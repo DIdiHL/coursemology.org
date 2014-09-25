@@ -1,0 +1,2 @@
+module MyMarketplaceCoursesHelper
+end
