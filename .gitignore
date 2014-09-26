@@ -11,6 +11,7 @@
 /db/*.sqlite3
 
 # Ignore all logfiles and tempfiles.
+/public/capybara.html
 /public/system/files
 /public/system/file_uploads/
 /public/course_themes

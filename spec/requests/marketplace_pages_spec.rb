@@ -1,19 +1,19 @@
 require "spec_helper"
 
 describe "MarketplacePages" do
+  subject { page }
+  let(:admin) { FactoryGirl.create(:admin) }
+  let(:course) { FactoryGirl.create(:course) }
 
-  describe "Marketplace Entrypoint" do
-    subject { page }
-    let(:admin) { FactoryGirl.create(:admin) }
-    let(:course) { FactoryGirl.create(:course) }
+  before do
+    sign_in admin
+    visit marketplace_index_path
+  end
 
-    before do
-      sign_in admin
-    end
+  it { should have_link("site-logo", href:marketplace_index_path) }
 
-    describe "marketplace link display" do
-      it { should have_link("Marketplace") }
-    end
+  describe "Marketplace Index" do
+    it { should have_field("search_keywords") }
   end
 
 end

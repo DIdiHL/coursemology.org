@@ -1,4 +1,8 @@
 include ApplicationHelper
+def show_page
+  save_page Rails.root.join( 'public', 'capybara.html' )
+  %x(launchy http://0.0.0.0:3000/capybara.html)
+end
 
 def sign_in(user)
   visit new_user_session_path

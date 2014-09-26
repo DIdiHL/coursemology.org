@@ -1,2 +1,22 @@
 module MarketplaceHelper
+  def get_suggested_categories
+    #get suggested categories based on the user's previous browsing and search
+    #history
+    categories = [{:category => "C++"}, {:category => "Java"}, {:category => "Python"}]
+    get_marketplace_search_parameters categories
+  end
+
+  def get_marketplace_search_parameters(search_parameters)
+    result = []
+    if search_parameters.kind_of?(Array)
+      search_parameters.each { |element|
+        if element.kind_of?(Hash)
+          element.except(:href)
+          element[:href] = marketplace_search_path(element);
+          result << element
+        end
+      }
+    end
+    result
+  end
 end

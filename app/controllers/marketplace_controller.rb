@@ -1,4 +1,8 @@
 class MarketplaceController < ApplicationController
+  def url_options
+    { marketplace_id: user_marketplace_id }.merge(super)
+  end
+
   def show
   end
 

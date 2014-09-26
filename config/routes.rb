@@ -1,7 +1,15 @@
 Coursemology::Application.routes.draw do
 
+  resources :my_marketplace_themes do
+    get "index"
+    get "show_created"
+    get "show_purchased"
+    get "edit_created"
+    get "edit_purchased"
+  end
+
   resources :my_marketplace_courses do
-    get :index, as: :my_marketplace_courses
+    get "index"
     get "show_created"
     get "show_purchased"
     get "edit_created"
@@ -9,10 +17,10 @@ Coursemology::Application.routes.draw do
   end
 
   resources :marketplace do
-    get :index, as: :marketplace_index
+    get "index"
     get "show"
-    get "search"
     get "edit"
+    get "search"
   end
 
   post "facebook/obtain_badge" => "facebook#obtain_badge"
