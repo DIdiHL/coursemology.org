@@ -6,7 +6,6 @@
       <%= text_field_tag(:search_keywords) %>
       <%= submit_tag("Search by keywords") %>
     <% end %>
-  </div>
-  <div id="category_suggestions">
+    <%=  render :partial => "suggested_categories" %>
   </div>
 </div>

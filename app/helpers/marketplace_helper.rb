@@ -2,7 +2,11 @@ module MarketplaceHelper
   def get_suggested_categories
     #get suggested categories based on the user's previous browsing and search
     #history
-    categories = [{:category => "C++"}, {:category => "Java"}, {:category => "Python"}]
+    categories = [
+        {:category => "C++"},
+        {:category => "Java"},
+        {:category => "Python"}
+    ]
     get_marketplace_search_parameters categories
   end
 
@@ -18,5 +22,27 @@ module MarketplaceHelper
       }
     end
     result
+  end
+
+  def get_name_from_suggested_category(category)
+    result = ""
+    if verify_suggested_category(category)
+      result = category[:category]
+    end
+    result
+  end
+
+  def get_href_from_suggested_category(category)
+    result = ""
+    if verify_suggested_category(category)
+      result = category[:href]
+    end
+    result
+  end
+
+  def verify_suggested_category(category)
+    return category.is_a?(Hash) &&
+        category.has_key?(:category) &&
+        category.has_key?(:href)
   end
 end

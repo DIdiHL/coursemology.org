@@ -1,0 +1,7 @@
+<div id="suggested_categories">
+  <% get_suggested_categories.each { |category|%>
+    <div class="suggested_category">
+      <%= link_to get_name_from_suggested_category(category), get_href_from_suggested_category(category) %>
+    </div>
+  <% } %>
+</div>
