@@ -2,10 +2,17 @@
 
 <div class="marketplace_entry_banner">
   <div id="search_box">
-    <%= form_tag(marketplace_search_path, method: "GET") do %>
-      <%= text_field_tag(:search_keywords) %>
-      <%= submit_tag("Search by keywords") %>
-    <% end %>
-    <%=  render :partial => "suggested_categories" %>
+    <div id="search_section">
+      <%= form_tag(marketplace_search_path, method: "GET", class: "form-search") do %>
+        <%= text_field_tag(:keywords, nil, :class => "input-xxlarge search-query") %>
+        <%= submit_tag("Search", :class => "btn") %>
+        <a data-toggle="search-tooltip" href="#" title="<%= t("Marketplace.search_tooltip") %>">
+          [?]
+        </a>
+      <% end %>
+    </div>
+    <div id="suggestion_section">
+      <%=  render :partial => "suggested_categories" %>
+    </div>
   </div>
 </div>

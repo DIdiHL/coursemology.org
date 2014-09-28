@@ -56,4 +56,12 @@ en:
       cancel:
         format: "%{submit_button} %{cancel_link}"
         cancel: "Cancel"
+  Marketplace:
+    search_tooltip: |
+      You can add additional options including:
+      -category
+      -title
+      -creator
+      Separate different options using comma.
+      Example: category:python, title: programming methodology, Prof Ben
 

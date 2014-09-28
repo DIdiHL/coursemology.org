@@ -1,2 +1,14 @@
-<h1>Marketplace#search</h1>
-<p>Find me in app/views/marketplace/search.html.erb</p>
+<h1>Search Results</h1>
+<table class="search-results">
+  <!-- TODO implement search display -->
+  <% @keywords.each { |key, value| %>
+    <tr>
+      <td>
+        <%= key %>:
+      </td>
+      <td>
+        <%= value %>
+      </td>
+    </tr>
+  <% } %>
+</table>

@@ -5,7 +5,8 @@ module MarketplaceHelper
     categories = [
         {:category => "C++"},
         {:category => "Java"},
-        {:category => "Python"}
+        {:category => "Python"},
+        {:category => "Javascript"}
     ]
     get_marketplace_search_parameters categories
   end
