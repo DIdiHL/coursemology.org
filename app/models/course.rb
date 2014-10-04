@@ -33,6 +33,11 @@ class Course < ActiveRecord::Base
   has_many  :course_preferences, dependent: :destroy
   has_many  :course_navbar_preferences, dependent: :destroy
 
+  # this is the record from which this course is duplicated
+  has_one   :origin_record, :class_name => 'CoursePurchase', :foreign_key => :duplicate_course_id
+  # these are the records that purchase seats from this course
+  has_many  :purchase_records, :class_name =>'CoursePurchase', :foreign_key => :original_course_id
+
   has_many  :missions, class_name: "Assessment::Mission", through: :assessments,
             source: :as_assessment, source_type: "Assessment::Mission" do
     def published
