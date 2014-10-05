@@ -4,7 +4,6 @@ class CreateCoursePurchases < ActiveRecord::Migration
       t.belongs_to :user
       t.belongs_to :original_course, class: 'Course', foreign_key: 'original_course_id'
       t.belongs_to :duplicate_course, class: 'Course', foreign_key: 'duplicate_course_id'
-      t.integer :seat_count
 
       t.timestamps
     end
