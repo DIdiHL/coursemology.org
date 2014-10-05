@@ -1,2 +1,26 @@
-<h1>MyMarketplaceCourses#index</h1>
-<p>Find me in app/views/my_marketplace_courses/index.html.erb</p>
+<meta name="viewport" content="width=device-width">
+
+<div id="my-marketplace-courses-index">
+  <h1><%= t('Marketplace.my_marketplace_courses.index_title') %></h1>
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#created_tab" data-toggle="tab">
+        <%= t('Marketplace.my_marketplace_courses.index_created_tab_title') %>
+      </a>
+    </li>
+    <li>
+      <a href="#purchased_tab" data-toggle="tab">
+        <%= t('Marketplace.my_marketplace_courses.index_purchased_tab_title') %>
+      </a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="created_tab">
+      <%= render partial: 'all_created_courses' %>
+    </div>
+    <div class="tab-pane" id="purchased_tab">
+      <%= render partial: 'all_purchased_courses' %>
+    </div>
+  </div>
+</div>

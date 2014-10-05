@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140919103853) do
+ActiveRecord::Schema.define(:version => 20141005184246) do
 
   create_table "achievements", :force => true do |t|
     t.string   "icon_url"
@@ -426,6 +426,13 @@ ActiveRecord::Schema.define(:version => 20140919103853) do
   add_index "course_preferences", ["course_id"], :name => "index_course_preferences_on_course_id"
   add_index "course_preferences", ["preferable_item_id"], :name => "index_course_preferences_on_preferable_item_id"
 
+  create_table "course_purchases", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "course_theme_attributes", :force => true do |t|
     t.integer  "course_id"
     t.integer  "theme_attribute_id"
@@ -463,6 +470,7 @@ ActiveRecord::Schema.define(:version => 20140919103853) do
     t.datetime "start_at"
     t.datetime "end_at"
     t.boolean  "is_pending_deletion", :default => false
+    t.integer  "course_purchase_id"
   end
 
   add_index "courses", ["creator_id"], :name => "index_courses_on_creator_id"
@@ -1055,7 +1063,6 @@ ActiveRecord::Schema.define(:version => 20140919103853) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
-    t.integer  "taggings_count", :default => 0
     t.text     "description"
     t.integer  "course_id"
     t.integer  "tag_group_id"

@@ -6,7 +6,7 @@
       <%= form_tag(marketplace_search_path, method: "GET", class: "form-search") do %>
         <%= text_field_tag(:keywords, nil, :class => "input-xxlarge search-query") %>
         <%= submit_tag("Search", :class => "btn") %>
-        <a data-toggle="search-tooltip" href="#" title="<%= t("Marketplace.search_tooltip") %>">
+        <a data-toggle="search-tooltip" href="#" title="<%= t("Marketplace.index.search_tooltip") %>">
           [?]
         </a>
       <% end %>

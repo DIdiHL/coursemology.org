@@ -1,7 +1,7 @@
 class MyMarketplaceCoursesController < ApplicationController
   def index
-    created_courses = get_created_courses
-    purchased_courses = get_purchased_courses
+    @created_courses = get_created_courses
+    @purchased_courses = get_purchased_courses
 
   end
 
@@ -19,10 +19,20 @@ class MyMarketplaceCoursesController < ApplicationController
 
   #----------------------controller helpers---------------------
   def get_created_courses
-    # TODO implement
+    result = []
+    current_user.courses.each { |course|
+      if course.is_original_course?
+        @my_created_courses << course
+      end
+    }
+    result
   end
 
   def get_purchased_courses
-    # TODO implement
+    result = []
+    current_user.course_purchases.each { |purchase|
+      @my_purchased_courses << purchase.duplicate_course
+    }
+    result
   end
 end
