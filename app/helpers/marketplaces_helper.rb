@@ -1,5 +1,5 @@
-module MarketplaceHelper
-  def get_suggested_categories
+module MarketplacesHelper
+  def get_suggested_categories(marketplace_id)
     #get suggested categories based on the user's previous browsing and search
     #history
     categories = [
@@ -8,16 +8,16 @@ module MarketplaceHelper
         {:category => "Python"},
         {:category => "Javascript"}
     ]
-    get_marketplace_search_parameters categories
+    get_marketplace_search_parameters(marketplace_id, categories)
   end
 
-  def get_marketplace_search_parameters(search_parameters)
+  def get_marketplace_search_parameters(marketplace_id, search_parameters)
     result = []
     if search_parameters.kind_of?(Array)
       search_parameters.each { |element|
         if element.kind_of?(Hash)
           element.except(:href)
-          element[:href] = marketplace_search_path(element);
+          element[:href] = marketplace_search_path(:marketplace_id => marketplace_id, :category => element);
           result << element
         end
       }

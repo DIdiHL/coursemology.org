@@ -16,7 +16,9 @@ Coursemology::Application.routes.draw do
     get "edit_purchased"
   end
 
-  resources :marketplace do
+
+  get "marketplace", to: "marketplaces#index"
+  resources :marketplaces do
     get "index"
     get "show"
     get "edit"

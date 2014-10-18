@@ -1,0 +1,9 @@
+<div>
+  <%= form_tag(marketplace_search_path(1), method: "GET", class: "form-search") do %>
+    <%= text_field_tag(:keywords, nil, :class => "input-xxlarge search-query") %>
+    <%= submit_tag("Search", :id => "submit_search_btn", :class => "btn") %>
+    <a data-toggle="search-tooltip" href="#" title="<%= t("Marketplace.index.search_tooltip") %>">
+      [?]
+    </a>
+  <% end %>
+</div>

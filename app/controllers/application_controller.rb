@@ -261,7 +261,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_marketplace_id
-    # TODO return the user's selected marketplace ID
+    # TODO return the user's selected marketplaces ID
     # The default ID is tied to the user's location
     return 1
   end

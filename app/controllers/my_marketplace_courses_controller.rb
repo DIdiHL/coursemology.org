@@ -22,7 +22,7 @@ class MyMarketplaceCoursesController < ApplicationController
     result = []
     current_user.courses.each { |course|
       if course.is_original_course?
-        @my_created_courses << course
+        result << course
       end
     }
     result
@@ -31,7 +31,7 @@ class MyMarketplaceCoursesController < ApplicationController
   def get_purchased_courses
     result = []
     current_user.course_purchases.each { |purchase|
-      @my_purchased_courses << purchase.duplicate_course
+      result << purchase.duplicate_course
     }
     result
   end

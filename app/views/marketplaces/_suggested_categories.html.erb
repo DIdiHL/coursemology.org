@@ -1,6 +1,6 @@
 <!-- Provide 4 category suggestions based on search and browsing history -->
-<div id="suggested_categories">
-  <% get_suggested_categories.each { |category|%>
+<div>
+  <% get_suggested_categories(params[:marketplace_id]).each { |category|%>
     <div class="suggested_category">
       <%= link_to get_name_from_suggested_category(category), get_href_from_suggested_category(category) %>
     </div>

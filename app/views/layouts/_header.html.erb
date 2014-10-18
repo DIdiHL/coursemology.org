@@ -1,7 +1,7 @@
 <header class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-          <% if ["marketplace", "my_marketplace_courses", "my_marketplace_themes"].include? params[:controller]%>
+          <% if ["marketplaces", "my_marketplace_courses", "my_marketplace_themes"].include? params[:controller]%>
             <%= link_to marketplace_index_path(user_marketplace_id), id: "site-logo" do %>
               <!-- TODO modify the icon -->
               <img src="/images/coursemology_marketplace_white.png" />

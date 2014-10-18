@@ -1,7 +1,4 @@
-class MarketplaceController < ApplicationController
-  def url_options
-    { marketplace_id: user_marketplace_id }.merge(super)
-  end
+class MarketplacesController < ApplicationController
 
   def show
     search_keywords = get_search_keywords
@@ -17,6 +14,9 @@ class MarketplaceController < ApplicationController
   end
 
   def index
+    if !params.has_key?(:marketplace_id)
+        params[:marketplace_id] = user_marketplace_id;
+    end
   end
 
   #----------------------controller helpers ------------------------
