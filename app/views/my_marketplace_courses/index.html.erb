@@ -1,14 +1,24 @@
 <meta name="viewport" content="width=device-width">
 
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice].html_safe %>
+  </div>
+<% end %>
+<% if flash[:error] %>
+  <div class="alert alert-error">
+    <%= flash[:error].html_safe %>
+  </div>
+<% end %>
 <div id="my-marketplace-courses-index">
   <h1><%= t('Marketplace.my_marketplace_courses.index_title') %></h1>
   <ul class="nav nav-tabs">
-    <li class="active">
+    <li class="<%= check_tab_status('created_tab', 'created_tab') %>">
       <a href="#created_tab" data-toggle="tab">
         <%= t('Marketplace.my_marketplace_courses.index_created_tab_title') %>
       </a>
     </li>
-    <li>
+    <li class="<%= check_tab_status('purchased_tab', 'created_tab') %>">
       <a href="#purchased_tab" data-toggle="tab">
         <%= t('Marketplace.my_marketplace_courses.index_purchased_tab_title') %>
       </a>
@@ -16,10 +26,10 @@
   </ul>
 
   <div class="tab-content">
-    <div class="tab-pane active" id="created_tab">
+    <div class="tab-pane <%= check_tab_status('created_tab', 'created_tab') %>" id="created_tab">
       <%= render partial: 'all_created_courses' %>
     </div>
-    <div class="tab-pane" id="purchased_tab">
+    <div class="tab-pane <%= check_tab_status('purchased_tab', 'created_tab') %>" id="purchased_tab">
       <%= render partial: 'all_purchased_courses' %>
     </div>
   </div>

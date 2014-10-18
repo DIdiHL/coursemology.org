@@ -27,7 +27,7 @@ class RoleRequestsController < ApplicationController
     end
     respond_to do |format|
       flash[:notice] = "Your request has been submitted."
-      format.html {redirect_to my_courses_path}
+      format.html {redirect_to((params[:redirect]) ? params[:redirect] : my_courses_path)}
     end
   end
 
@@ -51,7 +51,7 @@ class RoleRequestsController < ApplicationController
     respond_to do |format|
       if @role_request.update_attributes(params[:role_request])
         flash[:notice] = "Your request has been updated."
-        format.html {redirect_to my_courses_path}
+        format.html {redirect_to((params[:redirect]) ? params[:redirect] : my_courses_path)}
       end
     end
   end

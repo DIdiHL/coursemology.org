@@ -2,7 +2,6 @@ class MyMarketplaceCoursesController < ApplicationController
   def index
     @created_courses = get_created_courses
     @purchased_courses = get_purchased_courses
-
   end
 
   def show_created
@@ -21,7 +20,7 @@ class MyMarketplaceCoursesController < ApplicationController
   def get_created_courses
     result = []
     current_user.courses.each { |course|
-      if course.is_original_course?
+      if course.is_original_course? && course.creator_id == current_user.id
         result << course
       end
     }
