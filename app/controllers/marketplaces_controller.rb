@@ -8,6 +8,8 @@ class MarketplacesController < ApplicationController
     @keywords = get_search_keywords
     keyword_results = do_search_by_keywords(@keywords)
     @final_results = intersect_keyword_results(keyword_results)
+    #fd section
+    @final_results = [Course.find(96), Course.find(97)]
   end
 
   def edit
@@ -23,14 +25,6 @@ class MarketplacesController < ApplicationController
   def get_search_keywords
     #precedence: GET Param's category and name > keyword string's counterparts.
     result = {}
-    if params.has_key?(:category)
-      result[:category] = params[:category]
-    end
-
-    if params.has_key?(:name)
-      result[:name] = params[:name]
-    end
-
     if params.has_key?(:keywords)
       extract_keywords_to(result)
     end
@@ -42,22 +36,22 @@ class MarketplacesController < ApplicationController
       keywords_string = params[:keywords]
       if keywords_string.is_a?(String)
         remaining_keywords = keywords_string
-        search_grammar = /([A-Z|a-z]+:?[A-z|0-9| ]+)(,)?/
-        keywords =
-            keywords_string.scan(search_grammar).map { |element| element[0] }
-        keywords.each { |element|
-          remaining_keywords = remaining_keywords.sub(element, "")
-          key, value = element.split(":")
-          if not dest.has_key?(key)
-            dest[key] = value
+        search_grammar = /\s?((\w*):\s?)?([\w|+|#]+),?/
+        keywords = keywords_string.scan(search_grammar)
+
+        keyword_key_index = 1
+        keyword_value_index = 2
+        keywords.each { |keyword_group|
+          if keyword_group[keyword_key_index]
+            dest[keyword_group[keyword_key_index]] = keyword_group[keyword_value_index]
+          else
+            if !dest[:fuzzy]
+              dest[:fuzzy] = keyword_group[keyword_value_index]
+            else
+              dest[:fuzzy] += ' ' + keyword_group[keyword_value_index]
+            end
           end
         }
-
-        remaining_keywords = remaining_keywords.gsub(",", "")
-        if not remaining_keywords.empty?
-          # These are used to perform fuzzy search
-          dest[:fuzzy] = remaining_keywords
-        end
       end
     end
   end

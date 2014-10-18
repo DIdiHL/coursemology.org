@@ -8,18 +8,31 @@ module MarketplacesHelper
         {:category => "Python"},
         {:category => "Javascript"}
     ]
-    get_marketplace_search_parameters(marketplace_id, categories)
+    get_marketplace_search_paths(marketplace_id, categories)
   end
 
-  def get_marketplace_search_parameters(marketplace_id, search_parameters)
+  def get_marketplace_search_paths(marketplace_id, search_options_collection)
     result = []
-    if search_parameters.kind_of?(Array)
-      search_parameters.each { |element|
+    if search_options_collection.kind_of?(Array)
+      search_options_collection.each { |element|
         if element.kind_of?(Hash)
           element.except(:href)
-          element[:href] = marketplace_search_path(:marketplace_id => marketplace_id, :category => element);
+          element[:href] = marketplace_search_path(:marketplace_id => marketplace_id,
+                                                   :keywords => get_marketplace_search_keywords(element))
           result << element
         end
+      }
+    end
+    result
+  end
+
+  def get_marketplace_search_keywords(search_options)
+    result = ''
+    comma = ''
+    if search_options.is_a?(Hash)
+      search_options.each { |key, value|
+        result += "#{comma}#{key}:#{value}"
+        comma = ','
       }
     end
     result
