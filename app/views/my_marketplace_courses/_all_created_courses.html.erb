@@ -3,7 +3,7 @@
     <div>
       <div>You have not created any courses.</div>
       <% if can? :manage, Course %>
-        <%= link_to 'New Course',
+        <%= link_to t("Marketplace.my_marketplace_courses.new_course"),
                     new_course_path,
                     class: 'btn btn-primary' %>
       <% else %>
@@ -11,13 +11,13 @@
         <% if request = RoleRequest.exist_lecturer_request?(current_user) %>
           <span>Your request is being processed.</span>
           <div>
-            <%= link_to 'Update lecturer request',
+            <%= link_to t("Marketplace.my_marketplace_courses.update_lecturer_request"),
                         edit_role_request_path(request, redirect: my_marketplace_courses_path(active: 'created_tab')),
                         class: 'btn btn-primary' %>
           </div>
         <% else %>
           <div>
-            <%= link_to 'Request to be a lecturer',
+            <%= link_to t("Marketplace.my_marketplace_courses.lecturer_request"),
                         new_role_request_path(redirect: my_marketplace_courses_path(active: 'created_tab')),
                         class: 'btn btn-primary' %>
           </div>

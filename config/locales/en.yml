@@ -65,8 +65,14 @@ en:
         -creator
         Separate different options using comma.
         Example: category:python, title: programming methodology, Prof Ben
+    search:
+      title: Search Results
+      submit_btn_text: Search
     my_marketplace_courses:
       index_title: My Marketplace Courses
       index_created_tab_title: Created by me
       index_purchased_tab_title: Purchased by me
+      new_course: New Course
+      update_lecturer_request: Update lecturer request
+      lecturer_request: Request to be a lecturer
 
