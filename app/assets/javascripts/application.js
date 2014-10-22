@@ -18,7 +18,6 @@
 //= require angular
 //= require angular-resource
 //= require angular-route
-//= require angular-ui-sortable-rails
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require jquery-tmpl

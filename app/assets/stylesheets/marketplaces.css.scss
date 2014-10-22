@@ -1,3 +1,49 @@
 // Place all the styles related to the marketplace controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.marketplace_entry_banner {
+  height: 500px;
+  margin: -23px -20px 0px -20px;
+}
+
+#banner_color_extension {
+  text-align: center;
+  width: 100%;
+  height: 510px;
+  background-color: #86969C;
+}
+
+#banner_area {
+  background: url('/images/coursemology_marketplace_index_background.png') no-repeat;
+  background-size: 100%;
+  display: inline-block;
+  text-align: center;
+  height: 100%;
+  width: 900px;
+}
+
+#input_area {
+  h1 {
+    color: white;
+  }
+  display: inline-block;
+  position: relative;
+  width: 650px;
+  top: 200px;
+}
+
+#search_box, #suggestion_section {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+#suggestion_section {
+  a:hover {
+    color: white;
+  }
+  width: 100%;
+}
+
+.suggested_category {
+  text-align: middle;
+}

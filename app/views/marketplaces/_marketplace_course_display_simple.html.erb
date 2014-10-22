@@ -1,0 +1,20 @@
+<div class="marketplace-course-display-simple row">
+  <div class="search-course-image span2">
+    <a href="<%= course_path(course) %>" target="_blank">
+      <img src="<%= course.logo_url %>" class="course-logo"/>
+    </a>
+  </div>
+  <div class="search-course-details span10">
+    <div class="search-course-title">
+      <a href="<%= course_path(course) %>" target="_blank">
+        <%= course.title %>
+      </a>
+    </div>
+    <div class="search-course-creator">
+      <%= t("Marketplace.course.creator_label") %>: <span><%= course.creator.name%></span>
+    </div>
+    <div class="course-rating">
+      <!-- TODO add rating function -->
+    </div>
+  </div>
+</div>

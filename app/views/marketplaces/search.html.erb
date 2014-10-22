@@ -1,15 +1,11 @@
 <h1><%= t("Marketplace.search.title") %></h1>
 <%= render partial: "search_form" %>
-<table class="search-results">
-  <!-- TODO implement search display -->
-  <% @keywords.each { |key, value| %>
+<div class="search-results container-fluid">
+  <% @final_results.each { |course| %>
     <tr>
       <td>
-        <%= key %>:
-      </td>
-      <td>
-        <%= value %>
+        <%= render partial: "marketplace_course_display_simple", locals: {course: course} %>
       </td>
     </tr>
   <% } %>
-</table>
+</div>

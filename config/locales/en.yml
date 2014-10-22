@@ -57,6 +57,8 @@ en:
         format: "%{submit_button} %{cancel_link}"
         cancel: "Cancel"
   Marketplace:
+    course:
+      creator_label: Creator
     index:
       search_tooltip: |
         You can add additional options including:
