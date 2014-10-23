@@ -1,8 +1,24 @@
-require 'spec_helper'
+require 'rails_helper'
 describe 'CoursePurchases' do
+  let(:test_marketplace) { FactoryGirl.create(:marketplace) }
   let(:original_course1) { FactoryGirl.create(:course) }
   let(:original_course2) { FactoryGirl.create(:course) }
+  let(:original_course1_publish_record) { FactoryGirl.create(
+        :publish_record,
+        course: original_course1,
+        marketplace: test_marketplace
+  ) }
+  let(:original_course2_publish_record) { FactoryGirl.create(
+      :publish_record,
+      course: original_course2,
+      marketplace: test_marketplace
+  ) }
   let(:duplicate_course1) { FactoryGirl.create(:course) }
+  let(:duplicate_course1_publish_record) { FactoryGirl.create(
+      :publish_record,
+      course: duplicate_course1,
+      marketplace: test_marketplace
+  ) }
   let(:duplicate_course2) { FactoryGirl.create(:course) }
   let(:user) { FactoryGirl.create(:admin) }
 
@@ -12,8 +28,8 @@ describe 'CoursePurchases' do
         FactoryGirl.create(
           :course_purchase,
           user: user,
-          original_course: original_course1,
-          duplicate_course: duplicate_course1
+          publish_record: original_course1_publish_record,
+          course: duplicate_course1
         )
       }.to change{ CoursePurchase.count }.by(1)
     end
@@ -23,54 +39,73 @@ describe 'CoursePurchases' do
         FactoryGirl.create(
             :course_purchase,
             user: user,
-            original_course: original_course1,
-            duplicate_course: duplicate_course1
+            publish_record: original_course1_publish_record,
+            course: duplicate_course1
         )
         FactoryGirl.create(
             :course_purchase,
             user: user,
-            original_course: original_course1,
-            duplicate_course: duplicate_course2,
+            publish_record: original_course1_publish_record,
+            course: duplicate_course2,
         )
       }.to change(CoursePurchase, :count).by(2)
+    end
+
+    it 'should detect if a course is duplicate' do
+      expect {
+        FactoryGirl.create(
+            :course_purchase,
+            user: user,
+            publish_record: original_course1_publish_record,
+            course: duplicate_course1
+        )
+        duplicate_course1.is_purchased_course?.should be_truthy
+      }
     end
   end
 
   describe 'validations' do
-    before do
-      FactoryGirl.create(
+
+    it 'should not allow original course to be the purchased course' do
+      FactoryGirl.build(
           :course_purchase,
           user: user,
-          original_course: original_course1,
-          duplicate_course: duplicate_course1
-      )
+          publish_record: original_course1_publish_record,
+          course: original_course2
+      ).should_not be_valid
     end
 
     it 'should not allow duplicate course to be purchased' do
+      FactoryGirl.create(
+          :course_purchase,
+          user: user,
+          publish_record: original_course1_publish_record,
+          course: duplicate_course1
+      )
       FactoryGirl.build(
           :course_purchase,
           user: user,
-          original_course: duplicate_course1,
-          duplicate_course: duplicate_course2
+          publish_record: duplicate_course1_publish_record,
+          course: duplicate_course2
       ).should_not be_valid
     end
-
-    it 'should not allow the same duplicate course to appear in multiple CoursePurchases' do
-      FactoryGirl.build(
-          :course_purchase,
-          user: user,
-          original_course: original_course2,
-          duplicate_course: duplicate_course1
-      ).should_not be_valid
-    end
-
-    it 'should not allow originally created course to become purchased course' do
-      FactoryGirl.build(
-          :course_purchase,
-          user: user,
-          original_course: original_course2,
-          duplicate_course: original_course1
-      ).should_not be_valid
-    end
+  #
+  #   it 'should not allow the same duplicate course to appear in multiple CoursePurchases' do
+  #     FactoryGirl.build(
+  #         :course_purchase,
+  #         user: user,
+  #         original_course: original_course2,
+  #         duplicate_course: duplicate_course1
+  #     ).should_not be_valid
+  #   end
+  #
+  #   it 'should not allow originally created course to become purchased course' do
+  #     FactoryGirl.build(
+  #         :course_purchase,
+  #         user: user,
+  #         original_course: original_course2,
+  #         duplicate_course: original_course1
+  #     ).should_not be_valid
+  #   end
   end
 end

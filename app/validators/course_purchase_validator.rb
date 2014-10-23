@@ -1,16 +1,25 @@
 class CoursePurchaseValidator < ActiveModel::Validator
   def validate(record)
-    unless record.original_course.is_original_course?
-      record.errors[:original_course] << "Purchase must be made to an originally created course. Purchased course can't be resold."
+    unless verify_purchased_course(record)
+      record.errors[:course] << "Purchased course doesn't match the publish record."
     end
 
-    if !record.duplicate_course.purchase_records.blank?
-      record.errors[:duplicate_course] << "A course that has already been purchased can't be the duplicate course"
+    if not record.course.publish_records.blank?
+      record.errors[:course] << "A published course can't possibly be a purchased course."
     end
 
-    duplicate_course = record.duplicate_course
+    duplicate_course = record.course
     if duplicate_course and Course.find(duplicate_course.id).is_purchased_course?
-      record.errors[:duplicate_course] << 'Duplicate course already been purchased. You probably want to create a new SeatPurchase instead of CoursePurchase.'
+      record.errors[:course] << 'Duplicate course already been purchased. You probably want to create a new SeatPurchase instead of CoursePurchase.'
     end
+  end
+
+  def verify_purchased_course(record)
+    original_course = record.publish_record.course
+    duplicate_course = record.course
+    unless original_course.title == duplicate_course.title and original_course.creator == duplicate_course.creator
+      return false
+    end
+    true
   end
 end

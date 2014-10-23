@@ -1,10 +1,10 @@
 class CreateCoursePurchases < ActiveRecord::Migration
   def up
     create_table :course_purchases do |t|
-      t.integer :user_id
-      t.integer :course_id
+      t.belongs_to :user
+      t.belongs_to :publish_record
 
-      t.timestamps
+      t.timestamp
     end
   end
 
