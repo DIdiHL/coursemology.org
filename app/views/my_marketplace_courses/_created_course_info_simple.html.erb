@@ -1,21 +1,29 @@
 <!-- TODO implement "my created course" specific controls. -->
-<div class="marketplace-course-display-simple row">
+<div class="my-created-course-display-simple row-fluid">
   <div class="search-course-image span2">
-    <a href="<%= course_path(course) %>" target="_blank">
-      <img src="<%= course.logo_url %>" class="course-logo"/>
-    </a>
+    <%= link_to image_tag(course.logo_url, class: 'course-logo'),
+                course_path(course),
+                target: "_blank" %>
   </div>
-  <div class="search-course-details span10">
+  <div class="search-course-details span8">
     <div class="search-course-title">
-      <a href="<%= course_path(course) %>" target="_blank">
-        <%= course.title %>
-      </a>
+      <%= link_to course.title,
+                  course_path(course),
+                  target: "_blank" %>
     </div>
-    <div class="search-course-creator">
-      <%= t("Marketplace.course.creator_label") %>: <span><%= course.creator.name%></span>
+    <div>
+      Number of purchases: <%= course.purchase_records.size %>
     </div>
     <div class="course-rating">
       <!-- TODO add rating function -->
+    </div>
+  </div>
+  <div class="span2">
+    <div>
+      <%= link_to 'Publish settings',
+                  my_marketplace_course_show_created_path(course),
+                  target: "_blank",
+                  class: "btn btn-primary course-info-quick-access-btn" %>
     </div>
   </div>
 </div>

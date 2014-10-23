@@ -2,11 +2,7 @@
   <% if @created_courses.empty? %>
     <div>
       <div>You have not created any courses.</div>
-      <% if can? :manage, Course %>
-        <%= link_to t("Marketplace.my_marketplace_courses.new_course"),
-                    new_course_path,
-                    class: 'btn btn-primary' %>
-      <% else %>
+      <% if not can? :manage, Course %>
         <span>You have to be a lecturer to create a course.</span>
         <% if request = RoleRequest.exist_lecturer_request?(current_user) %>
           <span>Your request is being processed.</span>
@@ -24,7 +20,15 @@
         <% end %>
       <% end %>
     </div>
-  <% else %>
+  <% end %>
+  <div>
+    <% if can? :manage, Course %>
+      <%= link_to t("Marketplace.my_marketplace_courses.new_course"),
+                  new_course_path,
+                  class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+  <% if not @created_courses.empty? %>
     <div>
       <% @created_courses.each { |course| %>
         <%= render partial: "created_course_info_simple", locals: {course: course} %>
