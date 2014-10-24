@@ -44,7 +44,4 @@ FactoryGirl.define do
     start_at Time.now.to_s[0..-7]
     end_at 1.day.from_now.to_s[0..-7]
   end
-
-  factory :course_purchase do
-  end
 end
