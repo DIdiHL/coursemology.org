@@ -433,4 +433,8 @@ class Course < ActiveRecord::Base
   def is_published_in_marketplace?
     not self.publish_records.empty?
   end
+
+  def all_course_purchases
+    self.publish_records.map { |publish_record| publish_record.course_purchases }.flatten
+  end
 end

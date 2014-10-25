@@ -5,19 +5,32 @@
                 course_path(course),
                 target: "_blank" %>
   </div>
+
   <div class="search-course-details span8">
+
     <div class="search-course-title">
       <%= link_to course.title,
                   course_path(course),
                   target: "_blank" %>
     </div>
+
     <div>
-      Number of purchases: <%= course.purchase_records.size %>
+      Number of purchases: <%= course.all_course_purchases.size %>
+    </div>
+
+    <div>
+      <% published_markets = course.publish_records.map { |publish_record| publish_record.marketplace.name } %>
+      <% if published_markets.empty? %>
+        <%= t("Marketplace.my_marketplace_courses.not_published_notice") %>
+      <% else %>
+        Published markets: <%= published_markets.join(', ') %>
+      <% end %>
     </div>
     <div class="course-rating">
       <!-- TODO add rating function -->
     </div>
   </div>
+
   <div class="span2">
     <div>
       <%= link_to 'Publish settings',
