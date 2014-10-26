@@ -86,5 +86,6 @@ en:
       not_published_notice: This course is not published in any marketplace.
 
     my_marketplace_courses_settings:
+      submit_btn_text: Update
       published_markets_tab_label: Published markets
       purchase_history_tab_label: Purchase history

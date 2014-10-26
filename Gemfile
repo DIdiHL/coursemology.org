@@ -51,6 +51,7 @@ end
 gem 'mysql2'
 gem 'uglifier', '>= 1.0.3'
 gem 'jquery-rails', '2.1.3'
+gem 'jquery-form-rails'
 gem 'jqtree-rails'
 gem 'jquery-tmpl-rails'
 gem 'devise', '3.0'

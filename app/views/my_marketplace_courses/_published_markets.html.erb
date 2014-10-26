@@ -1,4 +1,7 @@
 <div>
-  <h1>Published markets 1</h1>
-  <!-- TODO implement -->
+  <%= form_tag my_marketplace_course_edit_created_path(course) do %>
+    <button type="submit" class="btn btn-primary">
+      <%= t('Marketplace.my_marketplace_courses_settings.submit_btn_text') %>
+    </button>
+  <% end %>
 </div>
