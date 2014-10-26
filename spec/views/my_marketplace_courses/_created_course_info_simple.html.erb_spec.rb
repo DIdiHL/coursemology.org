@@ -8,6 +8,10 @@ RSpec.describe 'Simple Course Info Components', type: :view do
     expect(subject).to match(course.title)
   end
 
+  it 'should contain publication settings button' do
+    expect(subject).to have_link(t('Marketplace.my_marketplace_courses.publication_settings_btn_label', href: my_marketplace_course_show_created_path(course.id)))
+  end
+
   context 'when the course is published' do
 
     it 'should contain not published notice' do
