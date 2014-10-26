@@ -15,6 +15,7 @@ Coursemology::Application.routes.draw do
     get "edit_created"
     get "edit_purchased"
     get 'published_markets'
+    get 'purchase_history'
   end
 
 

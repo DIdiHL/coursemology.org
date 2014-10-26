@@ -1,1 +1,2 @@
-$("#content").html("<%= escape_javascript(render partial: 'published_markets', locals: {course: @course}) %>")
+<% published_market_tab_id = '#published_market_tab' %>
+$("<%= published_market_tab_id %>").html("<%= escape_javascript(render partial: 'published_markets', locals: {course: @course}) %>")

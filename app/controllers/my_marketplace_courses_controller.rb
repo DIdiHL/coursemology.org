@@ -22,29 +22,14 @@ class MyMarketplaceCoursesController < ApplicationController
   end
 
   def published_markets
-    @course = Course.find(params[:my_marketplace_course_id])
-    respond_to do |format|
-      format.js
-    end
+    respond_to_ajax_action
+  end
+
+  def purchase_history
+    respond_to_ajax_action
   end
 
   #----------------------controller helpers---------------------
-  def load_marketplace_side_bar_data
-    if @created_course
-      load_side_bar_for_created_course
-    elsif @purchased_course
-      load_side_bar_for_purchased_course
-    end
-  end
-
-  def load_side_bar_for_created_course
-    #TODO
-  end
-
-  def load_side_bar_for_purchased_course
-    #TODO
-  end
-
   def get_created_courses
     result = []
     current_user.courses.each { |course|
@@ -62,4 +47,12 @@ class MyMarketplaceCoursesController < ApplicationController
     }
     result
   end
+
+  def respond_to_ajax_action
+    @course = Course.find(params[:my_marketplace_course_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end
