@@ -77,5 +77,6 @@ en:
       new_course: New Course
       update_lecturer_request: Update lecturer request
       lecturer_request: Request to be a lecturer
+      published_market_label: 'Published markets :'
       not_published_notice: This course is not published in any marketplace.
 

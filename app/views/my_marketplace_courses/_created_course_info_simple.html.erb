@@ -23,7 +23,7 @@
       <% if published_markets.empty? %>
         <%= t("Marketplace.my_marketplace_courses.not_published_notice") %>
       <% else %>
-        Published markets: <%= published_markets.join(', ') %>
+        <%= t('Marketplace.my_marketplace_courses.published_market_label') %> <%= published_markets.join(', ') %>
       <% end %>
     </div>
     <div class="course-rating">
