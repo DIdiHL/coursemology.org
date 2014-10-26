@@ -5,6 +5,11 @@ class MyMarketplaceCoursesController < ApplicationController
   end
 
   def show_created
+    @course = Course.find(params[:my_marketplace_course_id])
+    if not can? :manage, @course
+      redirect_to access_denied_path,
+                  alert: t('Marketplace.my_marketplace_courses.manage_publication_setting_access_denied')
+    end
   end
 
   def show_purchased
@@ -16,7 +21,30 @@ class MyMarketplaceCoursesController < ApplicationController
   def edit_purchased
   end
 
+  def published_markets
+    @course = Course.find(params[:my_marketplace_course_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   #----------------------controller helpers---------------------
+  def load_marketplace_side_bar_data
+    if @created_course
+      load_side_bar_for_created_course
+    elsif @purchased_course
+      load_side_bar_for_purchased_course
+    end
+  end
+
+  def load_side_bar_for_created_course
+    #TODO
+  end
+
+  def load_side_bar_for_purchased_course
+    #TODO
+  end
+
   def get_created_courses
     result = []
     current_user.courses.each { |course|

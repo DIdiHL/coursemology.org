@@ -1,2 +1,8 @@
-<h1>MyMarketplaceCourses#show_created</h1>
-<p>Find me in app/views/my_marketplace_courses/show_created.html.erb</p>
+<ul class="nav nav-tabs">
+  <% default_tab_name = 'published_market_tab' %>
+  <li class="<%= check_tab_status('published_market_tab', default_tab_name) %>">
+    <a href="#published_market_tab" data-toggle="tab">
+      <%= t('Marketplace.my_marketplace_courses_settings.published_markets_tab_label') %>
+    </a>
+  </li>
+</ul>

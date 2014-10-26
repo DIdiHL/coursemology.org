@@ -4,5 +4,6 @@ module MyMarketplaceCoursesHelper
     if !params[:active] && tab_name == default_name || params[:active] == tab_name
       result = 'active'
     end
+    result
   end
 end
