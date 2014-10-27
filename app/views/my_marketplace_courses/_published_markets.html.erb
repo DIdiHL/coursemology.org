@@ -1,7 +1,5 @@
 <div>
-  <%= form_tag my_marketplace_course_edit_created_path(course) do %>
-    <button type="submit" class="btn btn-primary">
-      <%= t('Marketplace.my_marketplace_courses_settings.submit_btn_text') %>
-    </button>
+  <%= form_tag my_marketplace_course_edit_created_path(course), id: 'published_markets_form' do %>
+    <input value="Update" type="submit" class="btn btn-primary">
   <% end %>
 </div>

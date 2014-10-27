@@ -1,4 +1,5 @@
 class MyMarketplaceCoursesController < ApplicationController
+
   def index
     @created_courses = get_created_courses
     @purchased_courses = get_purchased_courses

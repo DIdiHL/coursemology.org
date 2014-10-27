@@ -87,5 +87,7 @@ en:
 
     my_marketplace_courses_settings:
       submit_btn_text: Update
+      success_message: successfully updated.
+      failure_message: failed to update.
       published_markets_tab_label: Published markets
       purchase_history_tab_label: Purchase history

@@ -1,6 +1,16 @@
-<% published_market_tab_id = 'published_market_tab' %>
+<% published_market_tab_id = 'published_markets_tab' %>
 <% purchase_history_tab_id = 'purchase_history_tab' %>
 <% default_tab_id = published_market_tab_id %>
+
+<!-- This is a common notice area, it is intended to notice the user the result of previous operations even after tab is changed -->
+<%= javascript_include_tag 'i18n' %>
+<%= javascript_include_tag 'translations' %>
+<%= javascript_tag do %>
+  I18n.defaultLocale = "<%= I18n.default_locale %>";
+  I18n.locale = "<%= I18n.locale %>";
+<% end %>
+<div id="flash_area">
+</div>
 
 <ul id="my_marketplace_created_course_setting_tabs" class="nav nav-tabs ajax-nav-tabs">
 
@@ -22,24 +32,14 @@
 
 <div class="tab-content">
 
-  <!-- This is a common notice area, it is intended to notice the user the result of previous operations even after tab is changed -->
-  <% if flash[:notice] %>
-    <!-- TODO modify to use ajax -->
-    <div class="alert alert-success">
-      <%= flash[:notice].html_safe %>
-    </div>
-  <% end %>
-  <% if flash[:error] %>
-    <div class="alert alert-error">
-      <%= flash[:error].html_safe %>
-    </div>
-  <% end %>
+  <div class="alert alert-success hidden">
+  </div>
+  <div class="alert alert-error hidden">
+  </div>
 
   <div id="<%= published_market_tab_id %>" class="tab-pane <%= check_tab_status(published_market_tab_id, default_tab_id) %>">
-    <%= render partial: 'published_markets', locals: {course: @course} %>
   </div>
 
   <div id="<%= purchase_history_tab_id %>" class="tab-pane <%= check_tab_status(purchase_history_tab_id, default_tab_id) %>">
-    <%= render partial: 'purchase_history', locals: {course: @course} %>
   </div>
 </div>
