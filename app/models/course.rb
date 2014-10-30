@@ -39,7 +39,7 @@ class Course < ActiveRecord::Base
   # this is the record from which this course is duplicated
   belongs_to :course_purchase
   # users purchase courses from their publish records
-  has_many :publish_records
+  has_one :publish_record
 
   has_many  :missions, class_name: "Assessment::Mission", through: :assessments,
             source: :as_assessment, source_type: "Assessment::Mission" do
@@ -431,10 +431,10 @@ class Course < ActiveRecord::Base
   end
 
   def is_published_in_marketplace?
-    not self.publish_records.empty?
+    !!self.publish_record
   end
 
   def all_course_purchases
-    self.publish_records.map { |publish_record| publish_record.course_purchases }.flatten
+    self.publish_record.course_purchases
   end
 end
