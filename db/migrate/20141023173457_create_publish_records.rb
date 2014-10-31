@@ -2,7 +2,6 @@ class CreatePublishRecords < ActiveRecord::Migration
   def up
     create_table :publish_records do |t|
       t.belongs_to :course
-      t.belongs_to :marketplace
 
       t.timestamp
     end

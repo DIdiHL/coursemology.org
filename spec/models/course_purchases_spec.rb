@@ -1,122 +1,95 @@
 require 'rails_helper'
 RSpec.describe CoursePurchase, :type => :model do
-
   let(:user1) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(
       :user,
       email: 'course_purchase_test_user@example.com'
-  ) }
-  let(:marketplace) { FactoryGirl.create(:marketplace) }
+  )}
   let(:original_course1) { FactoryGirl.create(:course) }
   let(:original_course1_publish_record) { FactoryGirl.create(
       :publish_record,
-      marketplace: marketplace,
       course: original_course1
-  ) }
-  let(:duplicate_course1) { FactoryGirl.create(:course) }
-  let(:duplicate_course2) { FactoryGirl.create(:course) }
+  )}
+  let(:duplicate_course1) { FactoryGirl.create(:course, is_original_course: false) }
+  let(:duplicate_course2) { FactoryGirl.create(:course, is_original_course: false) }
 
-  describe 'creation' do
 
-    it 'is valid with an originally created course and a duplicate course' do
-      expect {
-        FactoryGirl.create(
-          :course_purchase,
-          user: user1,
-          publish_record: original_course1_publish_record,
-          course: duplicate_course1
-        )
-      }.to change{ CoursePurchase.count }.by(1)
+  describe 'create' do
+
+    describe 'purchase from an originally created course' do
+      subject { FactoryGirl.create(:course_purchase, user: user1, publish_record: original_course1_publish_record) }
+      it 'should be allowed' do
+        expect{ subject }.to change{ CoursePurchase.count }.by(1)
+      end
+
+      it 'should attach a duplicate course to the course purchase' do
+        subject.course = duplicate_course1
+        expect(duplicate_course1.course_purchase).to eq(subject)
+      end
     end
 
-    it 'should allow different users to purchase from the same course.' do
-      expect {
-        FactoryGirl.create(
-            :course_purchase,
-            user: user1,
-            publish_record: original_course1_publish_record,
-            course: duplicate_course1
-        )
-        FactoryGirl.create(
-            :course_purchase,
-            user: user2,
-            publish_record: original_course1_publish_record,
-            course: duplicate_course2,
-        )
-      }.to change(CoursePurchase, :count).by(2)
+    describe 'multiple purchases from the same course by different users' do
+      it 'should be allowed' do
+        expect{
+            FactoryGirl.create(:course_purchase, user: user1, publish_record: original_course1_publish_record)
+        }.to change{ CoursePurchase.count }.by(1)
+        expect{
+            FactoryGirl.create(:course_purchase, user: user2, publish_record: original_course1_publish_record)
+        }.to change{ CoursePurchase.count }.by(1)
+      end
     end
 
-    it 'should detect if a course is duplicate' do
-      FactoryGirl.create(
-          :course_purchase,
-          user: user1,
-          publish_record: original_course1_publish_record,
-          course: duplicate_course1
-      )
-      duplicate_course1.is_purchased_course?.should be_truthy
-    end
   end
 
   describe 'validations' do
     let(:original_course2) { FactoryGirl.create(:course) }
     let(:original_course2_publish_record) { FactoryGirl.create(
         :publish_record,
-        marketplace: marketplace,
         course: original_course2
-    ) }
+    )}
+    let(:original_course1_purchase) { FactoryGirl.create(
+        :course_purchase,
+        user: user1,
+        publish_record: original_course1_publish_record
+    )}
 
-    it 'should not allow a published course to be the purchased course' do
-      original_course2_publish_record
-      FactoryGirl.build(
-          :course_purchase,
-          user: user1,
-          publish_record: original_course1_publish_record,
-          course: original_course2
-      ).should_not be_valid
+    describe 'using originally created course as the duplicate course' do
+      before do
+        original_course2_publish_record
+      end
+
+      it 'should not be allowed' do
+        expect { original_course1_purchase.course = original_course2 }.to raise_error
+      end
     end
 
-    # If PublishRecord's spec's 'should prevent purchased courses to be published' case is passing
-    # but this is failing, the error can be due to the validator.
-    it 'should not allow a purchase from a publish record that belongs to a duplicate course' do
-      FactoryGirl.create(
-          :course_purchase,
-          user: user1,
-          publish_record: original_course1_publish_record,
-          course: duplicate_course1
-      )
-      original_course1_publish_record.course = duplicate_course1
-      FactoryGirl.build(
-          :course_purchase,
-          user: user1,
-          publish_record: original_course1_publish_record,
-          course: duplicate_course2
-      ).should_not be_valid
+    describe 'purchasing from invalid publish record' do
+      before do
+        original_course1_publish_record.course = duplicate_course1
+      end
+
+      it 'should not be allowed' do
+        expect(
+            FactoryGirl.build(
+              :course_purchase,
+              user: user1,
+              publish_record: original_course1_publish_record
+            )
+        ).not_to be_valid
+      end
     end
 
-    it 'should not allow invalid publish record to be purchased from' do
-      original_course1_publish_record.course = duplicate_course1
-
-      FactoryGirl.build(
-          :course_purchase,
-          user: user1,
-          publish_record: original_course1_publish_record,
-          course: duplicate_course2
-      ).should_not be_valid
-    end
-
-    it 'should not allow the same duplicate course to appear in multiple CoursePurchases' do
-      FactoryGirl.create(
-          :course_purchase,
-          user: user1,
-          publish_record: original_course1_publish_record,
-          course: duplicate_course2
-      )
-      FactoryGirl.build(
+    describe 'attaching the same duplicate course to different course purchases' do
+      let(:original_course1_purchase2) { FactoryGirl.create(
           :course_purchase,
           user: user2,
-          publish_record: original_course1_publish_record,
-          course: duplicate_course2
-      ).should_not be_valid
+          publish_record: original_course2_publish_record
+      )}
+
+      it 'should not be allowed' do
+        original_course1_purchase.course = duplicate_course1
+        expect { original_course1_purchse2.course = duplicate_course1 }.to raise_error
+      end
     end
 
   end

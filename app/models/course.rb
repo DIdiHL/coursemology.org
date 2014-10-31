@@ -1,6 +1,6 @@
 class Course < ActiveRecord::Base
   include ActiveModel::Validations
-  validates_with CourseMarketplaceTypeValidator
+  validates_with CourseValidator
 
   acts_as_paranoid
   acts_as_duplicable
@@ -12,6 +12,7 @@ class Course < ActiveRecord::Base
   attr_accessible :course_navbar_preferences_attributes,
                   :missions_attributes,
                   :trainings_attributes
+  attr_accessible :is_original_course, :course_purchase_id
 
   belongs_to :creator, class_name: "User"
 
@@ -37,7 +38,7 @@ class Course < ActiveRecord::Base
   has_many  :course_navbar_preferences, dependent: :destroy
 
   # this is the record from which this course is duplicated
-  belongs_to :course_purchase
+  belongs_to :course_purchase, readonly: true
   # users purchase courses from their publish records
   has_one :publish_record
 
@@ -423,11 +424,11 @@ class Course < ActiveRecord::Base
   # this test are original courses. E.g. A duplicate course that hasn't
   # been purchased yet will also pass this test.
   def is_original_course?
-    !self.course_purchase
+    self.is_original_course
   end
 
-  def is_purchased_course?
-    !self.is_original_course?
+  def is_duplicate_course?
+    not self.is_original_course?
   end
 
   def is_published_in_marketplace?

@@ -8,22 +8,38 @@ class CoursePurchaseValidator < ActiveModel::Validator
   end
 
   def should_have_valid_publish_record(course_purchase, publish_record)
-    if not PublishRecord.where(marketplace_id: publish_record.marketplace_id, course_id: publish_record.course_id).any?
-      course_purchase.errors[:publish_record] << 'The given publish record is not found.'
+    if not publish_record
+      return
     end
 
-    if publish_record.course.is_purchased_course?
+    existing_record = PublishRecord.where(course_id: publish_record.course_id)
+    if not existing_record.any?
+      course_purchase.errors[:publish_record] << 'The given publish record is not found.'
+    elsif existing_record[0].course_id != publish_record.course_id
+      course_purchase.errors[:publish_record] << 'The given publish record contains incorrect data.'
+    end
+
+    if publish_record.course.is_duplicate_course?
       course_purchase.errors[:publish_record] << 'The publish record should not belong to a duplicate course.'
     end
   end
 
   def should_have_valid_course(course_purchase, course)
-    if course.is_published_in_marketplace?
-      course_purchase.errors[:course] << "A published course can't be the purchased course."
+    if not course
+      return
     end
 
-    if Course.find(course.id).course_purchase
-      course_purchase.errors[:course] << "A purchased course can't appear in multiple purchases"
+    puts course.inspect#fd
+    if course.is_original_course?
+      course_purchase.errors[:course] << " - an original course can't be the purchased course."
+    end
+
+    if course.is_published_in_marketplace?
+      course_purchase.errors[:course] << "- a published course can't be the purchased course."
+    end
+
+    if course.course_purchase
+      course_purchase.errors[:course] << "- a purchased course can't appear in multiple purchases"
     end
   end
 
