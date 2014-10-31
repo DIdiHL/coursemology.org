@@ -436,6 +436,11 @@ class Course < ActiveRecord::Base
   end
 
   def all_course_purchases
-    self.publish_record.course_purchases
+    result = []
+    if self.publish_record
+      result = self.publish_record.course_purchases
+    end
+    puts result.inspect#fd
+    result
   end
 end

@@ -82,8 +82,8 @@ en:
       lecturer_request: Request to be a lecturer
       publication_settings_btn_label: Publication settings
       manage_publication_setting_access_denied: You are not authorized to manage this course's market settings
-      published_market_label: 'Published markets :'
-      not_published_notice: This course is not published in any marketplace.
+      published_notice: Published
+      not_published_notice: Not published
 
     my_marketplace_courses_settings:
       submit_btn_text: Update

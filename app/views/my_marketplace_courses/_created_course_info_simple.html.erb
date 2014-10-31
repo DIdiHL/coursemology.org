@@ -19,11 +19,10 @@
     </div>
 
     <div>
-      <% published_markets = course.publish_records.map { |publish_record| publish_record.marketplace.name } %>
-      <% if published_markets.empty? %>
-        <%= t("Marketplace.my_marketplace_courses.not_published_notice") %>
+      <% if course.publish_record %>
+        <%= t('Marketplace.my_marketplace_courses.published_notice') %>
       <% else %>
-        <%= t('Marketplace.my_marketplace_courses.published_market_label') %> <%= published_markets.join(', ') %>
+        <%= t("Marketplace.my_marketplace_courses.not_published_notice") %>
       <% end %>
     </div>
     <div class="course-rating">
