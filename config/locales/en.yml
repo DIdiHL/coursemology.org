@@ -2,6 +2,14 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  number:
+    currency:
+      format:
+        unit: '$'
+        delimiter: '.'
+        separator: ' '
+        precision: 2
+        format: '%u%n'
   helpers:
     links:
       new_mcq:  "New MCQ Question"
@@ -81,13 +89,12 @@ en:
       update_lecturer_request: Update lecturer request
       lecturer_request: Request to be a lecturer
       publication_settings_btn_label: Publication settings
-      manage_publication_setting_access_denied: You are not authorized to manage this course's market settings
       published_notice: Published
       not_published_notice: Not published
 
-    my_marketplace_courses_settings:
+    course_marketplace_preference:
       submit_btn_text: Update
-      success_message: successfully updated.
-      failure_message: failed to update.
-      published_markets_tab_label: Published markets
+      marketplace_preference_tab_label: Marketplace
+      marketplace_preference_title_label: Edit Publish Record
+      purchase_preference_tab_label: Purchase
       purchase_history_tab_label: Purchase history

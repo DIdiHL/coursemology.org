@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141030184353) do
+ActiveRecord::Schema.define(:version => 20141101042307) do
 
   create_table "achievements", :force => true do |t|
     t.string   "icon_url"
@@ -678,10 +678,6 @@ ActiveRecord::Schema.define(:version => 20141030184353) do
   add_index "levels", ["course_id"], :name => "index_levels_on_course_id"
   add_index "levels", ["creator_id"], :name => "index_levels_on_creator_id"
 
-  create_table "marketplaces", :force => true do |t|
-    t.string "name", :null => false
-  end
-
   create_table "masquerade_logs", :force => true do |t|
     t.integer  "by_user_id"
     t.integer  "as_user_id"
@@ -765,6 +761,21 @@ ActiveRecord::Schema.define(:version => 20141030184353) do
   add_index "notifications", ["obj_id", "obj_type"], :name => "index_notifications_on_obj_id_and_obj_type"
   add_index "notifications", ["target_course_id"], :name => "index_notifications_on_target_course_id"
 
+  create_table "old_tags", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "course_id"
+    t.string   "icon_url"
+    t.integer  "max_exp"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "tag_group_id"
+    t.time     "deleted_at"
+  end
+
+  add_index "old_tags", ["course_id"], :name => "index_tags_on_course_id"
+  add_index "old_tags", ["tag_group_id"], :name => "index_tags_on_tag_group_id"
+
   create_table "pending_actions", :force => true do |t|
     t.integer  "course_id"
     t.integer  "user_course_id"
@@ -815,7 +826,8 @@ ActiveRecord::Schema.define(:version => 20141030184353) do
 
   create_table "publish_records", :force => true do |t|
     t.integer "course_id"
-    t.integer "marketplace_id"
+    t.decimal "price_per_seat", :precision => 8, :scale => 2
+    t.boolean "published"
   end
 
   create_table "question_assessments", :force => true do |t|

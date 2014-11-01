@@ -419,20 +419,12 @@ class Course < ActiveRecord::Base
     url
   end
 
-  # This is not a strict test.
-  # All original course will pass this test. But not all courses that pass
-  # this test are original courses. E.g. A duplicate course that hasn't
-  # been purchased yet will also pass this test.
-  def is_original_course?
-    self.is_original_course
-  end
-
   def is_duplicate_course?
     not self.is_original_course?
   end
 
   def is_published_in_marketplace?
-    !!self.publish_record
+    self.publish_record and self.publish_record.published?
   end
 
   def all_course_purchases

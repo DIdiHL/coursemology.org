@@ -7,7 +7,7 @@ RSpec.describe CoursePurchase, :type => :model do
   )}
   let(:original_course1) { FactoryGirl.create(:course) }
   let(:original_course1_publish_record) { FactoryGirl.create(
-      :publish_record,
+      :publish_records,
       course: original_course1
   )}
   let(:duplicate_course1) { FactoryGirl.create(:course, is_original_course: false) }
@@ -17,7 +17,7 @@ RSpec.describe CoursePurchase, :type => :model do
   describe 'create' do
 
     describe 'purchase from an originally created course' do
-      subject { FactoryGirl.create(:course_purchase, user: user1, publish_record: original_course1_publish_record) }
+      subject { FactoryGirl.create(:course_purchases, user: user1, publish_records: original_course1_publish_record) }
       it 'should be allowed' do
         expect{ subject }.to change{ CoursePurchase.count }.by(1)
       end
@@ -31,10 +31,10 @@ RSpec.describe CoursePurchase, :type => :model do
     describe 'multiple purchases from the same course by different users' do
       it 'should be allowed' do
         expect{
-            FactoryGirl.create(:course_purchase, user: user1, publish_record: original_course1_publish_record)
+            FactoryGirl.create(:course_purchases, user: user1, publish_records: original_course1_publish_record)
         }.to change{ CoursePurchase.count }.by(1)
         expect{
-            FactoryGirl.create(:course_purchase, user: user2, publish_record: original_course1_publish_record)
+            FactoryGirl.create(:course_purchases, user: user2, publish_records: original_course1_publish_record)
         }.to change{ CoursePurchase.count }.by(1)
       end
     end
@@ -44,13 +44,13 @@ RSpec.describe CoursePurchase, :type => :model do
   describe 'validations' do
     let(:original_course2) { FactoryGirl.create(:course) }
     let(:original_course2_publish_record) { FactoryGirl.create(
-        :publish_record,
+        :publish_records,
         course: original_course2
     )}
     let(:original_course1_purchase) { FactoryGirl.create(
-        :course_purchase,
+        :course_purchases,
         user: user1,
-        publish_record: original_course1_publish_record
+        publish_records: original_course1_publish_record
     )}
 
     describe 'using originally created course as the duplicate course' do
@@ -71,9 +71,9 @@ RSpec.describe CoursePurchase, :type => :model do
       it 'should not be allowed' do
         expect(
             FactoryGirl.build(
-              :course_purchase,
+              :course_purchases,
               user: user1,
-              publish_record: original_course1_publish_record
+              publish_records: original_course1_publish_record
             )
         ).not_to be_valid
       end
@@ -81,9 +81,9 @@ RSpec.describe CoursePurchase, :type => :model do
 
     describe 'attaching the same duplicate course to different course purchases' do
       let(:original_course1_purchase2) { FactoryGirl.create(
-          :course_purchase,
+          :course_purchases,
           user: user2,
-          publish_record: original_course2_publish_record
+          publish_records: original_course2_publish_record
       )}
 
       it 'should not be allowed' do

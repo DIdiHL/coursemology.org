@@ -34,6 +34,15 @@ class CoursePreferencesController < ApplicationController
       when 'sidebar'
         @tab = 'Sidebar'
         @ranking = @course.student_sidebar_ranking
+      when 'marketplace'
+        @tab = 'MarketplacePreference'
+        @publish_record = (@course.publish_record) ? @course.publish_record : PublishRecord.new
+        if not @publish_record.course_id
+          @publish_record.course_id = @course.id
+        end
+      when 'purchase'
+        @tab = 'PurchasePreference'
+        @course_purchase = @course.course_purchase
       else
         @tab = 'CoursePreference'
         atts = []

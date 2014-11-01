@@ -23,7 +23,7 @@ RSpec.describe 'Simple Course Info Components', type: :view do
   context 'when course is published' do
     before do
       FactoryGirl.create(
-          :publish_record,
+          :publish_records,
           course: course,
       )
     end

@@ -1,30 +1,36 @@
 Coursemology::Application.routes.draw do
 
+  resources :course_purchases do
+    get "create"
+    get "delete"
+  end
+
+  resources :publish_records do
+    get "create"
+    get "update"
+    get "delete"
+  end
+
   resources :my_marketplace_themes do
-    get "index"
-    get "show_created"
-    get "show_purchased"
-    get "edit_created"
-    get "edit_purchased"
+    get 'index'
+    get 'show_created'
+    get 'show_purchased'
+    get 'edit_created'
+    get 'edit_purchased'
   end
 
   resources :my_marketplace_courses do
-    get "index"
-    get "show_created"
-    get "show_purchased"
-    get "edit_created"
-    get "edit_purchased"
-    get 'published_markets'
-    get 'purchase_history'
+    get 'index'
+    get 'update_publish_record'
   end
 
 
-  get "marketplace", to: "marketplaces#index"
+  get 'marketplace', to: 'marketplaces#index'
   resources :marketplaces do
-    get "index"
-    get "show"
-    get "edit"
-    get "search"
+    get 'index'
+    get 'show'
+    get 'edit'
+    get 'search'
   end
 
   post "facebook/obtain_badge" => "facebook#obtain_badge"

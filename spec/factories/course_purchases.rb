@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory :course_purchase do
+  factory :course_purchases do
   end
 end

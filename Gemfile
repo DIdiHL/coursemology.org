@@ -51,7 +51,6 @@ end
 gem 'mysql2'
 gem 'uglifier', '>= 1.0.3'
 gem 'jquery-rails', '2.1.3'
-gem 'jquery-form-rails'
 gem 'jqtree-rails'
 gem 'jquery-tmpl-rails'
 gem 'devise', '3.0'
@@ -92,7 +91,7 @@ gem "haml"
 gem "axlsx"
 gem "nokogiri"
 gem "newrelic_rpm"
-gem "i18n-js"
+gem 'meiomask-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

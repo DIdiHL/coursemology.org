@@ -48,9 +48,6 @@
 //= require codemirror/addons/edit/matchbrackets
 //= require moment
 //= require cocoon
-//= require jquery.form
-//= require i18n
-//= require i18n/translations
 //
 //= require_self
 //= require_tree ./templates

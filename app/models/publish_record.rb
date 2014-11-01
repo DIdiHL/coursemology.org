@@ -3,7 +3,8 @@ class PublishRecord < ActiveRecord::Base
   validates_with PublishRecordValidator
   validates_uniqueness_of :course_id
 
-  belongs_to :course
+  attr_accessible :price_per_seat, :published?
 
+  belongs_to :course
   has_many :course_purchases
 end

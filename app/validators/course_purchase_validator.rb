@@ -14,13 +14,13 @@ class CoursePurchaseValidator < ActiveModel::Validator
 
     existing_record = PublishRecord.where(course_id: publish_record.course_id)
     if not existing_record.any?
-      course_purchase.errors[:publish_record] << 'The given publish record is not found.'
+      course_purchase.errors[:publish_records] << 'The given publish record is not found.'
     elsif existing_record[0].course_id != publish_record.course_id
-      course_purchase.errors[:publish_record] << 'The given publish record contains incorrect data.'
+      course_purchase.errors[:publish_records] << 'The given publish record contains incorrect data.'
     end
 
     if publish_record.course.is_duplicate_course?
-      course_purchase.errors[:publish_record] << 'The publish record should not belong to a duplicate course.'
+      course_purchase.errors[:publish_records] << 'The publish record should not belong to a duplicate course.'
     end
   end
 

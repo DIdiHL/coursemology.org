@@ -6,16 +6,16 @@ RSpec.describe PublishRecord, :type => :model do
 
   describe 'creation' do
     it 'should allow valid creation' do
-      expect { FactoryGirl.create(:publish_record, course: original_course) }.to change(PublishRecord, :count).by(1)
+      expect { FactoryGirl.create(:publish_records, course: original_course) }.to change(PublishRecord, :count).by(1)
     end
   end
 
   describe 'invalid creation' do
-    let(:publish_record) { FactoryGirl.create(:publish_record, course: original_course) }
-    let(:course_purchase) { FactoryGirl.create(
-        :course_purchase,
+    let(:publish_records) { FactoryGirl.create(:publish_records, course: original_course) }
+    let(:course_purchases) { FactoryGirl.create(
+        :course_purchases,
         user: user,
-        publish_record: publish_record
+        publish_records: publish_record
     )}
     let(:purchased_course) { FactoryGirl.create(:course, course_purchase_id: course_purchase.id, is_original_course: false) }
     before do
@@ -23,11 +23,11 @@ RSpec.describe PublishRecord, :type => :model do
     end
 
     it 'should prevent the same course to be published multiple times' do
-      expect(FactoryGirl.build(:publish_record, course: original_course).valid?).to be_falsey
+      expect(FactoryGirl.build(:publish_records, course: original_course).valid?).to be_falsey
     end
 
     it 'should prevent duplicate courses to be published' do
-      expect(FactoryGirl.build(:publish_record, course: purchased_course).valid?).to be_falsey
+      expect(FactoryGirl.build(:publish_records, course: purchased_course).valid?).to be_falsey
     end
   end
 end
