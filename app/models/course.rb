@@ -432,7 +432,6 @@ class Course < ActiveRecord::Base
     if self.publish_record
       result = self.publish_record.course_purchases
     end
-    puts result.inspect#fd
     result
   end
 end

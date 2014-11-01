@@ -32,8 +32,8 @@
 
   <div class="span2">
     <div>
-      <%= link_to t('Marketplace.my_marketplace_courses.publication_settings_btn_label'),
-                  my_marketplace_course_show_created_path(course),
+      <%= link_to t('Marketplace.my_marketplace_courses.marketplace_preference_btn_text'),
+                  course_preferences_path(course, _tab: 'marketplace'),
                   target: "_blank",
                   class: "btn btn-primary course-info-quick-access-btn" %>
     </div>

@@ -24,11 +24,4 @@ class MyMarketplaceCoursesController < ApplicationController
     result
   end
 
-  def respond_to_ajax_action
-    @course = Course.find(params[:my_marketplace_course_id])
-    respond_to do |format|
-      format.js
-    end
-  end
-
 end

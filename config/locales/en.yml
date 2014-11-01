@@ -88,9 +88,9 @@ en:
       new_course: New Course
       update_lecturer_request: Update lecturer request
       lecturer_request: Request to be a lecturer
-      publication_settings_btn_label: Publication settings
       published_notice: Published
       not_published_notice: Not published
+      marketplace_preference_btn_text: Marketplace Preference
 
     course_marketplace_preference:
       submit_btn_text: Update

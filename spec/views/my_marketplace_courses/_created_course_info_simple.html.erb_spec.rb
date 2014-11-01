@@ -9,7 +9,9 @@ RSpec.describe 'Simple Course Info Components', type: :view do
   end
 
   it 'should contain publication settings button' do
-    expect(subject).to have_link(t('Marketplace.my_marketplace_courses.publication_settings_btn_label', href: my_marketplace_course_show_created_path(course.id)))
+    expect(subject).to have_link(
+                           t('Marketplace.my_marketplace_courses.marketplace_preference_btn_text.',
+                             href: course_preferences_path(course.id, _tab: 'marketplace')))
   end
 
   context 'when the course is not published' do
@@ -23,7 +25,7 @@ RSpec.describe 'Simple Course Info Components', type: :view do
   context 'when course is published' do
     before do
       FactoryGirl.create(
-          :publish_records,
+          :publish_record,
           course: course,
       )
     end
