@@ -94,4 +94,54 @@ RSpec.describe CoursePurchase, :type => :model do
 
   end
 
+  describe 'attaching purchase records' do
+    let(:original_course1_purchase) { FactoryGirl.create(
+        :course_purchase,
+        user: user1,
+        publish_record: original_course1_publish_record
+    )}
+    let(:purchase_record1) { FactoryGirl.create(
+        :purchase_record,
+        course_purchase: original_course1_purchase,
+        seat_count: 10
+    )}
+
+    let(:purchase_record2) { FactoryGirl.create(
+        :purchase_record,
+        course_purchase: original_course1_purchase,
+        seat_count: 10
+    )}
+
+    describe 'multiple purchase records' do
+      it 'should increate capacity' do
+        expect {
+          purchase_record1
+          purchase_record2
+        }.to change{ CoursePurchase.find(original_course1_purchase).capacity }.by(20)
+      end
+
+      it 'should increase vacancy' do
+        expect {
+          purchase_record1.seats_taken = 10
+          purchase_record1.save
+          purchase_record2
+        }.to change{ CoursePurchase.find(original_course1_purchase).vacancy }.by(10)
+      end
+    end
+
+    describe 'finding purchase records with vacancy' do
+      before do
+        purchase_record1.seats_taken = 10
+        purchase_record1.save
+        purchase_record2
+      end
+
+      it 'should only return vacant record' do
+        expect(original_course1_purchase.purchase_records_with_vacancy).to include(purchase_record2)
+        expect(original_course1_purchase.purchase_records_with_vacancy).not_to include(purchase_record1)
+      end
+    end
+
+  end
+
 end

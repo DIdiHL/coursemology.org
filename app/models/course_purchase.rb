@@ -7,6 +7,19 @@ class CoursePurchase < ActiveRecord::Base
   belongs_to :publish_record
 
   has_one :course
+  has_many :purchase_records
+
+  def capacity
+    self.purchase_records.map{ |purchase_record| purchase_record.seat_count }.sum
+  end
+
+  def vacancy
+    self.purchase_records.map{ |purchase_record| purchase_record.vacancy }.sum
+  end
+
+  def purchase_records_with_vacancy
+    self.purchase_records.select { |purchase_record| purchase_record.has_vacancy? }
+  end
 
   def course=(course)
     if not self.id
