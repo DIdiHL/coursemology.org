@@ -29,7 +29,6 @@ class CoursePurchaseValidator < ActiveModel::Validator
       return
     end
 
-    puts course.inspect#fd
     if course.is_original_course?
       course_purchase.errors[:course] << " - an original course can't be the purchased course."
     end

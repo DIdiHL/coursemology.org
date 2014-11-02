@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe PublishRecord, :type => :model do
   let(:user) { FactoryGirl.create(:user) }
   let(:original_course) { FactoryGirl.create(:course) }
+  let(:publish_record) { FactoryGirl.create(:publish_record, course: original_course, published: false) }
 
   describe 'creation' do
     it 'should allow valid creation' do
@@ -11,7 +12,6 @@ RSpec.describe PublishRecord, :type => :model do
   end
 
   describe 'invalid creation' do
-    let(:publish_record) { FactoryGirl.create(:publish_record, course: original_course) }
     let(:course_purchase) { FactoryGirl.create(
         :course_purchase,
         user: user,
@@ -28,6 +28,33 @@ RSpec.describe PublishRecord, :type => :model do
 
     it 'should prevent duplicate courses to be published' do
       expect(FactoryGirl.build(:publish_record, course: purchased_course).valid?).to be_falsey
+    end
+  end
+
+  describe 'validating' do
+
+    describe 'publish record with negative price' do
+      before do
+        publish_record.price_per_seat = -1
+        publish_record.save
+        publish_record.reload
+      end
+
+      it 'should not change the original publish record' do
+        expect(publish_record.price_per_seat).to eq(0)
+      end
+    end
+
+    describe 'publish record with nil published' do
+      before do
+        publish_record.published = nil
+        publish_record.save
+        publish_record.reload
+      end
+
+      it 'should not change the original publish record' do
+        expect(publish_record.published?).to eq(false)
+      end
     end
   end
 end

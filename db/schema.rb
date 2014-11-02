@@ -816,8 +816,8 @@ ActiveRecord::Schema.define(:version => 20141101093740) do
   create_table "publish_records", :force => true do |t|
     t.integer "course_id"
     t.integer "marketplace_id"
-    t.decimal "price_per_seat", :precision => 8, :scale => 2
-    t.boolean "published"
+    t.decimal "price_per_seat", :precision => 8, :scale => 2, :default => 0.0
+    t.boolean "published",                                    :default => false
   end
 
   create_table "purchase_records", :force => true do |t|

@@ -1,17 +1,17 @@
-<%= content_tag :h3, t('Marketplace.course_marketplace_preference.marketplace_preference_title_label') %>
-<%= form_for publish_record,
+<%= content_tag :h1, t('Marketplace.course_marketplace_preference.marketplace_preference_title_label') %>
+<%= form_for [course, publish_record],
              method: 'POST',
              html: {class: 'form-horizontal'},
-             url: publish_record_update_path(
+             url: course_publish_record_update_path(
+                 course,
                  publish_record,
-                 redirect: course_preferences_path(course, _tab: 'marketplace'
-             )) do |f| %>
-  <%= content_tag :label, 'Price per seat:' %>
+                 redirect: course_preferences_path(course, _tab: 'marketplace')) do |f| %>
+  <%= content_tag :label, t('Marketplace.course_marketplace_preference.price_per_seat_input_label') %>
   <%= content_tag :span, t('number.currency.format.unit')%>
-  <%= f.number_field :price_per_seat %>
+  <%= f.number_field :price_per_seat, class: 'input-small' %>
   <br /><br />
 
-  <%= content_tag :label, 'Published to marketplace? :' %>
+  <%= content_tag :label, t('Marketplace.course_marketplace_preference.published_input_label') %>
   <%= f.check_box :published %>
   <br /><br />
 

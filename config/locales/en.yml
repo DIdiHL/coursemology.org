@@ -96,5 +96,9 @@ en:
       submit_btn_text: Update
       marketplace_preference_tab_label: Marketplace
       marketplace_preference_title_label: Edit Publish Record
+      price_per_seat_input_label: Price per seat
+      published_input_label: Published to marketplace?
       purchase_preference_tab_label: Purchase
       purchase_history_tab_label: Purchase history
+    publish_record:
+      access_denied_message: You are not authorized to modify this pulish record.

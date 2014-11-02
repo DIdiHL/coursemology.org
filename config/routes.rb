@@ -1,14 +1,8 @@
 Coursemology::Application.routes.draw do
 
   resources :course_purchases do
-    get "create"
-    get "delete"
-  end
-
-  resources :publish_records do
-    get "create"
-    get "update"
-    get "delete"
+    post "create"
+    post "delete"
   end
 
   resources :my_marketplace_themes do
@@ -77,6 +71,12 @@ Coursemology::Application.routes.draw do
   resources :role_requests
 
   resources :courses do
+    resources :publish_records do
+      post "create"
+      post "update"
+      post "delete"
+    end
+
     get "/notifications" => "course_notifications#get"
 
     match "/leaderboards"     => "leaderboards#show", as: :leaderboards

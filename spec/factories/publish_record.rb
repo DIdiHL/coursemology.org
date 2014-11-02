@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :publish_record do
+    published true
   end
 end
