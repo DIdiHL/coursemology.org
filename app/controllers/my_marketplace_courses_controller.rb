@@ -19,7 +19,7 @@ class MyMarketplaceCoursesController < ApplicationController
   def get_purchased_courses
     result = []
     current_user.course_purchases.each { |purchase|
-      result << purchase.duplicate_course
+      result << purchase.course
     }
     result
   end

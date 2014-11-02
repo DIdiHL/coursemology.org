@@ -12,6 +12,7 @@ class PublishRecordsController < ApplicationController
     rescue => e
       flash[:error] = e.message
     end
+    my_redirect
   end
 
   def find_or_create_publish_record
@@ -34,12 +35,12 @@ class PublishRecordsController < ApplicationController
     publish_record.save!
   end
 
-  def redirect_back
+  def my_redirect
     redirect_path = params[:redirect]
     redirect_path ||= course_preferences_path(params[:course_id], _tab: 'marketplace')
 
     respond_to do |format|
-      format.html { redirect_to redirect_path }
+      format.html { redirect_to(redirect_path) }
     end
   end
 

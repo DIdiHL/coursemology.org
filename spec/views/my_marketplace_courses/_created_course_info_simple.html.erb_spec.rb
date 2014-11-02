@@ -16,10 +16,21 @@ RSpec.describe 'Simple Course Info Components', type: :view do
 
   context 'when the course is not published' do
 
-    it 'should contain not published notice' do
-      expect(subject).to match(t('Marketplace.my_marketplace_courses.not_published_notice'))
+    context "because it doesn't have a publish record" do
+      it 'should contain not published notice' do
+        expect(subject).to match(t('Marketplace.my_marketplace_courses.not_published_notice'))
+      end
     end
 
+    context 'because its publish record sets published to false' do
+      before do
+        FactoryGirl.create(:publish_record, course: course, published: false)
+      end
+
+      it 'should contain not published notice' do
+        expect(subject).to match(t('Marketplace.my_marketplace_courses.not_published_notice'))
+      end
+    end
   end
 
   context 'when course is published' do

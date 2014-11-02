@@ -19,7 +19,7 @@
     </div>
 
     <div>
-      <% if course.publish_record %>
+      <% if course.publish_record and course.publish_record.published? %>
         <%= t('Marketplace.my_marketplace_courses.published_notice') %>
       <% else %>
         <%= t("Marketplace.my_marketplace_courses.not_published_notice") %>
