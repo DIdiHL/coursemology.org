@@ -1,14 +1,27 @@
 <div class="course-thumbnails">
   <ul class="thumbnails">
     <% courses.each do |course| %>
-        <li>
+        <li class="course-thumbnail-item">
           <a href="<%= course_path(course) %>">
             <div class="thumbnail center">
               <img class="course-logo" src="<%= course.logo_url %>" />
-              <hr/>
-              <h3 class="media-heading">
+              <hr />
+              <div class="media-heading">
                 <%= course.title %>
-              </h3>
+              </div>
+              <div class="row-fluid">
+                <div class="creator-name span8">
+                  <%= course.creator.name %>
+                </div>
+                <div class="span3 offset1">
+                  <% price = course.publish_record.price_per_seat %>
+                  <% if price == 0 %>
+                    <%= t('Marketplace.course.free_course_label') %>
+                  <% else %>
+                    <%= number_to_currency(course.publish_record.price_per_seat) %>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </a>
         </li>

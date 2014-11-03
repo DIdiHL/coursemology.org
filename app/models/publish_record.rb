@@ -9,4 +9,8 @@ class PublishRecord < ActiveRecord::Base
 
   belongs_to :course
   has_many :course_purchases
+
+  def free?
+    self.price_per_seat == 0
+  end
 end

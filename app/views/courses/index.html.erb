@@ -1,6 +1,72 @@
 <%- model_class = Course -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <table>
+    <tr>
+      <td>
+        <%= content_tag :label, t('Marketplace.course.sort_by_label'), class: 'bold-label' %>
+      </td>
+      <td>
+        <div class="btn-group">
+          <%= sortable 'title',
+                       courses_path(),
+                       filter_params,
+                       t('Marketplace.course.sort_by_title_btn_text'),
+                       "btn #{(sort_column == 'title') ? 'btn-primary' : ''}" %>
+          <%= sortable 'creator_name',
+                       courses_path(@show_creators.to_query('show_creators')),
+                       filter_params,
+                       t('Marketplace.course.sort_by_creator_name_btn_text'),
+                       "btn #{(sort_column == 'creator_name') ? 'btn-primary' : ''}" %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="top-align-child">
+        <%= content_tag :label, t('Marketplace.course.filter_by_label'), class: 'bold-label' %>
+      </td>
+      <td>
+        <div>
+          <%= form_tag courses_path, method: :get, class: 'form-horizontal' do%>
+            <%= hidden_field_tag 'sort', sort_column %>
+            <%= hidden_field_tag 'direction', sort_direction %>
+
+            <% if not @creators.empty? %>
+              <%= t('Marketplace.course.filter_by_creator_label') %>
+              <% @creators.each { |creator| %>
+                <label>
+                  <%= check_box_tag 'show_creators[]', creator.email, @show_creators.include?(creator.email) %>
+                  <%= creator.name.html_safe %>
+                </label>
+              <% } %>
+              <br>
+            <% end %>
+
+            <%= t('Marketplace.course.filter_by_price_label') %>
+            <label>
+              <!--<%= check_box_tag 'free', true, !!params[:free] %>-->
+              <%= radio_button_tag 'price', 'all' %>
+              <%= t('Marketplace.course.filter_all_price_range_label') %>
+            </label>
+            <label>
+              <%= radio_button_tag 'price', 'free', params[:price] == 'free' %>
+              <%= t('Marketplace.course.filter_only_show_free_label') %>
+            </label>
+            <label>
+              <%= radio_button_tag 'price', 'paid', params[:price] == 'paid' %>
+              <%= t('Marketplace.course.filter_only_show_paid_label') %>
+            </label>
+
+            <br>
+            <%= submit_tag t('Marketplace.course.apply_filter_btn_text'), class: 'btn btn-primary filter-btn' %>
+            <%= link_to t('Marketplace.course.clear_filter_btn_text'),
+                        courses_path(sort: sort_column, direction: sort_direction),
+                        class: 'btn filter-btn' %>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>
 <% if flash[:notice] %>
     <div class="alert alert-success">

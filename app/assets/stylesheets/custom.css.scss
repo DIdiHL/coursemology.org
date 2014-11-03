@@ -590,6 +590,12 @@ a.user-thumb-profile {
 
 li .thumbnail {
   width: 200px;
+  border: solid 1px lightgray;
+  transition: border-color 0.3s;
+}
+
+li .thumbnail:hover {
+  border-color: black;
 }
 
 .profile-achievement-icon .thumbnail {

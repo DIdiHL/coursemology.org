@@ -3,7 +3,36 @@ class CoursesController < ApplicationController
   before_filter :load_general_course_data, only: [:show, :students, :pending_gradings, :manage_students]
 
   def index
-    @courses = Course.online_course
+    @show_creators = params[:show_creators]
+    @show_creators ||= []
+
+    case sort_column
+      when 'title'
+        @courses = Course.where(is_publish: true).order('title ' + sort_direction).select { |course| course.is_published_in_marketplace? }
+      when 'creator_name'
+        @courses = Course.online_course.select { |course| course.is_published_in_marketplace? }
+        if sort_direction == 'desc'
+          @courses = @courses.sort { |a, b| b.creator.name <=> a.creator.name }
+        else
+          @courses = @courses.sort { |a, b| a.creator.name <=> b.creator.name }
+        end
+      else
+        params[:sort] = 'title'
+        params[:direction] = 'asc'
+        @courses = Course.where(is_publish: true).order('title asc').select { |course| course.is_published_in_marketplace? }
+    end
+
+    @creators = @courses.map { |course| course.creator }.uniq.sort { |a, b| a.name <=> b.name }
+
+    if params[:price] == 'free'
+      @courses = @courses.select { |course| course.publish_record.free? }
+    elsif params[:price] == 'paid'
+      @courses = @courses.select { |course| not course.publish_record.free? }
+    end
+
+    if not @show_creators.empty?
+      @courses = @courses.select { |course| @show_creators.include?(course.creator.email) }
+    end
   end
 
   def create

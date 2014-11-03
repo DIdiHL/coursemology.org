@@ -103,7 +103,7 @@ module ApplicationHelper
     html.html_safe
   end
 
-  def sortable(column, url, params = "", title = nil)
+  def sortable(column, url, params = "", title = nil, html_class = '')
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "desc" ? "asc" : "desc"
@@ -115,7 +115,7 @@ module ApplicationHelper
     else
       icon = ''
     end
-    "<a href='#{url}?#{params}&sort=#{column}&direction=#{direction}' >#{title} #{icon}</a>".html_safe
+    "<a href='#{url}?#{params}&sort=#{column}&direction=#{direction}' class='#{html_class}' >#{title} #{icon}</a>".html_safe
   end
 
   def distance_of_time(seconds)
