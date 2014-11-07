@@ -16,6 +16,13 @@ class CoursesController < ApplicationController
         else
           @courses = @courses.sort { |a, b| a.creator.name <=> b.creator.name }
         end
+      when 'price'
+        @courses = Course.online_course.select { |course| course.is_published_in_marketplace? }
+        if sort_direction == 'desc'
+          @courses = @courses.sort { |a, b| b.publish_record.price_per_seat <=> a.publish_record.price_per_seat }
+        else
+          @courses = @courses.sort { |a, b| a.publish_record.price_per_seat <=> b.publish_record.price_per_seat }
+        end
       else
         params[:sort] = 'title'
         params[:direction] = 'asc'

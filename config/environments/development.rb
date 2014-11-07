@@ -33,7 +33,7 @@ Coursemology::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  config.serve_static_assets = false
+  config.serve_static_assets = true
 
   # Setup mailer
 

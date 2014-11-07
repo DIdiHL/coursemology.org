@@ -67,6 +67,9 @@ en:
   Marketplace:
     course:
       sort_by_label: Sort by
+      sort_by_title_btn_text: Course Title
+      sort_by_creator_name_btn_text: Creator Name
+      sort_by_price_btn_text: Price
       filter_by_label: Filter by
       filter_by_price_label: 'Price:'
       filter_only_show_free_label: Only show free courses
@@ -75,8 +78,6 @@ en:
       filter_by_creator_label: 'Creator:'
       apply_filter_btn_text: Apply
       clear_filter_btn_text: Clear
-      sort_by_title_btn_text: Course Title
-      sort_by_creator_name_btn_text: Creator Name
       no_course_message: There is nothing in the marketplace. Please check back later.
       free_course_label: Free
 
