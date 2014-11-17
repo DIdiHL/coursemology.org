@@ -24,7 +24,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'spork-rails'
   gem 'guard-spork'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
   gem 'capybara'
   gem 'launchy'
   gem 'coveralls', require: false
@@ -38,7 +38,8 @@ group :assets do
   gem 'bootstrap-sass', '2.1.0.0'
   gem 'font-awesome-sass-rails'
   gem 'bootstrap-datetimepicker-rails'
-  gem 'bootstrap-wysihtml5-rails', '0.3.1.24'
+  # gem 'bootstrap-wysihtml5-rails', '0.3.1.24'
+  gem 'bootstrap-wysihtml5-rails', :git => 'https://github.com/llja0112/bootstrap-wysihtml5-rails/', :tag => '0.3.1.25'
   gem 'jquery-fileupload-rails'
   gem 'bootstrap-colorpicker-rails'
   gem 'bootstrap-select-rails'
@@ -93,6 +94,7 @@ gem "haml"
 gem "axlsx"
 gem "nokogiri"
 gem "newrelic_rpm"
+gem 'dotenv-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

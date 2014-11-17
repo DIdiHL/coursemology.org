@@ -36,6 +36,7 @@ class Course < ActiveRecord::Base
   has_many  :file_uploads, as: :owner
   has_many  :course_preferences, dependent: :destroy
   has_many  :course_navbar_preferences, dependent: :destroy
+  has_many  :guilds, dependent: :destroy
 
   # this is the record from which this course is duplicated
   belongs_to :course_purchase, readonly: true

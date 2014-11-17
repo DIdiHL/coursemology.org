@@ -37,7 +37,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
 
   config.include Capybara::DSL
-  Capybara.default_wait_time = 3
+  Capybara.default_wait_time = 10
 
   config.before(:each) {
     Warden.test_mode!
