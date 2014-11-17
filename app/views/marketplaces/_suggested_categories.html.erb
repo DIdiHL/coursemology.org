@@ -1,8 +1,0 @@
-<!-- Provide 4 category suggestions based on search and browsing history -->
-<div class="row-fluid">
-  <% get_suggested_categories(params[:marketplace_id]).each { |category|%>
-    <div class="suggested_category span3">
-      <%= link_to get_name_from_suggested_category(category), get_href_from_suggested_category(category) %>
-    </div>
-  <% } %>
-</div>

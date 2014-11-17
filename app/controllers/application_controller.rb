@@ -260,14 +260,7 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
-  def user_marketplace_id
-    # TODO return the user's selected marketplaces ID
-    # The default ID is tied to the user's location
-    return 1
-  end
-
   helper_method :masquerading?
   helper_method :curr_user_course
   #helper_method :fb_liked?
-  helper_method :user_marketplace_id
 end

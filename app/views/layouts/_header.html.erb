@@ -1,16 +1,9 @@
 <header class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-          <% if ["marketplaces", "my_marketplace_courses", "my_marketplace_themes"].include? params[:controller]%>
-            <%= link_to marketplace_index_path(user_marketplace_id), id: "site-logo" do %>
-              <!-- TODO modify the icon -->
-              <img src="/images/coursemology_marketplace_white.png" />
-            <% end %>
-          <% else %>
-            <%= link_to "/", id: "site-logo" do %>
-              <img src="/images/coursemology_white.png" />
-            <% end %>
-          <% end %>
+      <%= link_to "/", id: "site-logo" do %>
+          <img src="/images/coursemology_white.png" />
+      <% end %>
       <div style="float: left; margin-top: 13px;margin-left:10px">
         <%= render partial: "layouts/facebook_like", locals: {style:"button_count"} %>
       </div>
@@ -20,7 +13,6 @@
 
       <div class="nav-collapse" style="height: 0px;">
         <ul class="nav pull-right">
-          <li><%= link_to "Marketplace", main_app.marketplace_index_path(user_marketplace_id) %></li>
           <li><%= link_to "Courses", main_app.courses_path %></li>
           <li><%= link_to "Help", main_app.help_path %></li>
           <% if current_user %>
