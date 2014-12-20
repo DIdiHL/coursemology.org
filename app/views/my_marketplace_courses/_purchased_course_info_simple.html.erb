@@ -1,0 +1,30 @@
+<!-- TODO implement "my purchased course" specific controls. -->
+<div class="my-purchased-course-display-simple row-fluid">
+  <div class="search-course-image span2">
+    <%= link_to image_tag(course.logo_url, class: 'course-logo'),
+                course_path(course),
+                target: "_blank" %>
+  </div>
+
+  <div class="search-course-details span8">
+
+    <div class="search-course-title">
+      <%= link_to course.title,
+                  course_path(course),
+                  target: "_blank" %>
+    </div>
+
+    <div class="course-rating">
+      <!-- TODO add rating function -->
+    </div>
+  </div>
+
+  <div class="span2">
+    <div>
+      <%= link_to t('Marketplace.my_marketplace_courses.preference_btn_text'),
+                  course_preferences_path(course),
+                  target: "_blank",
+                  class: "btn btn-primary course-info-quick-access-btn" %>
+    </div>
+  </div>
+</div>

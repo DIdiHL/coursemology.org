@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Simple Course Info Components', type: :view do
+RSpec.describe 'Simple Course Info Components For Created Courses', type: :view do
   let(:course) { FactoryGirl.create(:course) }
   subject { render partial: "my_marketplace_courses/created_course_info_simple", locals: {course: course} }
 

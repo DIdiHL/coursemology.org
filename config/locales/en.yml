@@ -99,10 +99,12 @@ en:
       index_created_tab_title: Created by me
       index_purchased_tab_title: Purchased by me
       new_course: New Course
+      browse_courses: Browse courses
       update_lecturer_request: Update lecturer request
       lecturer_request: Request to be a lecturer
       published_notice: Published
       not_published_notice: Not published
+      preference_btn_text: Preference
       marketplace_preference_btn_text: Marketplace Preference
 
     course_marketplace_preference:

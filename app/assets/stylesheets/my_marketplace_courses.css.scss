@@ -14,6 +14,18 @@
   border-color: black;
 }
 
+.my-purchased-course-display-simple {
+  border: 1px solid transparent;
+  margin: 10px 0px 10px 0px;
+  transition: border-color 0.5s;
+  font-size: 18px;
+  width: 1000px;
+}
+
+.my-purchased-course-display-simple:hover {
+  border-color: black;
+}
+
 .course-info-quick-access-btn {
   margin: 10px 10px 10px 10px;
 }
