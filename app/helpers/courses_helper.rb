@@ -10,4 +10,14 @@ module CoursesHelper
     end
     result
   end
+
+  def should_show_purchase_options?
+    params[:ref] == 'marketplace' &&
+        current_user && current_user.system_role_id == 3 &&
+        @course.is_published_in_marketplace?
+  end
+
+  def get_course_purchase
+    CoursePurchase.find_by_publish_record_id_and_user_id(@course.publish_record, current_user)
+  end
 end

@@ -1,4 +1,16 @@
 <div>
-  <%= render partial: 'purchase_history', locals: {course: course, course_purchase: course_purchase} %>
-  <%= render partial: 'form', locals: {course: course, course_purchase: course_purchase} %>
+  <%= content_tag :h1, t('Marketplace.course_marketplace_preference.purchase_history_tab_label') %>
+  <%= render partial: 'course_purchases/purchase_history', locals: {course: course, course_purchase: course_purchase} %>
+  <div id="purchase_options_div" class="pull-right">
+    <%= content_tag :p, t('Marketplace.course_marketplace_preference.capacity_format') % course_purchase.capacity %>
+    <%= content_tag :p, t('Marketplace.course_marketplace_preference.vacancy_format') % course_purchase.vacancy %>
+    <%= content_tag :p,
+                    t('Marketplace.course_marketplace_preference.pending_enrolment_request_format') %
+                        course.enroll_requests.count %>
+    <%= render partial: 'purchase_records/purchase_options_form',
+               locals: {
+                   publish_record: course_purchase.publish_record,
+                   course_purchase: course_purchase
+               } %>
+  </div>
 </div>

@@ -80,6 +80,27 @@ en:
       clear_filter_btn_text: Clear
       no_course_message: There is nothing in the marketplace. Please check back later.
       free_course_label: Free
+    transaction:
+      course_purchase_added_title: The course has been added to your catalogue
+      course_duplication_notice: The course will only be duplicated for you after you have topped up some capacity.
+      select_course_start_date_title: Select when you wish the course to start
+      confirm_course_start_date_btn_text: Confirm
+      vacancy_input_label: Vacancy
+      submit_btn_label: Submit order
+      new_purchase_record_title: 'Processing transaction...'
+      new_purchase_record_notice: 'Redirecting to payment processor...'
+      payment_confirmation:
+        failure_title: Sorry we are unable to process your payment
+        failure_notice: Please try again
+        make_payment_btn_text: Make payment
+        success_title: Payment successful
+        success_notice_format: 'You have purchased %s seats for your course.'
+        go_to_course_btn_text: Go to the course
+        already_paid_title: You have already paid for this order
+        already_paid_notice: You need to submit a new order to increase the course capacity
+        go_to_master_course_btn_text: Expand capacity
+
+
 
     index:
       search_tooltip: |
@@ -115,5 +136,14 @@ en:
       published_input_label: Published to marketplace?
       purchase_preference_tab_label: Purchase
       purchase_history_tab_label: Purchase history
+      paid_notice: Paid
+      make_payment_btn_text: Make payment
+      cancel_order_btn_text: Cancel order
+      no_history_notice: You have not purchased any vacancy yet.
+      cancel_paid_purchase_record_error: Unable to cancel paid order.
+      order_canceled_flash: Order cancelled.
+      capacity_format: 'Capacity: %d'
+      vacancy_format: 'Vacancy: %d'
+      pending_enrolment_request_format: 'Enrolment: %d'
     publish_record:
       access_denied_message: You are not authorized to modify this pulish record.

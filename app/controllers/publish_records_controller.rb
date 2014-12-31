@@ -1,30 +1,13 @@
 class PublishRecordsController < ApplicationController
-  before_filter :authorize_preference_setting
-
-  def authorize_preference_setting
-    authorize! :manage, :course_preference
-  end
+  load_and_authorize_resource :publish_record
 
   def update
-    publish_record = find_or_create_publish_record
     begin
-      set_publish_record_data_and_save(publish_record)
+      set_publish_record_data_and_save(@publish_record)
     rescue => e
       flash[:error] = e.message
     end
     my_redirect
-  end
-
-  def find_or_create_publish_record
-    if should_create
-      return PublishRecord.new
-    else
-      return PublishRecord.find(params[:publish_record_id])
-    end
-  end
-
-  def should_create
-    not params[:publish_record_id]
   end
 
   def set_publish_record_data_and_save(publish_record)

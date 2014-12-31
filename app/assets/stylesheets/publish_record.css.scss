@@ -1,3 +1,21 @@
 // Place all the styles related to the publish_record controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#purchase_history_div div {
+  text-align: center;
+}
+.purchase-history-item {
+  border: 1px solid transparent;
+  border-top-color: lightgray;
+  transition: border-color 0.5s;
+}
+
+.bottom-border-div {
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: lightgray;
+}
+
+.purchase-history-item:hover {
+  border-color: gray;
+}

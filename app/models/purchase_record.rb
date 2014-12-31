@@ -4,7 +4,7 @@ class PurchaseRecord < ActiveRecord::Base
   # price stays unchanged.
   validates :seat_count, numericality: {greater_than_or_equal_to: 0, greater_than_or_equal_to: :seats_taken}
 
-  attr_accessible :seat_count, :price_per_seat, :course_purchase
+  attr_accessible :seat_count, :price_per_seat, :course_purchase, :is_paid?
 
   belongs_to :course_purchase
 

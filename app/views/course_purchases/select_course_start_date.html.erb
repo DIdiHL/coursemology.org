@@ -1,0 +1,17 @@
+<div>
+  <div class="page-header">
+    <%= content_tag :h1, t('Marketplace.transaction.select_course_start_date_title') %>
+  </div>
+  <%= form_tag duplicate_course_publish_record_course_purchase_path(@publish_record, @course_purchase),
+               method: :get,
+               class: 'form-horizontal' do %>
+    <div class="datepicker date">
+      <%= text_field_tag :to_date, '', required: true, class: 'input-medium' %>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
+    </div>
+    <%= submit_tag t('Marketplace.transaction.confirm_course_start_date_btn_text'), class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,13 @@
+<div>
+  <div class="page-header">
+    <%= content_tag :h1, t('Marketplace.transaction.course_purchase_added_title') %>
+  </div>
+  <div>
+    <%= content_tag :p, t('Marketplace.transaction.course_duplication_notice') %>
+  </div>
+  <div>
+    <%= link_to t('Marketplace.transaction.payment_confirmation.go_to_master_course_btn_text'),
+                course_path(@publish_record.course),
+                class: 'btn btn-primary' %>
+  </div>
+</div>

@@ -2,7 +2,7 @@
   <ul class="thumbnails">
     <% courses.each do |course| %>
         <li class="course-thumbnail-item">
-          <a href="<%= course_path(course) %>">
+          <a href="<%= course_path(course, ref: 'marketplace') %>">
             <div class="thumbnail center">
               <img class="course-logo" src="<%= course.logo_url %>" />
               <hr />

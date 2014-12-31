@@ -14,6 +14,9 @@ class Ability
         can :update_role, User
       elsif user.is_lecturer?
         can :manage, Course, creator_id: user.id
+        can :manage, PublishRecord, course: {creator_id: user.id}
+        can :manage, CoursePurchase, user_id: user.id
+        can :manage, PurchaseRecord, course_purchase: {user_id: user.id}
         can :create, Course
       end
     end

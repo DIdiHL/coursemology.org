@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141107064604) do
+ActiveRecord::Schema.define(:version => 20141229183627) do
 
   create_table "achievements", :force => true do |t|
     t.string   "icon_url"
@@ -461,19 +461,20 @@ ActiveRecord::Schema.define(:version => 20141107064604) do
     t.string   "title"
     t.integer  "creator_id"
     t.text     "description"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "logo_url"
     t.string   "banner_url"
     t.time     "deleted_at"
-    t.boolean  "is_publish",          :default => false
-    t.boolean  "is_open",             :default => true
-    t.boolean  "is_active",           :default => true
+    t.boolean  "is_publish",            :default => false
+    t.boolean  "is_open",               :default => true
+    t.boolean  "is_active",             :default => true
     t.datetime "start_at"
     t.datetime "end_at"
-    t.boolean  "is_pending_deletion", :default => false
+    t.boolean  "is_pending_deletion",   :default => false
     t.integer  "course_purchase_id"
-    t.boolean  "is_original_course",  :default => true
+    t.boolean  "is_original_course",    :default => true
+    t.integer  "duplication_origin_id"
   end
 
   add_index "courses", ["creator_id"], :name => "index_courses_on_creator_id"
@@ -855,8 +856,9 @@ ActiveRecord::Schema.define(:version => 20141107064604) do
     t.integer  "seat_count",                                       :default => 0
     t.integer  "seats_taken",                                      :default => 0
     t.decimal  "price_per_seat",     :precision => 8, :scale => 2
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
+    t.boolean  "is_paid",                                          :default => false
   end
 
   create_table "question_assessments", :force => true do |t|

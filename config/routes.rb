@@ -1,16 +1,31 @@
 Coursemology::Application.routes.draw do
 
-  resources :course_purchases do
-    post "create"
-    post "delete"
-  end
-
   resources :my_marketplace_themes do
     get 'index'
     get 'show_created'
     get 'show_purchased'
     get 'edit_created'
     get 'edit_purchased'
+  end
+
+
+  resources :publish_records do
+    resources :course_purchases do
+      member do
+        get 'select_course_start_date'
+        get 'duplicate_course'
+        get 'need_payment'
+      end
+    end
+  end
+
+  resources :course_purchases do
+    resources :purchase_records do
+      member do
+        get 'pay'
+        get 'confirm'
+      end
+    end
   end
 
   resources :my_marketplace_courses do
@@ -71,11 +86,7 @@ Coursemology::Application.routes.draw do
   resources :role_requests
 
   resources :courses do
-    resources :publish_records do
-      post "create"
-      post "update"
-      post "delete"
-    end
+    resources :publish_records
 
     get "/notifications" => "course_notifications#get"
 

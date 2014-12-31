@@ -1,8 +1,8 @@
 <%= content_tag :h1, t('Marketplace.course_marketplace_preference.marketplace_preference_title_label') %>
 <%= form_for [course, publish_record],
-             method: 'POST',
+             method: :put,
              html: {class: 'form-horizontal'},
-             url: course_publish_record_update_path(
+             url: course_publish_record_path(
                  course,
                  publish_record,
                  redirect: course_preferences_path(course, _tab: 'marketplace')) do |f| %>

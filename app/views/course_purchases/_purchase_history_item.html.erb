@@ -1,0 +1,24 @@
+<div class="purchase-history-item row-fluid">
+  <div class="span4">
+    <%= purchase_record.created_at %>
+  </div>
+  <div class="span1">
+    <%= number_to_currency(purchase_record.price_per_seat) %>
+  </div>
+  <div class="span2">
+    <%= purchase_record.seat_count %>
+  </div>
+  <div class="span4">
+    <% if purchase_record.is_paid? %>
+      <%= t('Marketplace.course_marketplace_preference.paid_notice') %>
+    <% else %>
+      <%= link_to t('Marketplace.course_marketplace_preference.make_payment_btn_text'),
+                  pay_course_purchase_purchase_record_path(purchase_record.course_purchase, purchase_record),
+                  class: 'btn btn-primary btn-small' %>
+      <%= link_to t('Marketplace.course_marketplace_preference.cancel_order_btn_text'),
+                  course_purchase_purchase_record_path(purchase_record.course_purchase, purchase_record),
+                  class: 'btn btn-danger btn-small',
+                  method: :delete %>
+    <% end %>
+  </div>
+</div>

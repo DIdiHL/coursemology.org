@@ -2,17 +2,22 @@
     <div class="page-header">
       <h1><%= @course.title %></h1>
       <% if current_user %>
-          <div class="pull-right">
-            <a href="<%= new_course_enroll_request_path(@course) %>" class="btn btn-primary">Request to Enroll</a>
-            <% if can? :manage, Course %>
-                <br/>
-                <br/>
-                <%= link_to new_course_enroll_request_path(@course, role: Role.shared.first.name),
-                            class:"btn btn-info" do %>
-                    Request to Observe</a>
-                <% end %>
-            <% end %>
-          </div>
+        <div class="pull-right">
+          <a href="<%= new_course_enroll_request_path(@course) %>" class="btn btn-primary">Request to Enroll</a>
+          <% if can? :manage, Course %>
+              <br/>
+              <br/>
+              <%= link_to new_course_enroll_request_path(@course, role: Role.shared.first.name),
+                          class:"btn btn-info" do %>
+                  Request to Observe</a>
+              <% end %>
+          <% end %>
+          <% if should_show_purchase_options? %>
+            <br/>
+            <br/>
+            <%= render partial: 'purchase_records/purchase_options_form', locals: {publish_record: @course.publish_record, course_purchase: get_course_purchase} %>
+          <% end %>
+        </div>
       <% end %>
       <div class="media">
         <a class="pull-left activity-icon" href="#">

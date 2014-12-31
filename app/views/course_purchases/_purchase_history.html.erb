@@ -1,1 +1,11 @@
-<!-- TODO show all purchase history in this partial -->
+<div>
+  <% if course_purchase.purchase_records.empty? %>
+    <%= content_tag :p, t('Marketplace.course_marketplace_preference.no_history_notice') %>
+  <% else %>
+  <div id="purchase_history_div" class="bottom-border-div">
+    <% course_purchase.purchase_records.each { |purchase_record| %>
+      <%= render partial: 'course_purchases/purchase_history_item', locals: {purchase_record: purchase_record} %>
+    <% } %>
+  </div>
+  <% end %>
+</div>

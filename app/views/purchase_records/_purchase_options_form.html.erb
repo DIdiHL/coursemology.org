@@ -1,0 +1,14 @@
+<div>
+  <% if course_purchase %>
+    <% action_url = new_course_purchase_purchase_record_path(course_purchase) %>
+  <% else %>
+    <% action_url = new_publish_record_course_purchase_path(publish_record) %>
+  <% end %>
+
+  <%= form_tag action_url, method: :get, class: 'form-horizontal' do %>
+    <%= content_tag :label, t('Marketplace.transaction.vacancy_input_label') %>
+    <%= number_field_tag :vacancy, min: 0, step: 1 %>
+    <br/>
+    <%= submit_tag t('Marketplace.transaction.submit_btn_label'), id: 'order_submit_btn', class: 'btn btn-primary' %>
+  <% end %>
+</div>
