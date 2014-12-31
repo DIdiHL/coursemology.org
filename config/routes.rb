@@ -219,6 +219,8 @@ Coursemology::Application.routes.draw do
 
     resources :levels
 
+    get "exp_chronology" => "levels#chronology", as: :exp_chronology
+
     resources :achievements do
       collection do
         post 'reorder'
