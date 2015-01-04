@@ -1,16 +1,20 @@
+<% if course_purchase.course %>
+  <% course = course_purchase.course %>
+<% else %>
+  <% course = course_purchase.publish_record.course %>
+<% end %>
+
 <!-- TODO implement "my purchased course" specific controls. -->
 <div class="my-purchased-course-display-simple row-fluid">
   <div class="search-course-image span2">
-    <%= link_to image_tag(course.logo_url, class: 'course-logo'),
-                course_path(course),
-                target: "_blank" %>
+    <%= image_tag(course.logo_url, class: 'course-logo') %>
   </div>
 
   <div class="search-course-details span8">
 
     <div class="search-course-title">
       <%= link_to course.title,
-                  course_path(course),
+                  course_path(course, ref: 'marketplace'),
                   target: "_blank" %>
     </div>
 
@@ -20,11 +24,27 @@
   </div>
 
   <div class="span2">
-    <div>
-      <%= link_to t('Marketplace.my_marketplace_courses.preference_btn_text'),
-                  course_preferences_path(course),
-                  target: "_blank",
-                  class: "btn btn-primary course-info-quick-access-btn" %>
-    </div>
+    <% if course_purchase.course %>
+      <div>
+        <%= link_to t('Marketplace.my_marketplace_courses.preference_btn_text'),
+                    course_preferences_path(course),
+                    target: "_blank",
+                    class: "btn btn-primary course-info-quick-access-btn" %>
+      </div>
+    <% elsif course_purchase.capacity > 0 %>
+      <div>
+        <%= link_to t('Marketplace.transaction.payment_confirmation.go_to_course_btn_text'),
+                    select_course_start_date_publish_record_course_purchase_path(
+                        course_purchase.publish_record, course_purchase),
+                    target: '_blank',
+                    class: 'btn btn-primary course-info-quick-access-btn' %>
+      </div>
+    <% else %>
+      <div>
+        <%= link_to t('Marketplace.transaction.payment_confirmation.go_to_master_course_btn_text'),
+                    course_path(course, ref: 'marketplace'),
+                    class: "btn btn-primary course-info-quick-access-btn" %>
+      </div>
+    <% end %>
   </div>
 </div>

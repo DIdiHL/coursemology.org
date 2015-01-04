@@ -1,5 +1,5 @@
 <div>
-  <% if @purchased_courses.empty? %>
+  <% if @course_purchases.empty? %>
     <div>
       <div>You have not purchased any course.</div>
       <% if not can? :manage, Course %>
@@ -28,10 +28,10 @@
                   class: 'btn btn-primary' %>
     <% end %>
   </div>
-  <% if not @purchased_courses.empty? %>
+  <% if not @course_purchases.empty? %>
     <div>
-      <% @purchased_courses.each { |course| %>
-        <%= render partial: "purchased_course_info_simple", locals: {course: course} %>
+      <% @course_purchases.each { |course_purchase| %>
+        <%= render partial: "purchased_course_info_simple", locals: {course_purchase: course_purchase} %>
       <% } %>
     </div>
   <% end %>

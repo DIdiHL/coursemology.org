@@ -2,7 +2,7 @@ class MyMarketplaceCoursesController < ApplicationController
 
   def index
     @created_courses = get_created_courses
-    @purchased_courses = get_purchased_courses
+    @course_purchases = get_course_purchases
   end
 
   #----------------------controller helpers---------------------
@@ -16,10 +16,10 @@ class MyMarketplaceCoursesController < ApplicationController
     result
   end
 
-  def get_purchased_courses
+  def get_course_purchases
     result = []
     current_user.course_purchases.each { |purchase|
-      result << purchase.course
+      result << purchase
     }
     result
   end
