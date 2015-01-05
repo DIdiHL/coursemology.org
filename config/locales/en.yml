@@ -87,8 +87,16 @@ en:
       confirm_course_start_date_btn_text: Confirm
       vacancy_input_label: Vacancy
       submit_btn_label: Submit order
+      negative_vacancy_error: Vacancy cannot be negative value
       new_purchase_record_title: 'Processing transaction...'
       new_purchase_record_notice: 'Redirecting to payment processor...'
+      cancelled_error: Payment cancelled.
+      payment_method:
+        select_payment_method_title: Select payment method
+        paypal: Paypal
+        paypal_description_format: "Purchasing %d seats for course - %s at %s per seat"
+        paypal_error: Unable to create Paypal approval link.
+        paypal_missing_parameter_error: Missing parameters.
       payment_confirmation:
         failure_title: Sorry we are unable to process your payment
         failure_notice: Please try again
@@ -96,8 +104,6 @@ en:
         success_title: Payment successful
         success_notice_format: 'You have purchased %s seats for your course.'
         go_to_course_btn_text: Go to the course
-        already_paid_title: You have already paid for this order
-        already_paid_notice: You need to submit a new order to increase the course capacity
         go_to_master_course_btn_text: Expand capacity
 
 

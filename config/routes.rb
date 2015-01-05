@@ -22,7 +22,9 @@ Coursemology::Application.routes.draw do
   resources :course_purchases do
     resources :purchase_records do
       member do
+        get 'select_payment_method'
         get 'pay'
+        get 'paypal_confirm'
         get 'confirm'
       end
     end

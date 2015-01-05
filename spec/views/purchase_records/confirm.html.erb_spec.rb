@@ -24,14 +24,13 @@ RSpec.describe 'purchase_records/confirm', type: :view do
       render
       expect(rendered).to match t('Marketplace.transaction.payment_confirmation.failure_title')
       expect(rendered).to match t('Marketplace.transaction.payment_confirmation.failure_notice')
-      # TODO change the url when added to the real view
-      expect(rendered).to have_link(t('Marketplace.transaction.payment_confirmation.make_payment_btn_text'),'')
+      expect(rendered).to have_link(t('Marketplace.transaction.payment_confirmation.make_payment_btn_text'),
+                          href: pay_course_purchase_purchase_record_path(course_purchase, not_paid_record))
     end
   end
 
-  context 'when just paid' do
+  context 'when paid' do
     before do
-      assign(:has_pending_payment, true)
       assign(:purchase_record, paid_record)
     end
 
@@ -45,34 +44,22 @@ RSpec.describe 'purchase_records/confirm', type: :view do
     context 'when the course has not been duplicated' do
       it 'should contain link to course duplication page' do
         render
-        expect(rendered).to have_link t('Marketplace.transaction.payment_confirmation.go_to_course_btn_text'), ''
+        expect(rendered).to have_link t('Marketplace.transaction.payment_confirmation.go_to_course_btn_text'),
+                                      href: select_course_start_date_publish_record_course_purchase_path(
+                                          publish_record, course_purchase)
       end
     end
 
     context 'when the course has been duplicated' do
       before do
-        duplicate_course.course_purchase = course_purchase
+        course_purchase.course = duplicate_course
+        assign(:course_purchase, CoursePurchase.find(course_purchase.id))
       end
       it 'should contain link to the course page' do
         render
         expect(rendered).to have_link t('Marketplace.transaction.payment_confirmation.go_to_course_btn_text'),
-                                      course_path(duplicate_course)
+                                      href: course_path(duplicate_course)
       end
-    end
-  end
-
-  context 'when already paid' do
-    before do
-      assign(:has_pending_payment, false)
-      assign(:purchase_record, paid_record)
-    end
-
-    it 'should contain already paid title and notice' do
-      render
-      expect(rendered).to match t('Marketplace.transaction.payment_confirmation.already_paid_title')
-      expect(rendered).to match t('Marketplace.transaction.payment_confirmation.already_paid_notice')
-      expect(rendered).to have_link t('Marketplace.transaction.payment_confirmation.go_to_master_course_btn_text'),
-                                    course_path(publish_record.course)
     end
   end
 end

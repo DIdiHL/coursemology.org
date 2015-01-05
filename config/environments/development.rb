@@ -61,4 +61,6 @@ Coursemology::Application.configure do
           :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
       }
   }
+
+  PayPal::SDK::Core::Config.load('config/paypal.yml',  ENV['RACK_ENV'] || 'development')
 end

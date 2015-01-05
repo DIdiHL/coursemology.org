@@ -3,6 +3,11 @@ class CoursePurchasesController < ApplicationController
   load_resource :publish_record
 
   def new
+    if params[:vacancy] && params[:vacancy].to_f < 0
+      redirect_to course_path(@course_purchase.publish_record.course, ref: 'marketplace'),
+                  flash: {error: t('Marketplace.transaction.negative_vacancy_error')}
+    end
+
     @course_purchase.user = current_user
     @course_purchase.publish_record = @publish_record
     @course_purchase.save
@@ -62,7 +67,6 @@ class CoursePurchasesController < ApplicationController
     Assessment.skip_callback(:save, :after, :update_closing_tasks)
     Assessment.skip_callback(:save, :after, :create_or_destroy_tasks)
     clone = course.amoeba_dup
-    clone.creator = current_user
     user_course = clone.user_courses.build
     user_course.user = current_user
     user_course.role = Role.find_by_name(:lecturer)
