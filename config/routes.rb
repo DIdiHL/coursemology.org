@@ -8,6 +8,11 @@ Coursemology::Application.routes.draw do
     get 'edit_purchased'
   end
 
+  resources :payout_identities do
+    member do
+      get 'verify_identity'
+    end
+  end
 
   resources :publish_records do
     resources :course_purchases do

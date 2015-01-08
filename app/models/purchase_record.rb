@@ -8,8 +8,13 @@ class PurchaseRecord < ActiveRecord::Base
 
   belongs_to :course_purchase
   has_one :payment_transaction
+  has_one :payout_transaction
 
   def payment_required?
     self.price_per_seat > 0 and !self.is_paid?
+  end
+
+  def payout_amount
+    self.seat_count * self.price_per_seat * t('number.payout_proportion').to_f
   end
 end

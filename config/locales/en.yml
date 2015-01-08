@@ -6,10 +6,11 @@ en:
     currency:
       format:
         unit: '$'
-        delimiter: '.'
-        separator: ' '
+        delimiter: ','
+        separator: '.'
         precision: 2
         format: '%u%n'
+    payout_proportion: 0.7
   helpers:
     links:
       new_mcq:  "New MCQ Question"
@@ -80,6 +81,7 @@ en:
       clear_filter_btn_text: Clear
       no_course_message: There is nothing in the marketplace. Please check back later.
       free_course_label: Free
+      no_vacancy_error: The course has no more vacancy.
     transaction:
       course_purchase_added_title: The course has been added to your catalogue
       course_duplication_notice: The course will only be duplicated for you after you have topped up some capacity.
@@ -138,6 +140,9 @@ en:
       submit_btn_text: Update
       marketplace_preference_tab_label: Marketplace
       marketplace_preference_title_label: Edit Publish Record
+      dashboard_title: Dashboard
+      dashboard_sales_section: Sales
+      dashboard_no_sales_notice: No record
       price_per_seat_input_label: Price per seat
       published_input_label: Published to marketplace?
       purchase_preference_tab_label: Purchase
@@ -151,5 +156,16 @@ en:
       capacity_format: 'Capacity: %d'
       vacancy_format: 'Vacancy: %d'
       pending_enrolment_request_format: 'Enrolment: %d'
+      unclaimed_purchases_format: '%s unclaimed'
+      claimed_purchases_format: '%s claimed'
+      no_pending_claim_notice: No pending claim
+      claim_btn_text: Claim
+      payout_identity_notice: |
+        You need to provide us with an identity registered with
+        an external payment processor to publish a course
+
     publish_record:
       access_denied_message: You are not authorized to modify this pulish record.
+
+    payout_identity:
+      verify_identity_btn_text: Verify identity

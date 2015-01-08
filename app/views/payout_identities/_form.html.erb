@@ -1,0 +1,17 @@
+<%= form_for payout_identity do |f| %>
+  <%= f.radio_button :receiver_type, 'paypal' %>
+  <label for="payout_identity_receiver_type_paypal">
+    <div class="payment-processor-logo">
+      <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg" border="0" alt="PayPal Logo">
+    </div>
+  </label>
+  <%= f.radio_button :receiver_type, 'alipay' %>
+  <label for="payout_identity_receiver_type_alipay">
+    <div class="payment-processor-logo">
+      <img src="/images/alipay.png" alt="Alipay Logo">
+    </div>
+  </label>
+  <br>
+  <%= f.submit t('Marketplace.payout_identity.verify_identity_btn_text'),
+               class: 'btn btn-primary' %>
+<% end %>

@@ -37,4 +37,22 @@ class CoursePurchase < ActiveRecord::Base
     end
   end
 
+  def has_unclaimed_purchases?
+    unclaimed_purchases_amount > 0
+  end
+
+  def unclaimed_purchases_amount
+    self.all_purchases_amount - self.claimed_purchases_amount
+  end
+
+  def claimed_purchases_amount
+    self.purchase_records.map { |purchase_record|
+      (purchase_record.payout_transaction) ? purchase_record.payout_amount : 0
+    }.sum
+  end
+
+  def all_purchases_amount
+    self.purchase_records.map { |purchase_record| purchase_record.price_per_seat }.sum
+  end
+
 end

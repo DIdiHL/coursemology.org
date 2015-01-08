@@ -3,7 +3,7 @@ class CreatePublishRecords < ActiveRecord::Migration
     create_table :publish_records do |t|
       t.belongs_to :course
 
-      t.timestamp
+      t.timestamps
     end
   end
 

@@ -59,20 +59,25 @@ class EnrollRequestsController < ApplicationController
     req_type = params[:req_type]
     std_role = Role.find_by_name("student")
     @enroll_requests = @course.enroll_requests
-    @enroll_requests.each do |enroll_request|
-      if req_type == 'student' && enroll_request.role == std_role
-        approve_request(enroll_request)
-        enroll_request.destroy
+    begin
+      @enroll_requests.each do |enroll_request|
+        if req_type == 'student' && enroll_request.role == std_role
+          approve_request(enroll_request)
+          enroll_request.destroy
+        end
+        if req_type == 'staff' && enroll_request.role != std_role
+          approve_request(enroll_request)
+          enroll_request.destroy
+        end
       end
-      if req_type == 'staff' && enroll_request.role != std_role
-        approve_request(enroll_request)
-        enroll_request.destroy
-      end
+      flash[:notice] = "All requests have been approved!"
+    rescue
+      flash[:error] = $!.message
     end
     respond_to do |format|
       format.html {
         redirect_to course_enroll_requests_path(@course),
-                    notice: "All requests have been approved!"
+                    flash: flash
       }
     end
   end

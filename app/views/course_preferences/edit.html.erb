@@ -50,7 +50,7 @@
 <% elsif @tab == 'Sidebar' %>
     <%= render partial: "navbar_form" %>
 <% elsif @tab == 'MarketplacePreference' %>
-    <%= render partial: 'publish_records/form', locals: {course: @course, publish_record: @publish_record, action_url: @action_url} %>
+    <%= render partial: 'publish_records/preferences', locals: {course: @course, publish_record: @publish_record, action_url: @action_url} %>
 <% elsif @tab == 'PurchasePreference' %>
     <%= render partial: 'course_purchases/show', locals: {course: @course, course_purchase: @course_purchase} %>
 <% else %>

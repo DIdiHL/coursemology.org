@@ -4,6 +4,9 @@ class UserCourse < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   default_scope includes(:role)
 
+  include ActiveModel::Validations
+  validates_with UserCourseValidator
+
   attr_accessible :course_id, :exp, :role_id, :user_id, :level_id, :is_phantom, :last_active_time
 
   before_create :init

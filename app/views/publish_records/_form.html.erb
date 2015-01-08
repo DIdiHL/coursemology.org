@@ -1,20 +1,33 @@
-<%= content_tag :h1, t('Marketplace.course_marketplace_preference.marketplace_preference_title_label') %>
-<%= form_for [course, publish_record],
-             method: :put,
-             html: {class: 'form-horizontal'},
-             url: course_publish_record_path(
-                 course,
-                 publish_record,
-                 redirect: course_preferences_path(course, _tab: 'marketplace')) do |f| %>
-  <%= content_tag :label, t('Marketplace.course_marketplace_preference.price_per_seat_input_label') %>
-  <%= content_tag :span, t('number.currency.format.unit')%>
-  <%= f.number_field :price_per_seat, class: 'input-small' %>
-  <br /><br />
+<div class="page-header">
+  <%= content_tag :h1, t('Marketplace.course_marketplace_preference.marketplace_preference_title_label') %>
+</div>
+<% if !current_user.payout_identity %>
+  <div>
+    <%= content_tag :p, t('Marketplace.course_marketplace_preference.payout_identity_notice') %>
+  </div>
+  <div>
+    <%= render partial: 'payout_identities/form', locals: {payout_identity: get_payout_identity} %>
+  </div>
+<% else %>
+  <div>
+    <%= form_for [course, publish_record],
+                 method: :put,
+                 html: {class: 'form-horizontal'},
+                 url: course_publish_record_path(
+                     course,
+                     publish_record,
+                     redirect: course_preferences_path(course, _tab: 'marketplace')) do |f| %>
+      <%= content_tag :label, t('Marketplace.course_marketplace_preference.price_per_seat_input_label') %>
+      <%= content_tag :span, t('number.currency.format.unit')%>
+      <%= f.number_field :price_per_seat, class: 'input-small' %>
+      <br /><br />
 
-  <%= content_tag :label, t('Marketplace.course_marketplace_preference.published_input_label') %>
-  <%= f.check_box :published %>
-  <br /><br />
+      <%= content_tag :label, t('Marketplace.course_marketplace_preference.published_input_label') %>
+      <%= f.check_box :published %>
+      <br /><br />
 
 
-  <%= f.submit class: 'btn btn-primary', value: t('Marketplace.course_marketplace_preference.submit_btn_text') %>
+      <%= f.submit class: 'btn btn-primary', value: t('Marketplace.course_marketplace_preference.submit_btn_text') %>
+    <% end %>
+  </div>
 <% end %>

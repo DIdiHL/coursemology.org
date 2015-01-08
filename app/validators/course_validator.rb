@@ -5,7 +5,7 @@ class CourseValidator < ActiveModel::Validator
     end
 
     if course.course_purchase_id_changed? and not (course.course_purchase_id_was === nil)
-      course.errors[:course_purchase_id] << 'should never be changed after set the course is created'
+      course.errors[:course_purchase_id] << 'should never be changed after the course is created'
     end
   end
 end

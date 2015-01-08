@@ -4,11 +4,6 @@
 #purchase_history_div div {
   text-align: center;
 }
-.purchase-history-item {
-  border: 1px solid transparent;
-  border-top-color: lightgray;
-  transition: border-color 0.5s;
-}
 
 .bottom-border-div {
   border-bottom-width: 1px;
@@ -16,6 +11,23 @@
   border-color: lightgray;
 }
 
-.purchase-history-item:hover {
+.purchase-history-item, .dashboard-course-purchase-item {
+  border: 1px solid transparent;
+  border-top-color: lightgray;
+  transition: border-color 0.5s;
+}
+
+.purchase-history-item:hover, .dashboard-course-purchase-item:hover {
   border-color: gray;
+}
+
+.dashboard-course-purchase-item span {
+  vertical-align: middle;
+}
+
+#no_sales_notice {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 20px 0px 20px 0px;
 }

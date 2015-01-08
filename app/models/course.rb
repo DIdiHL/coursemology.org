@@ -407,7 +407,7 @@ class Course < ActiveRecord::Base
     if UserCourse.where(course_id: self, user_id: user).first
       return
     end
-    self.user_courses.create(user_id: user.id, role_id: role.id)
+    self.user_courses.create!(user_id: user.id, role_id: role.id)
   end
 
   def logo_url

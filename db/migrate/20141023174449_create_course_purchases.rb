@@ -4,7 +4,7 @@ class CreateCoursePurchases < ActiveRecord::Migration
       t.belongs_to :user
       t.belongs_to :publish_record
 
-      t.timestamp
+      t.timestamps
     end
   end
 

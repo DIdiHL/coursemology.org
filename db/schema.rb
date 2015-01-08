@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150104054740) do
+ActiveRecord::Schema.define(:version => 20150108144011) do
 
   create_table "achievements", :force => true do |t|
     t.string   "icon_url"
@@ -431,8 +431,10 @@ ActiveRecord::Schema.define(:version => 20150104054740) do
   add_index "course_preferences", ["preferable_item_id"], :name => "index_course_preferences_on_preferable_item_id"
 
   create_table "course_purchases", :force => true do |t|
-    t.integer "user_id"
-    t.integer "publish_record_id"
+    t.integer  "user_id"
+    t.integer  "publish_record_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "course_theme_attributes", :force => true do |t|
@@ -790,6 +792,22 @@ ActiveRecord::Schema.define(:version => 20150104054740) do
     t.datetime "updated_at",         :null => false
   end
 
+  create_table "payout_identities", :force => true do |t|
+    t.string   "receiver_id"
+    t.string   "receiver_type"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "payout_transactions", :force => true do |t|
+    t.string   "payout_id"
+    t.string   "payout_processor"
+    t.integer  "purchase_record_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
   create_table "pending_actions", :force => true do |t|
     t.integer  "course_id"
     t.integer  "user_course_id"
@@ -839,9 +857,11 @@ ActiveRecord::Schema.define(:version => 20150104054740) do
   end
 
   create_table "publish_records", :force => true do |t|
-    t.integer "course_id"
-    t.decimal "price_per_seat", :precision => 8, :scale => 2, :default => 0.0
-    t.boolean "published",                                    :default => false
+    t.integer  "course_id"
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.decimal  "price_per_seat", :precision => 8, :scale => 2, :default => 0.0
+    t.boolean  "published",                                    :default => false
   end
 
   create_table "purchase_records", :force => true do |t|
