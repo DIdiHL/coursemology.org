@@ -1,5 +1,43 @@
 <div>
   <div class="page-header">
+    <%= content_tag :h1, t('Marketplace.transaction.payment_method.order_detail_title') %>
+  </div>
+  <div id="order_detail">
+    <table>
+      <tr>
+        <td colspan="2">
+          <%= link_to @course_purchase.publish_record.course.title,
+                      course_path(@course_purchase.publish_record.course, ref: 'marketplace'),
+                      target: '_blank' %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= t('Marketplace.transaction.payment_method.order_detail_price') %>
+        </td>
+        <td>
+          <%= number_to_currency(@purchase_record.price_per_seat) %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= t('Marketplace.transaction.payment_method.order_detail_seat') %>
+        </td>
+        <td>
+          <%= @purchase_record.seat_count %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= t('Marketplace.transaction.payment_method.order_detail_total') %>
+        </td>
+        <td>
+          <%= number_to_currency(@purchase_record.price_per_seat * @purchase_record.seat_count) %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="page-header">
     <%= content_tag :h1, t('Marketplace.transaction.payment_method.select_payment_method_title') %>
   </div>
   <%= form_tag pay_course_purchase_purchase_record_path(@course_purchase, @purchase_record),

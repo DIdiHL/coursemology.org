@@ -94,6 +94,10 @@ en:
       new_purchase_record_notice: 'Redirecting to payment processor...'
       cancelled_error: Payment cancelled.
       payment_method:
+        order_detail_title: Order detail
+        order_detail_price: Price
+        order_detail_seat: Number of seats
+        order_detail_total: Total amount payable
         select_payment_method_title: Select payment method
         paypal: Paypal
         paypal_description_format: "Purchasing %d seats for course - %s at %s per seat"
