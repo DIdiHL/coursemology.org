@@ -22,4 +22,25 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     end
   end
+
+  def paypal
+    # There is no intention to allow paypal login. This only serves to verify the user's
+    # PayPal identity so that payouts can be made to him via PayPal.
+    if user_signed_in? and current_user.payout_identity
+      current_user.payout_identity.receiver_id = request.env["omniauth.auth"][:info][:email]
+      current_user.payout_identity.save!
+      @courses = current_user.courses
+      if @courses.count == 0
+        redirect_to my_courses_path, notice: t('Marketplace.payout_identity.paypal_verified_notice')
+      else
+        course_id = session[:payout_identity_request_course]
+        course_id ||= @courses.count == 1 ? @courses.first.id :
+            current_user.user_courses.order("last_active_time desc").first.course.id
+        redirect_to course_preferences_path(course_id, _tab: 'marketplace'),
+                    notice: t('Marketplace.payout_identity.paypal_verified_notice')
+      end
+    else
+      redirect_to access_denied_path, alert: t('Marketplace.payout_identity.not_signed_in_error')
+    end
+  end
 end

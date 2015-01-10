@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :confirmable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook]
+         :omniauthable, :omniauth_providers => [:facebook, :paypal]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
@@ -205,4 +205,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  def has_verified_payout_identity?
+    self.payout_identity and self.payout_identity.receiver_id
+  end
 end

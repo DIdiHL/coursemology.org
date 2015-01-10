@@ -18,6 +18,7 @@ class Ability
         can :manage, PublishRecord, course: {creator_id: user.id}
         can :manage, CoursePurchase, user_id: user.id
         can :manage, PurchaseRecord
+        can :manage, PayoutIdentity, user_id: user.id
         can :create, Course
       end
     end

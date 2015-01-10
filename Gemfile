@@ -68,6 +68,7 @@ gem 'daemons'
 gem 'google_visualr', '>= 2.1'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-paypal'
 gem "koala"
 gem 'kaminari'
 gem 'best_in_place'

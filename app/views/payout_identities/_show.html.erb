@@ -1,0 +1,15 @@
+  <div id="payout_identity">
+    <% if payout_identity.receiver_type == 'paypal' %>
+      <%= t('Marketplace.payout_identity.paypal_identity_notice') %>
+      <%= content_tag :span, payout_identity.receiver_id.html_safe %>
+    <% end %>
+    <%= link_to t('Marketplace.payout_identity.change_identity_btn_text'),
+                '#change_payout_identity_dialog',
+                role: 'button',
+                class: 'btn btn-primary',
+                data: {toggle: 'modal'} %>
+    <div id="change_payout_identity_dialog" class="modal hide fade" role="dialog" tabindex="-1"
+         aria-labelledby="change_payout_identity_dialog_label" aria-hidden="true">
+      <%= render partial: 'payout_identities/form', locals: {payout_identity: payout_identity} %>
+    </div>
+  </div>
