@@ -63,4 +63,8 @@ Coursemology::Application.configure do
   }
 
   PayPal::SDK::Core::Config.load('config/paypal.yml',  ENV['RACK_ENV'] || 'development')
+  ENV['paypal_api_base_url'] = 'https://api.sandbox.paypal.com'
+
+  ENV['client_id'] = 'AUJbbhB_O2u8qhA3gC2PMozDz9oCvdB9NK--dQsf3iXUk9dKMsGaXp2LVhKG'
+  ENV['client_secret'] = 'EENB7xBE6tmIwYpbtM94dlXx8JDLo35BnH9DXM4BLmvKjqrRkXFO9JcqxGtV'
 end

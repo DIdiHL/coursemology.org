@@ -48,7 +48,7 @@ class PurchaseRecordsController < ApplicationController
             :description => t('Marketplace.transaction.payment_method.paypal_description_format') %
                 [@purchase_record.seat_count,
                  @course_purchase.publish_record.course.title,
-                 @purchase_record.price_per_seat] } ] } )
+                 view_context.number_to_currency(@purchase_record.price_per_seat)] } ] } )
 
     if @payment.create
       redirect_url = @payment.links.find{|v| v.method == "REDIRECT" }.href
@@ -75,6 +75,9 @@ class PurchaseRecordsController < ApplicationController
             payment_processor: payment_processor)
         payment_transaction.purchase_record = @purchase_record
         payment_transaction.save
+
+        @purchase_record.execute_payout
+
         @purchase_record.is_paid = true
         @purchase_record.save
         redirect_to confirm_course_purchase_purchase_record_path(@course_purchase, @purchase_record)
@@ -88,7 +91,7 @@ class PurchaseRecordsController < ApplicationController
 
   def redirect_to_course(flash_options = {})
     if @course_purchase.course
-      redirect_to course_preferences_path(@course_purchase.course, ref: 'marketplace'), flash: flash_options
+      redirect_to course_preferences_path(@course_purchase.course, _tab: 'purchase'), flash: flash_options
     else
       redirect_to course_path(@course_purchase.publish_record.course, ref: 'marketplace'), flash: flash_options
     end

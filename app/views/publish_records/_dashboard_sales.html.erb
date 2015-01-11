@@ -28,7 +28,7 @@
               <div class="span4">
                 <!-- TODO url-->
                 <%= link_to t('Marketplace.course_marketplace_preference.claim_btn_text'),
-                            '',
+                            claim_payouts_publish_record_path(publish_record, course_purchase_id: course_purchase.id),
                             class: 'btn btn-primary' %>
               </div>
             <% else %>

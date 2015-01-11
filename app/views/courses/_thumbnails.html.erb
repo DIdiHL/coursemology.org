@@ -14,11 +14,13 @@
                   <%= course.creator.name %>
                 </div>
                 <div class="span3 offset1">
-                  <% price = course.publish_record.price_per_seat %>
-                  <% if price == 0 %>
-                    <%= t('Marketplace.course.free_course_label') %>
-                  <% else %>
-                    <%= number_to_currency(course.publish_record.price_per_seat) %>
+                  <% if course.publish_record %>
+                    <% price = course.publish_record.price_per_seat %>
+                    <% if price == 0 %>
+                      <%= t('Marketplace.course.free_course_label') %>
+                    <% else %>
+                      <%= number_to_currency(course.publish_record.price_per_seat) %>
+                    <% end %>
                   <% end %>
                 </div>
               </div>

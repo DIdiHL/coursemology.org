@@ -47,12 +47,15 @@ class CoursePurchase < ActiveRecord::Base
 
   def claimed_purchases_amount
     self.purchase_records.map { |purchase_record|
-      (purchase_record.payout_transaction) ? purchase_record.payout_amount : 0
+      (purchase_record.payout_transaction and purchase_record.payout_transaction.is_paid?) ?
+          purchase_record.payout_amount : 0
     }.sum
   end
 
   def all_purchases_amount
-    self.purchase_records.map { |purchase_record| purchase_record.price_per_seat }.sum
+    self.purchase_records.map { |purchase_record|
+      purchase_record.price_per_seat * purchase_record.seat_count
+    }.sum
   end
 
 end

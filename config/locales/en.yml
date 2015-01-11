@@ -167,6 +167,7 @@ en:
       payout_identity_notice: |
         You need to provide us with an identity registered with
         an external payment processor to publish a course
+      payout_claimed_notice: Payouts claimed.
 
     publish_record:
       access_denied_message: You are not authorized to modify this pulish record.
@@ -177,3 +178,5 @@ en:
       not_signed_in_error: You need to sign in first to bind a paypal account to your coursemology account.
       paypal_verified_notice: We have saved your PayPal email to your account.
       paypal_identity_notice: 'Payments will be made to your PayPal account'
+      payout_email_subject: 'Payment from Coursemology'
+      payout_email_note_format: 'You have a payment to your course - %s'

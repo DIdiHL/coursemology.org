@@ -11,6 +11,12 @@ Coursemology::Application.routes.draw do
   resources :payout_identities
 
   resources :publish_records do
+    member do
+      get 'claim_payouts'
+    end
+  end
+
+  resources :publish_records do
     resources :course_purchases do
       member do
         get 'select_course_start_date'

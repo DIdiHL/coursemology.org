@@ -13,7 +13,8 @@
       <%= t('Marketplace.course_marketplace_preference.paid_notice') %>
     <% else %>
       <%= link_to t('Marketplace.course_marketplace_preference.make_payment_btn_text'),
-                  pay_course_purchase_purchase_record_path(purchase_record.course_purchase, purchase_record),
+                  select_payment_method_course_purchase_purchase_record_path(
+                      purchase_record.course_purchase, purchase_record),
                   class: 'btn btn-primary btn-small' %>
       <%= link_to t('Marketplace.course_marketplace_preference.cancel_order_btn_text'),
                   course_purchase_purchase_record_path(purchase_record.course_purchase, purchase_record),

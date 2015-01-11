@@ -15,6 +15,20 @@ class PurchaseRecord < ActiveRecord::Base
   end
 
   def payout_amount
-    self.seat_count * self.price_per_seat * t('number.payout_proportion').to_f
+    self.seat_count * self.price_per_seat * I18n.t('number.payout_proportion').to_f
+  end
+
+  def execute_payout
+    payout_identity = self.course_purchase.publish_record.course.creator.payout_identity
+    if payout_identity
+      if payout_identity.receiver_type == 'paypal'
+        execute_paypal_payout(payout_identity)
+      end
+    end
+  end
+
+  def execute_paypal_payout(payout_identity)
+    require 'paypal_helper'
+    PayPalHelper.execute_single_paypal_payout(self, payout_identity)
   end
 end
