@@ -803,9 +803,10 @@ ActiveRecord::Schema.define(:version => 20150108144011) do
   create_table "payout_transactions", :force => true do |t|
     t.string   "payout_id"
     t.string   "payout_processor"
+    t.string   "payout_transaction_id"
     t.integer  "purchase_record_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "pending_actions", :force => true do |t|
