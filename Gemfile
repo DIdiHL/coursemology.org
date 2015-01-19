@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 gem 'rails', '3.2.14'
 
@@ -48,6 +49,7 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'coffee-rails'
+  gem 'rails-assets-fabric'
 end
 
 #gem 'pg'
@@ -98,6 +100,10 @@ gem "newrelic_rpm"
 gem 'dotenv-rails'
 gem 'paypal-sdk-rest'
 gem 'httparty'
+gem "wkhtmltopdf_binary_provider"
+gem "wicked_pdf"
+gem 'imagesLoaded_rails'
+gem 'rollbar'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

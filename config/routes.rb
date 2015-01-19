@@ -137,6 +137,12 @@ Coursemology::Application.routes.draw do
                 path:       :general_questions,
                 controller: :general_questions
 
+      resources :assessment_scribing_questions,
+                path:       :scribing_questions,
+                controller: :scribing_questions
+
+
+
       resources :assessment_submissions,
                 path:       :submissions,
                 as:         :submissions,
@@ -155,6 +161,7 @@ Coursemology::Application.routes.draw do
                   path: :gradings,
                   as:   :gradings,
                   controller: :gradings
+
       end
 
       resources :assessment_submissions,
@@ -176,6 +183,7 @@ Coursemology::Application.routes.draw do
         get 'overview' => 'missions#overview'
         get 'stats' => 'missions#stats'
         get 'submissions' => 'assessments#listall', type: 'mission'
+        get 'dump_pdfs' => 'assessments#dump_pdfs', type: 'mission'
       end
       get 'dump_code' => 'missions#dump_code'
     end
@@ -187,6 +195,7 @@ Coursemology::Application.routes.draw do
         get 'overview' => 'trainings#overview'
         get 'stats' => 'trainings#stats'
         get 'submissions' => 'assessments#listall', type: 'training'
+        get 'dump_pdfs' => 'assessments#dump_pdfs', type: 'training'
       end
     end
 
@@ -387,4 +396,9 @@ Coursemology::Application.routes.draw do
     resources :file_uploads
   end
 
+  resources :assessment_scribing_questions do
+    resources :file_uploads
+  end
+
+  resources :scribbles, only: [:create]
 end

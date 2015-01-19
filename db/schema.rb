@@ -270,6 +270,18 @@ ActiveRecord::Schema.define(:version => 20150108144011) do
 
   add_index "assessment_questions", ["as_question_id", "as_question_type"], :name => "index_on_as_question", :unique => true
 
+  create_table "assessment_scribing_answers", :force => true do |t|
+    t.datetime "deleted_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "assessment_scribing_questions", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
+  end
+
   create_table "assessment_submissions", :force => true do |t|
     t.integer  "assessment_id"
     t.integer  "std_course_id"
@@ -946,6 +958,14 @@ ActiveRecord::Schema.define(:version => 20150108144011) do
   end
 
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "scribbles", :force => true do |t|
+    t.text     "content"
+    t.integer  "std_course_id"
+    t.integer  "scribing_answer_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "seen_by_users", :force => true do |t|
     t.integer  "user_course_id"
