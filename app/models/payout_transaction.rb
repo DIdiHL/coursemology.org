@@ -1,5 +1,5 @@
 class PayoutTransaction < ActiveRecord::Base
-  attr_accessible :payout_id, :payout_processor
+  attr_accessible :payout_id, :payout_processor, :payout_batch_id, :payout_status
 
   @@PROCESSOR_PAYPAL = 'paypal'
 
@@ -10,6 +10,13 @@ class PayoutTransaction < ActiveRecord::Base
   end
 
   def is_paid?
-    !!self.payout_id
+    # For now, only consider PayPal. Add more conditions
+    # when other payment processors are added
+    self.payout_status == 'SUCCESS'
+  end
+
+  def is_processing?
+    self.payout_status == 'PROCESSING' or
+        (!self.payout_id && self.payout_batch_id)
   end
 end

@@ -167,7 +167,7 @@ en:
       payout_identity_notice: |
         You need to provide us with an identity registered with
         an external payment processor to publish a course
-      payout_claimed_notice: Payouts claimed.
+      payout_claimed_submitted_notice: Payout claim submitted.
 
     publish_record:
       access_denied_message: You are not authorized to modify this pulish record.

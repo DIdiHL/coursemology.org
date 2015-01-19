@@ -3,9 +3,10 @@ class CreatePayoutTransactions < ActiveRecord::Migration
     create_table :payout_transactions do |t|
       t.string :payout_id
       t.string :payout_processor
+      t.string :payout_status
       # The transaction id is used for retrieving results of
       # asynchronous requests.
-      t.string :payout_transaction_id
+      t.string :payout_batch_id
       t.belongs_to :purchase_record
 
       t.timestamps

@@ -42,7 +42,7 @@ class CoursePurchase < ActiveRecord::Base
   end
 
   def unclaimed_purchases_amount
-    self.all_purchases_amount - self.claimed_purchases_amount
+    self.all_purchases_amount * I18n.t('number.payout_proportion').to_f - self.claimed_purchases_amount
   end
 
   def claimed_purchases_amount

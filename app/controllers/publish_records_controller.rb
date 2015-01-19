@@ -38,7 +38,7 @@ class PublishRecordsController < ApplicationController
       PayPalHelper.execute_batch_paypal_payout(
           @course_purchase.purchase_records,
           @publish_record.course.creator.payout_identity)
-      flash[:notice] = t('Marketplace.course_marketplace_preference.payout_claimed_notice')
+      flash[:notice] = t('Marketplace.course_marketplace_preference.payout_claimed_submitted_notice')
     end
 
     redirect_to course_preferences_path(@publish_record.course, _tab: 'marketplace'), flash: flash

@@ -31,4 +31,16 @@ class PurchaseRecord < ActiveRecord::Base
     require 'paypal_helper'
     PayPalHelper.execute_single_paypal_payout(self, payout_identity)
   end
+
+  def is_payout_done?
+    self.payout_transaction and self.payout_transaction.is_paid?
+  end
+
+  def has_pending_payout?
+    !self.payout_transaction
+  end
+
+  def is_processing_payout?
+    self.payout_transaction and self.payout_transaction.is_processing?
+  end
 end

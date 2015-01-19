@@ -8,6 +8,7 @@
     </div>
   <% else %>
     <% publish_record.course_purchases.each { |course_purchase| %>
+      <% refresh_payout_status(course_purchase) %>
       <div class="dashboard-course-purchase-item row-fluid">
         <div class="span4">
           <%= content_tag :span, course_purchase.created_at %>
@@ -26,7 +27,6 @@
                                     number_to_currency(course_purchase.unclaimed_purchases_amount) %>
               </div>
               <div class="span4">
-                <!-- TODO url-->
                 <%= link_to t('Marketplace.course_marketplace_preference.claim_btn_text'),
                             claim_payouts_publish_record_path(publish_record, course_purchase_id: course_purchase.id),
                             class: 'btn btn-primary' %>
