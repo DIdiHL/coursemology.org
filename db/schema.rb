@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150108144011) do
+ActiveRecord::Schema.define(:version => 20150117163547) do
 
   create_table "achievements", :force => true do |t|
     t.string   "icon_url"
@@ -960,11 +960,11 @@ ActiveRecord::Schema.define(:version => 20150108144011) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "scribbles", :force => true do |t|
-    t.text     "content"
+    t.text     "content",            :limit => 16777215
     t.integer  "std_course_id"
     t.integer  "scribing_answer_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   create_table "seen_by_users", :force => true do |t|
