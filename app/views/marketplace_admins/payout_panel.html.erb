@@ -1,0 +1,122 @@
+<div id="flash" class="alert alert-hidden">
+</div>
+
+<div class="page-header">
+  <%= content_tag :h1, t('Marketplace.admin.payout_panel_title') %>
+</div>
+
+<div>
+  <%= form_tag '',
+               id: 'email_input_form',
+               class: 'form-horizontal',
+               method: :get,
+               class: 'form-horizontal',
+               'data-action' => marketplace_admins_courses_path('json'),
+               'ng-submit' => 'processForm($event)',
+               'ng-controller' => 'emailFormController' do %>
+    <div class="control-group">
+      <%= content_tag :label, t('Marketplace.admin.email_input_label'), for: 'email', class: 'control-label' %>
+      <div class="controls">
+        <%= email_field_tag 'email',
+                            '',
+                            placeholder: 'email@example.com',
+                            class: 'form-control',
+                            'ng-class' => "{'has-error': email_input_form.email.$invalid}",
+                            'ng-model' => 'coursePayoutData.email' %>
+        <%= submit_tag t('Marketplace.admin.submit_payout_query_button_label'), class: 'btn btn-primary' %>
+        <span class="help-block" ng-show="errorEmail">{{ errorEmail }}</span>
+      </div>
+    </div>
+  <% end %>
+
+  <div id="payout_records" ng-controller="coursePayoutsController">
+    <form class="form-horizontal">
+      <div class="control-group">
+        <%= content_tag :label, t('Marketplace.admin.course_input_label'), class: 'control-label' %>
+        <div class="controls">
+          <select id="course_selector_for_payout_records"
+                  data-action="<%= marketplace_admins_payout_records_path('json') %>"
+                  ng-model="course"
+                  ng-options="course['course_id'] + ': ' + course['course_title'] for course in coursePayoutData.courses track by course['course_id']"
+                  ng-change="getPayoutDataForCourse()"
+                  class="selectpicker input-large"></select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= content_tag :label, t('Marketplace.admin.payouts_label'), class: 'control-label' %>
+        <div class="controls">
+          <div id="purchase_record_table" class="row-fluid no-space">
+
+            <div id="course_purchase_selector" class="span3">
+              <div class="flow-header">
+                <%= content_tag :span, t('Marketplace.admin.course_purchase_column_header') %>
+              </div>
+              <div id="course_purchase_items" class="scrollable-div">
+                <div class="animate-repeat course-purchase-item "
+                     ng-repeat="coursePurchase in coursePayoutData.coursePurchases"
+                     ng-click="selectCoursePurchase(coursePurchase)"
+                     ng-class="{'selected-course-purchase-item': selectedCoursePurchase == coursePurchase}">
+                <span class="buyer-name">
+                  {{ coursePurchase.user.name }}
+                </span>
+                <span class="buyer-email">
+                  <{{ coursePurchase.user.email }}>
+                </span>
+                </div>
+              </div>
+            </div>
+
+            <div id="payout_record_selector" class="span9">
+              <div class="flow-header">
+                <%= content_tag :span, t('Marketplace.admin.purchase_records_column_header') %>
+              </div>
+
+              <div id="course_purchase_summary">
+                <span>
+                  <%= t('Marketplace.admin.total_purchase_amount') %>
+                  {{ selectedCoursePurchase.all_purchases_amount | currency: <%= t('number.currency.format.unit') %> }}
+                </span>
+                <span>
+                  <%= t('Marketplace.admin.unclaimed_purchase_amount') %>
+                  {{ selectedCoursePurchase.unclaimed_purchases_amount | currency: <%= t('number.currency.format.unit') %> }}
+                </span>
+                <span>
+                  <%= t('Marketplace.admin.course_capacity') %>
+                  {{ selectedCoursePurchase.capacity }}
+                </span>
+                <span>
+                  <%= t('Marketplace.admin.num_students') %>
+                  {{ selectedCoursePurchase.number_of_students }}
+                </span>
+                <span ng-show="hasUnclaimedPurchases(selectedCoursePurchase)">
+                  <%= link_to t('Marketplace.admin.payout_btn_text'),
+                              '{{ selectedCoursePurchase.payout_path }}',
+                              class: 'btn btn-primary' %>
+                </span>
+              </div>
+
+              <div id="purchase_record_items" class="scrollable-div">
+                <div class="row-fluid animate-repeat" ng-repeat="purchaseRecord in selectedCoursePurchase.purchase_records">
+                  <div class="span4">
+                    <span>{{ purchaseRecord.created_at | date: 'd MMM y h:mm:ss a' }}</span>
+                  </div>
+                  <div class="span3">
+                    <span>{{ purchaseRecord.price_per_seat * purchaseRecord.seat_count | currency: <%= t('number.currency.format.unit') %> }}</span>
+                  </div>
+                  <div class="span3">
+                    <span>
+                      {{ purchaseRecord.seat_count }}
+                      <%= t('Marketplace.admin.purchased_seats') %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

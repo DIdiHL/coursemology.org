@@ -7,7 +7,7 @@ class CoursePurchase < ActiveRecord::Base
   belongs_to :publish_record
 
   has_one :course
-  has_many :purchase_records
+  has_many :purchase_records, order: 'created_at DESC'
 
   def capacity
     self.purchase_records.map{ |purchase_record|

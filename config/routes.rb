@@ -82,6 +82,9 @@ Coursemology::Application.routes.draw do
   get 'admins/system_wide_announcement' => 'admins#new_system_wide_announcement'
   post 'admins/system_wide_announcement' => 'admins#send_system_wide_announcement'
   #match "admin/access_control" => "admins#access_control"
+  get 'marketplace_admins/payout_panel' => 'marketplace_admins#payout_panel'
+  get 'marketplace_admins/payout_records' => 'marketplace_admins#payout_records'
+  get 'marketplace_admins/courses' => 'marketplace_admins#courses'
 
   delete "admins/stop_masquerades" => "masquerades#destroy", as: :destroy_masquerades
   get "/my_courses" => "home#my_courses", as: :my_courses

@@ -13,7 +13,7 @@ module CoursesHelper
 
   def should_show_purchase_options?
     params[:ref] == 'marketplace' &&
-        current_user && current_user.system_role_id == 3 &&
+        current_user && current_user.system_role_id < 4 &&
         @course.is_published_in_marketplace?
   end
 

@@ -18,7 +18,7 @@ module PurchaseRecordsHelper
 
   def get_btn_url
     if !@purchase_record.is_paid?
-      return pay_course_purchase_purchase_record_path(@course_purchase, @purchase_record)
+      return pay_course_purchase_purchase_record_path(@course_purchase, @purchase_record, payment_method: 'paypal')
     else
       if @course_purchase.course
         return course_path(@course_purchase.course)

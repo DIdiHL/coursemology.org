@@ -181,3 +181,25 @@ en:
       paypal_identity_notice: 'Payments will be made to your PayPal account'
       payout_email_subject: 'Payment from Coursemology'
       payout_email_note_format: 'You have a payment to your course - %s'
+
+    admin:
+      payout_panel_title: Payout Panel
+      email_input_label: Email
+      course_input_label: Course
+      payouts_label: Payout Records
+      course_purchase_column_header: Buyer
+      purchase_records_column_header: Purchases
+      submit_payout_query_button_label: Get payout records
+      user_not_found_error_msg: User not found.
+      user_not_specified_error_msg: No email specified.
+      payout_records_fetched_notice: Payout records retrieved.
+      course_id_not_specified_error_msg: No course provided.
+      course_not_found_error_msg: Course not found.
+      course_creator_not_match_error_msg: Provided user does not own the course.
+      total_purchase_amount: 'Total:'
+      unclaimed_purchase_amount: 'Unclaimed:'
+      num_students: 'Number of students:'
+      course_capacity: 'Capacity:'
+      purchased_seats: seats
+      payout_btn_text: Payout
+
