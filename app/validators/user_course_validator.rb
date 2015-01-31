@@ -2,7 +2,8 @@ class UserCourseValidator < ActiveModel::Validator
   def validate(user_course)
     if user_course.role_id == Role.student.first.id
       if no_vacancy?(user_course)
-        user_course.error[:no_vacancy] = t('Marketplace.course.no_vacancy_error')
+        puts user_course.course.course_purchase.vacancy #fd
+        user_course.errors[:no_vacancy] = I18n.t('Marketplace.course.no_vacancy_error')
       end
     end
   end

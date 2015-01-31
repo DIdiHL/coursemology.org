@@ -50,6 +50,16 @@ FactoryGirl.define do
         user_course.role = Role.find_by_name(:lecturer)
         user_course.save
       end
+
+      if evaluator.course_purchase
+        if evaluator.course_purchase.publish_record and evaluator.course_purchase.publish_record.course
+          course.duplication_origin_id = evaluator.course_purchase.publish_record.course.id
+        end
+        course.save
+        course.update_attributes(course_purchase_id: evaluator.course_purchase.id)
+        evaluator.course_purchase.reload
+      end
+
       course.levels.create(level: 0, exp_threshold: 0)
     end
 
