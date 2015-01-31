@@ -88,9 +88,9 @@ en:
       course_duplication_notice: The course will only be duplicated for you after you have topped up some capacity.
       select_course_start_date_title: Select when you wish the course to start
       confirm_course_start_date_btn_text: Confirm
-      vacancy_input_label: Vacancy
+      vacancy_input_label: Seats
       submit_btn_label: Submit order
-      negative_vacancy_error: Vacancy cannot be negative value
+      negative_vacancy_error: The number of seats cannot be negative value
       new_purchase_record_title: 'Processing transaction...'
       new_purchase_record_notice: 'Redirecting to payment processor...'
       cancelled_error: Payment cancelled.
