@@ -103,42 +103,23 @@ RSpec.describe CoursePurchase, :type => :model do
     let(:purchase_record1) { FactoryGirl.create(
         :purchase_record,
         course_purchase: original_course1_purchase,
-        seat_count: 10
+        seat_count: 10,
+        is_paid: true
     )}
 
     let(:purchase_record2) { FactoryGirl.create(
         :purchase_record,
         course_purchase: original_course1_purchase,
-        seat_count: 10
+        seat_count: 10,
+        is_paid: true
     )}
 
     describe 'multiple purchase records' do
-      it 'should increate capacity' do
+      it 'should increase capacity' do
         expect {
           purchase_record1
           purchase_record2
-        }.to change{ CoursePurchase.find(original_course1_purchase).capacity }.by(20)
-      end
-
-      it 'should increase vacancy' do
-        expect {
-          purchase_record1.seats_taken = 10
-          purchase_record1.save
-          purchase_record2
-        }.to change{ CoursePurchase.find(original_course1_purchase).vacancy }.by(10)
-      end
-    end
-
-    describe 'finding purchase records with vacancy' do
-      before do
-        purchase_record1.seats_taken = 10
-        purchase_record1.save
-        purchase_record2
-      end
-
-      it 'should only return vacant record' do
-        expect(original_course1_purchase.purchase_records_with_vacancy).to include(purchase_record2)
-        expect(original_course1_purchase.purchase_records_with_vacancy).not_to include(purchase_record1)
+        }.to change{ original_course1_purchase.capacity }.by(20)
       end
     end
 
