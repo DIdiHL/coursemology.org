@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150117163547) do
+ActiveRecord::Schema.define(:version => 20150201094630) do
 
   create_table "achievements", :force => true do |t|
     t.string   "icon_url"
@@ -445,8 +445,9 @@ ActiveRecord::Schema.define(:version => 20150117163547) do
   create_table "course_purchases", :force => true do |t|
     t.integer  "user_id"
     t.integer  "publish_record_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.integer  "seat_taken_count",  :default => 0
   end
 
   create_table "course_theme_attributes", :force => true do |t|

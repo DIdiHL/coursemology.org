@@ -12,7 +12,7 @@ class CoursePurchase < ActiveRecord::Base
   def capacity
     self.purchase_records.map{ |purchase_record|
       (purchase_record.is_paid?) ? purchase_record.seat_count : 0
-    }.sum
+    }.sum - self.seat_taken_count
   end
 
   def vacancy
@@ -23,19 +23,6 @@ class CoursePurchase < ActiveRecord::Base
     self.purchase_records.select { |purchase_record| purchase_record.has_vacancy? }
   end
 
-  def course=(course)
-    if not self.id
-      raise 'Course purchase not saved yet. Unable to create association'
-    end
-
-    if course.is_original_course?
-      raise "An originally created course can't be the duplicate course."
-    end
-
-    if course
-      course.update_attributes(course_purchase_id: self.id)
-    end
-  end
 
   def has_unclaimed_purchases?
     unclaimed_purchases_amount > 0

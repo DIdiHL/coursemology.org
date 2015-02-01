@@ -36,6 +36,15 @@ FactoryGirl.define do
     end
   end
 
+  factory :seller, parent: :user do
+    name 'course seller'
+    email 'seller@example.org'
+    association :payout_identity, factory: :payout_identity
+    after(:build) do |user|
+      user.system_role_id = 3
+    end
+  end
+
   factory :course do
     title "Programming"
     description "It's a programming course"

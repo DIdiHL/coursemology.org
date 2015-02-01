@@ -24,7 +24,6 @@ RSpec.describe UserCourse, type: :model do
         purchase_record.course_purchase = course_purchase
         purchase_record.save
         course_purchase.reload
-        puts course_purchase.purchase_records.inspect #fd
       end
 
       it 'should allow new enrolment' do

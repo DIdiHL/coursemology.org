@@ -25,7 +25,8 @@ RSpec.describe 'purchase_records/confirm', type: :view do
       expect(rendered).to match t('Marketplace.transaction.payment_confirmation.failure_title')
       expect(rendered).to match t('Marketplace.transaction.payment_confirmation.failure_notice')
       expect(rendered).to have_link(t('Marketplace.transaction.payment_confirmation.make_payment_btn_text'),
-                          href: pay_course_purchase_purchase_record_path(course_purchase, not_paid_record))
+                          href: pay_course_purchase_purchase_record_path(
+                              course_purchase, not_paid_record, payment_method: 'paypal'))
     end
   end
 

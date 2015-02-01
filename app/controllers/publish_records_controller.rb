@@ -11,7 +11,7 @@ class PublishRecordsController < ApplicationController
   end
 
   def set_publish_record_data_and_save(publish_record)
-    if publish_record.user.has_verified_payout_identity
+    if publish_record.course.creator.has_verified_payout_identity?
       data = params[:publish_record]
       publish_record.price_per_seat = data[:price_per_seat]
       publish_record.published = data[:published]

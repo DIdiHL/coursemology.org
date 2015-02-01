@@ -192,6 +192,10 @@ class User < ActiveRecord::Base
     self.save
   end
 
+  def has_verified_payout_identity?
+    self.payout_identity and self.payout_identity.receiver_id
+  end
+
   private
   def set_default_role
     unless self.system_role
@@ -203,9 +207,5 @@ class User < ActiveRecord::Base
     unless self.profile_photo_url
       self.profile_photo_url = DEFAULT_PROFILE_PIC_URL
     end
-  end
-
-  def has_verified_payout_identity?
-    self.payout_identity and self.payout_identity.receiver_id
   end
 end

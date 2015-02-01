@@ -98,8 +98,9 @@ RSpec.describe CoursePurchase, :type => :model do
     let(:original_course1_purchase) { FactoryGirl.create(
         :course_purchase,
         user: user1,
-        publish_record: original_course1_publish_record
+        course: duplicate_course1
     )}
+
     let(:purchase_record1) { FactoryGirl.create(
         :purchase_record,
         course_purchase: original_course1_purchase,
@@ -124,5 +125,4 @@ RSpec.describe CoursePurchase, :type => :model do
     end
 
   end
-
 end

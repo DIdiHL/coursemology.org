@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe PublishRecordsController, type: :controller do
-  let(:authorized_user) { FactoryGirl.create(:user, system_role_id: 1) }
-  let(:unauthorized_user) { FactoryGirl.create(:user, system_role_id: 5) }
-  let(:course) { FactoryGirl.create(:course) }
+  let(:authorized_user) { FactoryGirl.create(:seller, system_role_id: 1) }
+  let(:unauthorized_user) { FactoryGirl.create(:user, email: 'unauthorized@example.com', system_role_id: 5) }
+  let(:course) { FactoryGirl.create(:course, creator: authorized_user) }
   let(:publish_record) { FactoryGirl.create(:publish_record, course: course, published: true) }
 
-  describe 'POST update' do
+  describe 'PUT update' do
 
     context 'when user is not authorized' do
       before do
@@ -14,7 +14,7 @@ RSpec.describe PublishRecordsController, type: :controller do
       end
 
       it 'should redirect to access denied page' do
-        post :update, course_id: course.id, publish_record_id: publish_record.id
+        put :update, course_id: course.id, id: publish_record.id
         expect(response).to redirect_to(access_denied_path)
       end
     end
@@ -24,7 +24,7 @@ RSpec.describe PublishRecordsController, type: :controller do
         sign_in authorized_user
         @valid_data = {
             course_id: course.id,
-            publish_record_id: publish_record.id,
+            id: publish_record.id,
             publish_record: {
                 price_per_seat: 1,
                 published: false
@@ -33,7 +33,7 @@ RSpec.describe PublishRecordsController, type: :controller do
       end
 
       it 'should update existing publish record' do
-        post :update, @valid_data
+        put :update, @valid_data
         publish_record.reload
         expect(flash[:error]).to be_nil
         expect(publish_record.price_per_seat).to eq(1)
@@ -46,15 +46,15 @@ RSpec.describe PublishRecordsController, type: :controller do
         sign_in authorized_user
       end
 
-      context "for publish_record doesn't belong to course" do
-        let(:course2) { FactoryGirl.create(:course) }
+      context "when publish_record doesn't belong to course" do
+        let(:course2) { FactoryGirl.create(:course, creator: authorized_user) }
         let(:publish_record2) { FactoryGirl.create(:publish_record, course: course2) }
 
         before do
           publish_record
           @invalid_data = {
               course_id: course.id,
-              publish_record_id: publish_record2.id,
+              id: publish_record2.id,
               publish_record: {
                   price_per_seat: 2,
                   published: false
@@ -63,7 +63,7 @@ RSpec.describe PublishRecordsController, type: :controller do
         end
 
         it 'should not change the correct publish record and flash error message' do
-          post :update, @invalid_data
+          put :update, @invalid_data
           publish_record.reload
           expect(flash[:error]).to eq('Validation failed: Course has already been taken')
           expect(publish_record.price_per_seat).to eq(0)
@@ -75,7 +75,7 @@ RSpec.describe PublishRecordsController, type: :controller do
         before do
           @invalid_data = {
               course_id: course.id,
-              publish_record_id: publish_record.id,
+              id: publish_record.id,
               publish_record: {
                   price_per_seat: -1,
                   published: false
@@ -84,7 +84,7 @@ RSpec.describe PublishRecordsController, type: :controller do
         end
 
         it 'should not change the correct publish record and flash error message' do
-          post :update, @invalid_data
+          put :update, @invalid_data
           publish_record.reload
           expect(flash[:error]).to eq('Validation failed: Price per seat must be greater than or equal to 0')
           expect(publish_record.price_per_seat).to eq(0)
@@ -93,7 +93,5 @@ RSpec.describe PublishRecordsController, type: :controller do
       end
 
     end
-
   end
-
 end
