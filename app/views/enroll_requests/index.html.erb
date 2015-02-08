@@ -1,21 +1,49 @@
+<script type="text/javascript">
+  var enrol_requests_path = '<%= course_enroll_requests_path(@course, 'json') %>';
+</script>
+
 <div class="page-header">
-  <h1>Enroll Requests</h1>
+  <%= content_tag :h1, t('course.enrolment.enrol_requests_page_title') %>
 </div>
 
 <%= render partial: "enroll_requests/enroll_tab", locals: { mass_requests: false } %>
 
-<% if @staff_requests.size > 0 %>
-  <h3>Staff Requests:</h3>
-  <%= render partial: "enroll_requests/list", locals: { requests: @staff_requests, type: "staff" } %>
-<% end %>
+<div id="request_list" ng-controller="enrolRequestListController">
+  <div id="enroll_request_alert"
+       class="alert transparent-enroll-request-alert"
+       ng-class="{'alert-success': alertSuccess,
+                  'alert-error': !alertSuccess,
+                  'transparent-enroll-request-alert': alertMessage == null}">
+    {{ alertMessage }}
+  </div>
 
-<br/>
+  <%= content_tag :h3, t('course.enrolment.staff_request_title') %>
+  <% if @staff_requests.size > 0 %>
+    <%= render partial: "enroll_requests/list", locals: { requests: @staff_requests, type: "staff" } %>
+  <% else %>
+    <%= content_tag :span, t('course.enrolment.no_staff_request') %>
+  <% end %>
 
-<% if @student_requests.size > 0 %>
-  <h3>Student Requests:</h3>
-  <%= render partial: "enroll_requests/list", locals: { requests: @student_requests, type: "student" } %>
-<% end %>
+  <br/>
 
-<% if @staff_requests.size + @student_requests.size == 0 %>
-  <span>There is no outstanding request</span>
-<% end %>
+  <%= content_tag :h3, t('course.enrolment.student_request_title') %>
+  <% if @course.course_purchase %>
+    <% course_purchase = @course.course_purchase %>
+    <div id="course_purchase_info">
+      <span>
+        <%= t('course.enrolment.number_of_students') %> {{ enrolledStudentCount }}
+      </span>
+      <span>
+        <%= t('course.enrolment.capacity_indicator') %> {{ courseCapacity }}
+      </span>
+      <span>
+        <%= t('course.enrolment.seats_indicator') %> {{ availableSeatCount }}
+      </span>
+    </div>
+  <% end %>
+  <% if @student_requests.size > 0 %>
+    <%= render partial: "enroll_requests/list", locals: { requests: @student_requests, type: "student" } %>
+  <% else %>
+    <%= content_tag :span, t('course.enrolment.no_student_request') %>
+  <% end %>
+</div>

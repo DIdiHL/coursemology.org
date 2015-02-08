@@ -66,6 +66,33 @@ en:
       cancel:
         format: "%{submit_button} %{cancel_link}"
         cancel: "Cancel"
+
+  course:
+    enrolment:
+      enrol_requests_page_title: Enrolment Requests
+      staff_request_title: 'Staff Requests:'
+      student_request_title: 'Student Requests:'
+      no_staff_request: No outstanding staff request
+      no_student_request: No outstanding student request
+      capacity_indicator: 'Capacity:'
+      seats_indicator: 'Number of Available Seats:'
+      number_of_students: 'Number of Enrolled Students:'
+      request_list_name_header: Name
+      request_list_email_header: Email
+      request_list_date_header: Requested At
+      request_list_role_header: Role
+      request_list_action_header: Action
+      loading_text: Loading...
+      approved_message_format: 'Approved enrollment request from %s.'
+      deleted_message_format: 'Deleted enrollment request from %s.'
+      approved_selected_message_with_count: 'Approved %d enrollment requests.'
+      deleted_selected_message_with_count: 'Deleted %d enrollment requests.'
+      approve_selected: Approve Selcted
+      delete_selected: Delete Selected
+      approve_all: Approve All
+      delete_all: Delete All
+      failed_to_enrol_format: 'Failed to approve enrolment requests. %s'
+
   Marketplace:
     course:
       sort_by_label: Sort by

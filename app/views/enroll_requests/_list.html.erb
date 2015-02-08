@@ -1,51 +1,78 @@
-<table class="table enroll-requests">
+<% if type == 'staff' %>
+  <% container = 'staffRequests' %>
+<% else %>
+  <% container = 'studentRequests' %>
+<% end %>
+
+<div id="loading" ng-show="loading">
+  <image src="/images/ajax_loader.gif" alt="Spinner"></image>
+  <%= content_tag :span, t('course.enrolment.loading_text') %>
+</div>
+
+<table class="table enroll-requests" ng-show="!loading">
   <thead>
   <tr>
     <% if can? :approve, EnrollRequest %>
-        <td><input type="checkbox" class="check-all" data-target="<%= ".checkbox-#{type}" %>"/></td>
+        <td><input type="checkbox" class="check-all"
+                   ng-model="<%= container %>CheckAll"
+                   ng-change="checkAll(<%= container %>CheckAll, <%= container %>)"/></td>
     <% end %>
-    <td>Name</td>
-    <td>Email</td>
-    <td>Requested At</td>
-    <td>Role</td>
+    <%= content_tag :td, t('course.enrolment.request_list_name_header') %>
+    <%= content_tag :td, t('course.enrolment.request_list_email_header') %>
+    <%= content_tag :td, t('course.enrolment.request_list_date_header') %>
+    <%= content_tag :td, t('course.enrolment.request_list_role_header') %>
     <% if can? :approve, EnrollRequest %>
-        <td>Action</td>
+      <%= content_tag :td, t('course.enrolment.request_list_action_header') %>
     <% end %>
   </tr>
   </thead>
   <tbody>
-  <% requests.each do |ec| %>
-      <tr>
-        <% if can? :approve, EnrollRequest %>
-            <input type="hidden" class="destroy-url"
-                   value="<%= course_enroll_request_path(@course, ec.id) %>" />
-            <td><input type="checkbox" value="<%= ec.id %>" class="<%= "checkbox-#{type}" %>"/></td>
-        <% end %>
-        <td><label class="user-name"><%= ec.user.name %></label></td>
-        <td><%= ec.user.email %></td>
-        <td><%= datetime_no_seconds(ec.created_at) %></td>
-        <td><%= ec.role.title %></td>
-        <% if can? :approve, EnrollRequest %>
-            <td>
-              <%= link_to '#', class: "btn btn-primary request-approve" do %>
-                  <i class="icon-ok"></i>
-              <% end %>
-              <%= link_to '#', class: "btn btn-danger request-del" do %>
-                  <i class="icon-remove"></i>
-              <% end %>
-            </td>
-        <% end %>
-      </tr>
-  <% end %>
+
+  <tr ng-repeat="request in <%= container %>" class="enroll-request-animate-repeat">
+    <% if can? :approve, EnrollRequest %>
+      <td><input type="checkbox" ng-model="request.checked" ng-value="request.id" class="checkbox-<%= type %>"></td>
+    <% end %>
+    <td><label class="user-name">{{ request.user.name }}</label></td>
+    <td>{{ request.user.email }}</td>
+    <td>{{ request.created_at | date: 'd MMM y h:mm a' }}</td>
+    <td>{{ request.role.title }}</td>
+    <% if can? :approve, EnrollRequest %>
+      <td>
+        <button ng-click="deleteButtonClicked(request, <%= container %>, true)"
+                class="btn btn-primary request-approve">
+          <i class="icon-ok"></i>
+        </button>
+        <button ng-click="deleteButtonClicked(request, <%= container %>, false)"
+                class="btn btn-danger request-del">
+          <i class="icon-remove"></i>
+        </button>
+      </td>
+    <% end %>
+  </tr>
+
   </tbody>
 </table>
-<div>
 
+<div id="batch_controls">
   <% if can? :approve, EnrollRequest %>
-      <a class="update-selected" href="<%= course_enroll_request_approve_selected_path(@course)%>" data-target="<%= ".checkbox-#{type}" %>">Approve Selected</a> |
-      <a class="update-selected" href="<%= course_enroll_request_delete_selected_path(@course) %>" data-target="<%= ".checkbox-#{type}" %>">Delete Selected</a> |
-      <%= link_to 'Approve All', course_enroll_request_approve_all_path(@course, req_type: type) %> |
-      <%= link_to 'Delete All', course_enroll_request_delete_all_path(@course, req_type: type) %> |
+    <a class="update-selected"
+       ng-click="deleteSelected('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                                <%= container %>, true)">
+      <%= t('course.enrolment.approve_selected') %>
+    </a>|
+    <a class="update-selected"
+       ng-click="deleteSelected('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                                <%= container %>, false)">
+      <%= t('course.enrolment.delete_selected') %>
+    </a>|
+    <a ng-click="deleteAll('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                           <%= container %>, true)">
+      <%= t('course.enrolment.approve_all') %>
+    </a>|
+    <a ng-click="deleteAll('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                           <%= container %>, false)">
+      <%= t('course.enrolment.delete_all') %>
+    </a>
   <% end %>
 </div>
 

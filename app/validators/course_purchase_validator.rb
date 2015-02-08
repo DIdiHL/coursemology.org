@@ -36,10 +36,6 @@ class CoursePurchaseValidator < ActiveModel::Validator
     if course.is_published_in_marketplace?
       course_purchase.errors[:course] << "- a published course can't be the purchased course."
     end
-
-    if course.course_purchase
-      course_purchase.errors[:course] << "- a purchased course can't appear in multiple purchases"
-    end
   end
 
 end

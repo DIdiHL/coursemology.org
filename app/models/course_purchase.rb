@@ -10,9 +10,14 @@ class CoursePurchase < ActiveRecord::Base
   has_many :purchase_records, order: 'created_at DESC'
 
   def capacity
+    student_count = 0
+    if self.course
+      student_count = self.course.student_courses.count
+    end
+
     self.purchase_records.map{ |purchase_record|
       (purchase_record.is_paid?) ? purchase_record.seat_count : 0
-    }.sum - self.seat_taken_count
+    }.sum - self.seat_taken_count + student_count
   end
 
   def vacancy

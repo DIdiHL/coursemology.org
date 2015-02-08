@@ -18,6 +18,35 @@ class EnrollRequestsController < ApplicationController
         @staff_requests << er
       end
     end
+
+    respond_to do |format|
+      format.html
+      format.json {
+        staff_request_hashes = get_request_hash(@staff_requests)
+        student_request_hashes = get_request_hash(@student_requests)
+        response_hash = {staff_reqeusts: staff_request_hashes, student_requests: student_request_hashes}
+        add_course_info_to_response_hash(response_hash)
+        render json: response_hash
+      }
+    end
+  end
+
+  def get_request_hash(requests)
+    result = []
+    requests.each do |request|
+      request_hash = request.as_json(include: {user: {only: [:name, :email]}, role: {only: :title}})
+      request_hash[:path] = course_enroll_request_path(@course, request.id, 'json')
+      result << request_hash
+    end
+    result
+  end
+
+  def add_course_info_to_response_hash(response_hash)
+    if @course.course_purchase
+      response_hash[:enrolledStudentCount] = @course.student_courses.count
+      response_hash[:courseCapacity] = @course.course_purchase.capacity
+      response_hash[:availableSeatCount] = @course.course_purchase.vacancy
+    end
   end
 
   def new
@@ -54,98 +83,83 @@ class EnrollRequestsController < ApplicationController
     @course.enrol_user(enroll_request.user, enroll_request.role)
   end
 
-  def approve_all
+  def approve_request!(enroll_request)
     authorize! :approve, EnrollRequest
-    req_type = params[:req_type]
-    std_role = Role.find_by_name("student")
-    @enroll_requests = @course.enroll_requests
+    @course.enrol_user!(enroll_request.user, enroll_request.role)
+  end
+
+  def destroy_selected
+    enroll_requests = EnrollRequest.where(id: params[:ids])
+    has_error = false
+    message = nil
+    deleted_ids = []
     begin
-      @enroll_requests.each do |enroll_request|
-        if req_type == 'student' && enroll_request.role == std_role
-          approve_request(enroll_request)
-          enroll_request.destroy
+      deleted_count = 0
+      enroll_requests.each do |enroll_request|
+        if params[:approved] == 'true'
+          approve_request!(enroll_request)
         end
-        if req_type == 'staff' && enroll_request.role != std_role
-          approve_request(enroll_request)
-          enroll_request.destroy
-        end
+
+        deleted_ids << enroll_request.id
+        enroll_request.destroy
+        deleted_count += 1
       end
-      flash[:notice] = "All requests have been approved!"
+
+      if params[:approved] == 'true'
+        message = t('course.enrolment.approved_selected_message_with_count') % deleted_count
+      else
+        message = t('course.enrolment.deleted_selected_message_with_count') % deleted_count
+      end
     rescue
-      flash[:error] = $!.message
-    end
-    respond_to do |format|
-      format.html {
-        redirect_to course_enroll_requests_path(@course),
-                    flash: flash
-      }
-    end
-  end
-
-  def approve_selected
-    enroll_requests = EnrollRequest.where(id: params[:ids])
-    puts params[:ids]
-    puts enroll_requests.to_json
-    enroll_requests.each do |enroll_request|
-      puts enroll_request.to_json
-      approve_request(enroll_request)
-      enroll_request.destroy
+      has_error = true
+      message = t('course.enrolment.failed_to_enrol_format') % $!.message
     end
 
     respond_to do |format|
-      format.html {
-        redirect_to course_enroll_requests_path(@course),
-                    notice: "The request(s) have been approved!"
-      }
-    end
-  end
-
-  def delete_all
-    req_type = params[:req_type]
-    std_role = Role.find_by_name("student")
-    @enroll_requests = @course.enroll_requests
-    @enroll_requests.each do |enroll_request|
-      if req_type == 'student' && enroll_request.role == std_role
-        enroll_request.destroy
+      format.json do
+        response_hash = {message: message, approved_ids: deleted_ids}
+        add_course_info_to_response_hash(response_hash)
+        if has_error
+          render json: response_hash, status: :internal_server_error
+        else
+          render json: response_hash, status: :ok
+        end
       end
-      if req_type == 'staff' && enroll_request.role != std_role
-        enroll_request.destroy
-      end
-    end
-    respond_to do |format|
-      format.html {
-        redirect_to course_enroll_requests_path(@course),
-                    notice: "All requests have been deleted!"
-      }
-    end
-  end
-
-  def delete_selected
-    enroll_requests = EnrollRequest.where(id: params[:ids])
-    enroll_requests.each do |enroll_request|
-      puts enroll_request.to_json
-      enroll_request.destroy
-    end
-
-    respond_to do |format|
-      format.html {
-        redirect_to course_enroll_requests_path(@course),
-                    notice: "The request(s) have been deleted!"
-      }
     end
   end
 
   def destroy
-    if params[:approved]
-      puts 'Request approved!'
-      # create new UserCourse record
-      approve_request(@enroll_request)
+    has_error = false
+    message = nil
+    email = @enroll_request.user.email
+
+    begin
+      if params[:approved] == 'true'
+        # create new UserCourse record
+        approve_request!(@enroll_request)
+        message = t('course.enrolment.approved_message_format') % email
+      end
+
+      @enroll_request.destroy
+      if !message
+        message = t('course.enrolment.deleted_message_format') % email
+      end
+    rescue
+      has_error = true
+      message = $!.message
     end
 
-    @enroll_request.destroy
-
     respond_to do |format|
-      format.json { render json: { status: 'OK' } }
+      format.json do
+        response_hash = {message: message}
+        add_course_info_to_response_hash(response_hash)
+        if has_error
+          # Assuming the only error that can happen is no vacancy error
+          render json: response_hash, status: :internal_server_error
+        else
+          render json: response_hash, status: :ok
+        end
+      end
     end
   end
 end

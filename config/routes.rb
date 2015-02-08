@@ -252,13 +252,7 @@ Coursemology::Application.routes.draw do
 
     resources :file_uploads
 
-    match "enroll_requests/approve_all" => "enroll_requests#approve_all", as: :enroll_request_approve_all
-
-    match "enroll_requests/approve_selected" => "enroll_requests#approve_selected", as: :enroll_request_approve_selected
-
-    match "enroll_requests/delete_all" => "enroll_requests#delete_all", as: :enroll_request_delete_all
-
-    match "enroll_requests/delete_selected" => "enroll_requests#delete_selected", as: :enroll_request_delete_selected
+    match "enroll_requests/destroy_selected" => "enroll_requests#destroy_selected", as: :enroll_request_destroy_selected
 
     resources :enroll_requests
 

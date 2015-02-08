@@ -39,7 +39,7 @@ class Course < ActiveRecord::Base
   has_many  :guilds, dependent: :destroy
 
   # this is the record from which this course is duplicated
-  belongs_to :course_purchase, readonly: true
+  belongs_to :course_purchase
   # users purchase courses from their publish records
   has_one :publish_record
 
@@ -423,11 +423,25 @@ class Course < ActiveRecord::Base
   end
 
 
-  def enrol_user(user, role)
+  def enrol_user!(user, role)
     if UserCourse.where(course_id: self, user_id: user).first
       return
     end
+
     self.user_courses.create!(user_id: user.id, role_id: role.id)
+    if self.course_purchase
+      self.course_purchase.seat_taken_count += 1
+      self.course_purchase.save
+    end
+  end
+
+  def enrol_user(user, role)
+    begin
+      self.enrol_user(user, role)
+      return true
+    rescue
+      return false
+    end
   end
 
   def logo_url
