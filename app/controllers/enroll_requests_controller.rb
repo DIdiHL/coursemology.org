@@ -24,7 +24,7 @@ class EnrollRequestsController < ApplicationController
       format.json {
         staff_request_hashes = get_request_hash(@staff_requests)
         student_request_hashes = get_request_hash(@student_requests)
-        response_hash = {staff_reqeusts: staff_request_hashes, student_requests: student_request_hashes}
+        response_hash = {staff_requests: staff_request_hashes, student_requests: student_request_hashes}
         add_course_info_to_response_hash(response_hash)
         render json: response_hash
       }

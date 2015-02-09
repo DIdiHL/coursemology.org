@@ -18,32 +18,10 @@
   </div>
 
   <%= content_tag :h3, t('course.enrolment.staff_request_title') %>
-  <% if @staff_requests.size > 0 %>
     <%= render partial: "enroll_requests/list", locals: { requests: @staff_requests, type: "staff" } %>
-  <% else %>
-    <%= content_tag :span, t('course.enrolment.no_staff_request') %>
-  <% end %>
 
   <br/>
 
   <%= content_tag :h3, t('course.enrolment.student_request_title') %>
-  <% if @course.course_purchase %>
-    <% course_purchase = @course.course_purchase %>
-    <div id="course_purchase_info">
-      <span>
-        <%= t('course.enrolment.number_of_students') %> {{ enrolledStudentCount }}
-      </span>
-      <span>
-        <%= t('course.enrolment.capacity_indicator') %> {{ courseCapacity }}
-      </span>
-      <span>
-        <%= t('course.enrolment.seats_indicator') %> {{ availableSeatCount }}
-      </span>
-    </div>
-  <% end %>
-  <% if @student_requests.size > 0 %>
-    <%= render partial: "enroll_requests/list", locals: { requests: @student_requests, type: "student" } %>
-  <% else %>
-    <%= content_tag :span, t('course.enrolment.no_student_request') %>
-  <% end %>
+  <%= render partial: "enroll_requests/list", locals: { requests: @student_requests, type: "student" } %>
 </div>

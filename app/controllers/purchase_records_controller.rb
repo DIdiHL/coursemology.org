@@ -19,7 +19,7 @@ class PurchaseRecordsController < ApplicationController
       else
         @purchase_record.is_paid = true
         @purchase_record.save
-        redirect_to confirm_course_purchase_purchase_record_path(@course_purchase, @purchase_record)
+        redirect_to confirm_course_purchase_purchase_record_path(@course_purchase, @purchase_record, params)
       end
     end
   end

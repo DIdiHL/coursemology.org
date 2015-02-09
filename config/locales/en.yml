@@ -92,6 +92,7 @@ en:
       approve_all: Approve All
       delete_all: Delete All
       failed_to_enrol_format: 'Failed to approve enrolment requests. %s'
+      purchase_more_seats: Purchase Seats
 
   Marketplace:
     course:
@@ -138,6 +139,7 @@ en:
         success_title: Payment successful
         success_notice_format: 'You have purchased %s seats for your course.'
         go_to_course_btn_text: Go to the course
+        return_btn_text: Return
         go_to_master_course_btn_text: Expand capacity
 
 
@@ -200,6 +202,9 @@ en:
     publish_record:
       access_denied_message: You are not authorized to modify this pulish record.
 
+    purchase_record:
+      purchase_dialog_title: Purchase more seats
+
     payout_identity:
       verify_identity_btn_text: Verify identity
       change_identity_btn_text: Change identity
@@ -208,6 +213,7 @@ en:
       paypal_identity_notice: 'Payments will be made to your PayPal account'
       payout_email_subject: 'Payment from Coursemology'
       payout_email_note_format: 'You have a payment to your course - %s'
+      change_payout_identity: Change payout identity
 
     admin:
       payout_panel_title: Payout Panel

@@ -5,5 +5,10 @@
   <div>
     <%= content_tag :p, get_confirmation_notice %>
     <%= link_to get_btn_text, get_btn_url, class: 'btn btn-primary' %>
+    <% if params[:return_url] %>
+      <%= link_to t('Marketplace.transaction.payment_confirmation.return_btn_text'),
+                  params[:return_url],
+                  class: 'btn btn-primary' %>
+    <% end %>
   </div>
 </div>

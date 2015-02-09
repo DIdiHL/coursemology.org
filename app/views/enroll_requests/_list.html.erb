@@ -1,7 +1,9 @@
 <% if type == 'staff' %>
   <% container = 'staffRequests' %>
+  <% no_request_message = t('course.enrolment.no_staff_request') %>
 <% else %>
   <% container = 'studentRequests' %>
+  <% no_request_message = t('course.enrolment.no_student_request') %>
 <% end %>
 
 <div id="loading" ng-show="loading">
@@ -9,70 +11,106 @@
   <%= content_tag :span, t('course.enrolment.loading_text') %>
 </div>
 
-<table class="table enroll-requests" ng-show="!loading">
-  <thead>
-  <tr>
-    <% if can? :approve, EnrollRequest %>
-        <td><input type="checkbox" class="check-all"
-                   ng-model="<%= container %>CheckAll"
-                   ng-change="checkAll(<%= container %>CheckAll, <%= container %>)"/></td>
-    <% end %>
-    <%= content_tag :td, t('course.enrolment.request_list_name_header') %>
-    <%= content_tag :td, t('course.enrolment.request_list_email_header') %>
-    <%= content_tag :td, t('course.enrolment.request_list_date_header') %>
-    <%= content_tag :td, t('course.enrolment.request_list_role_header') %>
-    <% if can? :approve, EnrollRequest %>
-      <%= content_tag :td, t('course.enrolment.request_list_action_header') %>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
+<div ng-show="!loading">
+  <% if type == 'student' and @course.course_purchase %>
+    <% course_purchase = @course.course_purchase %>
+    <div id="course_purchase_info">
+      <span>
+        <%= content_tag :span, t('course.enrolment.number_of_students'), class: 'bold-text' %> {{ enrolledStudentCount }}
+      </span>
+      <span>
+        <%= content_tag :span, t('course.enrolment.capacity_indicator'), class: 'bold-text' %> {{ courseCapacity }}
+      </span>
+      <span>
+        <%= content_tag :span, t('course.enrolment.seats_indicator'), class: 'bold-text' %> {{ availableSeatCount }}
+      </span>
 
-  <tr ng-repeat="request in <%= container %>" class="enroll-request-animate-repeat">
-    <% if can? :approve, EnrollRequest %>
-      <td><input type="checkbox" ng-model="request.checked" ng-value="request.id" class="checkbox-<%= type %>"></td>
-    <% end %>
-    <td><label class="user-name">{{ request.user.name }}</label></td>
-    <td>{{ request.user.email }}</td>
-    <td>{{ request.created_at | date: 'd MMM y h:mm a' }}</td>
-    <td>{{ request.role.title }}</td>
-    <% if can? :approve, EnrollRequest %>
-      <td>
-        <button ng-click="deleteButtonClicked(request, <%= container %>, true)"
-                class="btn btn-primary request-approve">
-          <i class="icon-ok"></i>
-        </button>
-        <button ng-click="deleteButtonClicked(request, <%= container %>, false)"
-                class="btn btn-danger request-del">
-          <i class="icon-remove"></i>
-        </button>
-      </td>
-    <% end %>
-  </tr>
-
-  </tbody>
-</table>
-
-<div id="batch_controls">
-  <% if can? :approve, EnrollRequest %>
-    <a class="update-selected"
-       ng-click="deleteSelected('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
-                                <%= container %>, true)">
-      <%= t('course.enrolment.approve_selected') %>
-    </a>|
-    <a class="update-selected"
-       ng-click="deleteSelected('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
-                                <%= container %>, false)">
-      <%= t('course.enrolment.delete_selected') %>
-    </a>|
-    <a ng-click="deleteAll('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
-                           <%= container %>, true)">
-      <%= t('course.enrolment.approve_all') %>
-    </a>|
-    <a ng-click="deleteAll('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
-                           <%= container %>, false)">
-      <%= t('course.enrolment.delete_all') %>
-    </a>
+      <% if can?(:manage, @course) and @course.course_purchase %>
+        <span>
+          <%= link_to t('course.enrolment.purchase_more_seats'),
+                      '#purchase_seats_dialog',
+                      role: 'button',
+                      data: {toggle: 'modal'} %>
+        </span>
+        <div id="purchase_seats_dialog" class="modal hide fade" role="dialog" tabindex="-1"
+             aria-labelledby="purchase_seats_dialog_label" aria-hidden="true">
+          <%= render partial: 'purchase_records/purchase_options_dialog',
+                     locals: {course_purchase: @course.course_purchase, return_url: course_enroll_requests_path(@course)} %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>
 
+<div ng-show="!loading && <%= container %>.length == 0">
+  <%= content_tag :span, no_request_message %>
+</div>
+
+<div ng-show="!loading && <%= container %>.length > 0">
+  <table class="table enroll-requests">
+    <thead>
+    <tr>
+      <% if can? :approve, EnrollRequest %>
+        <td><input type="checkbox" class="check-all"
+                   ng-model="<%= container %>CheckAll"
+                   ng-change="checkAll(<%= container %>CheckAll, <%= container %>)"/></td>
+      <% end %>
+      <%= content_tag :td, t('course.enrolment.request_list_name_header') %>
+      <%= content_tag :td, t('course.enrolment.request_list_email_header') %>
+      <%= content_tag :td, t('course.enrolment.request_list_date_header') %>
+      <%= content_tag :td, t('course.enrolment.request_list_role_header') %>
+      <% if can? :approve, EnrollRequest %>
+        <%= content_tag :td, t('course.enrolment.request_list_action_header') %>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr ng-repeat="request in <%= container %>" class="enroll-request-animate-repeat">
+      <% if can? :approve, EnrollRequest %>
+        <td><input type="checkbox" ng-model="request.checked" ng-value="request.id" class="checkbox-<%= type %>"></td>
+      <% end %>
+      <td><label class="user-name">{{ request.user.name }}</label></td>
+      <td>{{ request.user.email }}</td>
+      <td>{{ request.created_at | date: 'd MMM y h:mm a' }}</td>
+      <td>{{ request.role.title }}</td>
+      <% if can? :approve, EnrollRequest %>
+        <td>
+          <button ng-click="deleteButtonClicked(request, <%= container %>, true)"
+                  class="btn btn-primary request-approve">
+            <i class="icon-ok"></i>
+          </button>
+          <button ng-click="deleteButtonClicked(request, <%= container %>, false)"
+                  class="btn btn-danger request-del">
+            <i class="icon-remove"></i>
+          </button>
+        </td>
+      <% end %>
+    </tr>
+
+    </tbody>
+  </table>
+
+  <div id="batch_controls">
+    <% if can? :approve, EnrollRequest %>
+      <a class="update-selected"
+         ng-click="deleteSelected('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                                <%= container %>, true)">
+        <%= t('course.enrolment.approve_selected') %>
+      </a>|
+      <a class="update-selected"
+         ng-click="deleteSelected('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                                <%= container %>, false)">
+        <%= t('course.enrolment.delete_selected') %>
+      </a>|
+      <a ng-click="deleteAll('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                           <%= container %>, true)">
+        <%= t('course.enrolment.approve_all') %>
+      </a>|
+      <a ng-click="deleteAll('<%= course_enroll_request_destroy_selected_path(@course, 'json')%>',
+                           <%= container %>, false)">
+        <%= t('course.enrolment.delete_all') %>
+      </a>
+    <% end %>
+  </div>
+</div>

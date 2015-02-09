@@ -1,0 +1,25 @@
+<div>
+  <% if course_purchase %>
+    <% action_url = new_course_purchase_purchase_record_path(course_purchase) %>
+  <% else %>
+    <% action_url = new_publish_record_course_purchase_path(publish_record) %>
+  <% end %>
+
+  <%= form_tag action_url, method: :get, class: 'form-horizontal' do %>
+    <div class="modal-header">
+      <%= content_tag :h1, t('Marketplace.purchase_record.purchase_dialog_title') %>
+    </div>
+    <div class="modal-body">
+      <%= number_field_tag :vacancy, min: 0, step: 1 %>
+      <%= content_tag :label, t('Marketplace.transaction.vacancy_input_label') %>
+    </div>
+
+    <% if defined? :return_url %>
+      <%= hidden_field_tag 'return_url', return_url %>
+    <% end %>
+
+    <div class="modal-footer">
+      <%= submit_tag t('Marketplace.transaction.submit_btn_label'), id: 'order_submit_btn', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
