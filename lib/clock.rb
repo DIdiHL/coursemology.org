@@ -15,4 +15,5 @@ module Clockwork
 
   # List all other jobs here
   every(1.day, MailingJob.new(nil, 'ForumDigests', nil, nil), at: '00:00')
+  every(1.month, PayoutToSellersJob.new(nil, 'PayoutToSellersJob', nil, nil), at: '04:00', thread: true)
 end

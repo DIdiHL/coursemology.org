@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
   include TruncateHtmlHelper
+  add_template_helper(PublishRecordsHelper)
   helper_method :truncate_html
 
   default from: "noreply@coursemology.com",
@@ -155,5 +156,17 @@ class UserMailer < ActionMailer::Base
     @name = name
     @body = body
     mail(to: email, subject: "[Coursemology] #{subject}")
+  end
+
+  def payout_completed(user)
+    @user = user
+    date_time_filename_str = (DateTime.now - 1.month).to_formatted_s(:month_and_year_no_space)
+    date_time_str = (DateTime.now - 1.month).to_formatted_s(:month_and_year)
+    attachment_name = t('Marketplace.mailer.attached_invoice_file_name_format') % date_time_filename_str
+    attachments[attachment_name] = WickedPdf.new.pdf_from_string(
+        render_to_string pdf: 'invoice', template: 'publish_records/invoice', locals: {user: user}
+    )
+    mail(to: user.email,
+         subject: t('Marketplace.mailer.subject_format') % date_time_str)
   end
 end

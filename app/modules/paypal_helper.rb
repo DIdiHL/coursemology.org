@@ -68,6 +68,11 @@ module PayPalHelper
     }
   end
 
+  def PayPalHelper.execute_batch_paypal_payout_for_course_purchase(course_purchase)
+    payout_identity = course_purchase.publish_record.payout_identity
+    PayPalHelper.execute_batch_paypal_payout(course_purchase.purchase_records, payout_identity)
+  end
+
   def PayPalHelper.confirm_async_paypal_payout(payout_batch_id)
     operation_uri = ENV['paypal_api_base_url'] + '/v1/payments/payouts/' + payout_batch_id
     auth = PayPalHelper.get_bearer_header

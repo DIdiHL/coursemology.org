@@ -142,8 +142,6 @@ en:
         return_btn_text: Return
         go_to_master_course_btn_text: Expand capacity
 
-
-
     index:
       search_tooltip: |
         You can add additional options including:
@@ -235,4 +233,22 @@ en:
       course_capacity: 'Capacity:'
       purchased_seats: seats
       payout_btn_text: Payout
+    mailer:
+      greeting_format: 'Hello, %s'
+      subject_format: 'Your %s payout has been completed'
+      invoice_email_body: Your latest payout invoice is ready for viewing. Please refer to the attached pdf file.
+      sign_off: Best Regards,
+      sender: The Coursemology Team
+      attached_invoice_file_name_format: 'Invoice_%s.pdf'
+      invoice:
+        invoice_title_format: 'Coursemology Marketplace Payout Invoice %s'
+        sales_summary: Sales summary
+        itemized_sales_record: Itemized Records
+        buyer: Buyer
+        email: Email
+        purchase_date: Purchase Date
+        amount_paid: Amount Paid
+        seats_purchased: Seats Purchased
+        date_format: '%d %B %Y'
+
 

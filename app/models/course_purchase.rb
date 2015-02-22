@@ -24,30 +24,52 @@ class CoursePurchase < ActiveRecord::Base
     self.capacity - self.course.student_courses.count
   end
 
-  def purchase_records_with_vacancy
-    self.purchase_records.select { |purchase_record| purchase_record.has_vacancy? }
-  end
-
-
   def has_unclaimed_purchases?
     unclaimed_purchases_amount > 0
   end
 
+  def seats_purchased
+    self.seats_purchased_between(Time.new(0), Time.now)
+  end
+
+  def seats_purchased_between(start_date, end_date)
+    self.purchase_records
+      .where('created_at between ? and ?', start_date, end_date)
+      .map { |purchase_record| purchase_record.seat_count }.sum
+  end
+
   def unclaimed_purchases_amount
-    self.all_purchases_amount * I18n.t('number.payout_proportion').to_f - self.claimed_purchases_amount
+    self.unclaimed_purchases_amount_between(Time.new(0), Time.now)
+  end
+
+  def unclaimed_purchases_amount_between(start_date, end_date)
+    self.all_purchases_amount_between(start_date, end_date) *
+        I18n.t('number.payout_proportion').to_f -
+        self.claimed_purchases_amount_between(start_date, end_date)
   end
 
   def claimed_purchases_amount
-    self.purchase_records.map { |purchase_record|
-      (purchase_record.payout_transaction and purchase_record.payout_transaction.is_paid?) ?
-          purchase_record.payout_amount : 0
-    }.sum
+    self.unclaimed_purchases_amount_between(Time.new(0), Time.now)
+  end
+
+  def claimed_purchases_amount_between(start_date, end_date)
+    self.purchase_records
+      .where('created_at between ? and ?', start_date, end_date)
+      .map { |purchase_record|
+        (purchase_record.payout_transaction and purchase_record.payout_transaction.is_paid?) ?
+            purchase_record.payout_amount : 0
+      }.sum
   end
 
   def all_purchases_amount
-    self.purchase_records.map { |purchase_record|
-      purchase_record.price_per_seat * purchase_record.seat_count
-    }.sum
+    self.all_purchases_amount_between(Time.new(0), Time.now)
   end
 
+  def all_purchases_amount_between(start_date, end_date)
+    self.purchase_records
+      .where('created_at between ? and ?', start_date, end_date)
+      .map { |purchase_record|
+        purchase_record.price_per_seat * purchase_record.seat_count
+      }.sum
+  end
 end

@@ -77,7 +77,9 @@ class PurchaseRecordsController < ApplicationController
         payment_transaction.purchase_record = @purchase_record
         payment_transaction.save
 
-        @purchase_record.execute_payout
+        # Payout is chosen to be done at the beginning of every month instead of after every purchase.
+        # The record will still appear in the user's sales dashboard but will be marked unpaid.
+        # @purchase_record.execute_payout
 
         @purchase_record.is_paid = true
         @purchase_record.save

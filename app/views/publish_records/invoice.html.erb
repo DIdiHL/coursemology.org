@@ -1,0 +1,37 @@
+<% publish_records = user.courses.map { |course| course.publish_record }.select{ |publish_record| publish_record != nil }%>
+<html>
+<head>
+  <%= wicked_pdf_stylesheet_link_tag 'payout_invoice' %>
+</head>
+<body>
+
+<div class="page-header">
+  <%= content_tag :h2, t('Marketplace.mailer.invoice.invoice_title_format') % get_invoice_time %>
+</div>
+
+<% publish_records.each do |publish_record| %>
+  <% if publish_record.has_sales_between?(beginning_of_last_month, Time.now) %>
+    <a href="<%= course_url(publish_record.course) %>">
+      <%= content_tag :h3, publish_record.course.title %>
+    </a>
+    <div>
+      <%= content_tag :h4, t('Marketplace.mailer.invoice.sales_summary') %>
+      <%= render partial: 'publish_records/timed_sales_summary',
+                 locals: {publish_record: publish_record,
+                          start_date: beginning_of_last_month,
+                          end_date: end_of_last_month} %>
+    </div>
+
+    <div>
+      <%= content_tag :h4, t('Marketplace.mailer.invoice.itemized_sales_record') %>
+      <%= render partial: 'publish_records/timed_purchase_records_for_course_purchase',
+                 locals: {publish_record: publish_record,
+                          start_date: beginning_of_last_month,
+                          end_date: end_of_last_month} %>
+    </div>
+
+  <% end %>
+<% end %>
+
+</body>
+</html>

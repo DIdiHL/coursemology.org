@@ -43,7 +43,7 @@ class MarketplaceAdminsController < ApplicationController
           course_purchase_hash['purchase_records'] = course_purchase.purchase_records.as_json
           course_purchase_hash['capacity'] = course_purchase.capacity
           course_purchase_hash['payout_path'] =
-              claim_payouts_publish_record_path(@course.publish_record, course_purchase_id: course_purchase.id)
+              claim_payouts_course_publish_record_path(@course, @course.publish_record, course_purchase_id: course_purchase.id)
           if course_purchase.course
             course_purchase_hash['number_of_students'] = course_purchase.course.student_courses.count
           else

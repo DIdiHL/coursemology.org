@@ -1,0 +1,21 @@
+<% course_purchases = publish_record.course_purchases %>
+<table style="width: 100%">
+  <thead>
+    <%= content_tag :th, t('Marketplace.mailer.invoice.buyer') %>
+    <%= content_tag :th, t('Marketplace.mailer.invoice.email') %>
+    <%= content_tag :th, t('Marketplace.mailer.invoice.purchase_date') %>
+    <%= content_tag :th, t('Marketplace.mailer.invoice.amount_paid') %>
+    <%= content_tag :th, t('Marketplace.mailer.invoice.seats_purchased') %>
+  </thead>
+  <tbody>
+    <% course_purchases.each do |course_purchase| %>
+      <tr>
+        <%= content_tag :td, course_purchase.user.name %>
+        <%= content_tag :td, course_purchase.user.email %>
+        <%= content_tag :td, invoice_format_date(course_purchase.created_at) %>
+        <%= content_tag :td, number_to_currency(course_purchase.all_purchases_amount_between(start_date, end_date)) %>
+        <%= content_tag :td, course_purchase.seats_purchased_between(start_date, end_date) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
